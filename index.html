@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
+  <title>Evaluación Práctica: Acta de Procedimiento</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --accent: #0284c7;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --success: #16a34a;
+      --error: #dc2626;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: #0f172a;
+      padding: 12px;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .header-box {
+      text-align: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    .timer {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      margin: 8px 0 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .bank-box, .target-box {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 120px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-content: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .bank-box {
+      background-color: #f1f5f9;
+      border-style: dashed;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .target-box {
+      background-color: #ffffff;
+      min-height: 160px;
+    }
+
+    .chip {
+      background: white;
+      border: 1px solid #94a3b8;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      line-height: 1.2;
+    }
+
+    .chip.placed {
+      background-color: #eff6ff;
+      border-color: #93c5fd;
+      color: var(--primary);
+    }
+
+    .chip.correct {
+      background-color: #dcfce7 !important;
+      border-color: var(--success) !important;
+      color: #15803d !important;
+    }
+
+    .chip.incorrect {
+      background-color: #fee2e2 !important;
+      border-color: var(--error) !important;
+      color: var(--error) !important;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: #e2e8f0;
+      color: #334155;
+    }
+
+    /* Modal Registro */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+      margin: 12px 0;
+      text-transform: uppercase;
+    }
+
+    /* Ranking */
+    .ranking-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    .ranking-table th, .ranking-table td {
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      text-align: left;
+    }
+
+    .ranking-table th {
+      background-color: #f1f5f9;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="gameScreen">
+    <div class="header-box">
+      <h1>Estructura de Acta Policial</h1>
+      <div class="timer" id="timerDisplay">Tiempo: 00:00</div>
+    </div>
+
+    <div class="section-label">
+      <span>Palabras Disponibles</span>
+      <span id="bankCount">0</span>
+    </div>
+    <div class="bank-box" id="bankBox"></div>
+
+    <div class="section-label">
+      <span>Acta en Redacción</span>
+      <span id="targetCount">0</span>
+    </div>
+    <div class="target-box" id="targetBox"></div>
+
+    <button class="btn btn-primary" onclick="openFinishModal()">Finalizar y Entregar</button>
+  </div>
+
+  <!-- Modal de Calificación y Envío -->
+  <div class="modal" id="finishModal">
+    <div class="modal-content">
+      <h2>Registro del Cadete</h2>
+      <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Ingresa tus datos completos para registrar tu calificación.</p>
+      
+      <input type="text" id="cadetName" placeholder="APELLIDO Y NOMBRES" required>
+      
+      <button class="btn btn-primary" id="submitBtn" onclick="submitEvaluation()">Enviar Evaluación</button>
+      <button class="btn btn-secondary" onclick="closeModal()">Seguir Editando</button>
+    </div>
+  </div>
+
+  <!-- Pantalla Final y Ranking -->
+  <div class="container" id="rankingScreen" style="display: none; margin-top: 16px;">
+    <div class="header-box">
+      <h1>Resultado de Evaluación</h1>
+      <p id="userScoreDisplay" style="font-size: 1.1rem; font-weight: 700; margin-top: 6px;"></p>
+    </div>
+
+    <div class="section-label">Ranking General</div>
+    <table class="ranking-table" id="rankingTable">
+      <thead>
+        <tr>
+          <th>Puesto</th>
+          <th>Cadete</th>
+          <th>Aciertos</th>
+          <th>Tiempo</th>
+        </tr>
+      </thead>
+      <tbody id="rankingBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTUTsYG4jYlm5q5xTP0pZpQYUgTuqzC9rDE3PhASyAO_DB3v0_Q77qUBBI5Ml-r82rpw/exec";
+
+    const correctSequence = [
+      "ACTA PARA DOCUMENTAR PROCEDIMIENTO:",
+      "En la CIUDAD de",
+      "San Miguel de Tucumán,",
+      "Departamento Capital,",
+      "Provincia de Tucumán,",
+      "República Argentina,",
+      "a los 28 días",
+      "del mes de Agosto",
+      "del año 2026,",
+      "siendo las 14:45 horas,",
+      "quien suscribe,",
+      "Oficial Auxiliar",
+      "PONCE SERGIO EDGARDO,",
+      "Legajo Personal N° 28.450,",
+      "con prestación de servicios en",
+      "Comisaría Seccional 1°",
+      "y en el mismo cumpliendo las funciones de",
+      "Oficial de Servicio,",
+      "secundado en este acto por el",
+      "Cabo Primero",
+      "TESEIRA ROQUE FRANCO JESUS,",
+      "Legajo Personal N° 34.120,",
+      "con funciones de",
+      "Chofer / Auxiliar de Guardia,",
+      "ambos pertenecientes al",
+      "Departamento General de Policía,",
+      "conforme al Artículo 107 “FORMAS”",
+      "del C.P.P.T.,",
+      "redacto la presente",
+      "a los fines y efectos legales",
+      "de dejar debidamente documentado lo siguiente:"
+    ];
+
+    let seconds = 0;
+    let timerInterval = setInterval(() => {
+      seconds++;
+      const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const sec = String(seconds % 60).padStart(2, '0');
+      document.getElementById('timerDisplay').textContent = `Tiempo: ${min}:${sec}`;
+    }, 1000);
+
+    const bankBox = document.getElementById('bankBox');
+    const targetBox = document.getElementById('targetBox');
+
+    function init() {
+      bankBox.innerHTML = '';
+      targetBox.innerHTML = '';
+      const shuffled = [...correctSequence].sort(() => Math.random() - 0.5);
+      shuffled.forEach(text => {
+        const chip = document.createElement('div');
+        chip.classList.add('chip');
+        chip.textContent = text;
+        chip.dataset.text = text;
+        chip.onclick = () => moveToTarget(chip);
+        bankBox.appendChild(chip);
+      });
+      updateCounts();
+    }
+
+    function moveToTarget(chip) {
+      chip.classList.add('placed');
+      chip.onclick = () => moveToBank(chip);
+      targetBox.appendChild(chip);
+      updateCounts();
+    }
+
+    function moveToBank(chip) {
+      chip.classList.remove('placed');
+      chip.onclick = () => moveToTarget(chip);
+      bankBox.appendChild(chip);
+      updateCounts();
+    }
+
+    function updateCounts() {
+      document.getElementById('bankCount').textContent = bankBox.children.length;
+      document.getElementById('targetCount').textContent = `${targetBox.children.length} / ${correctSequence.length}`;
+    }
+
+    function openFinishModal() {
+      if (targetBox.children.length === 0) {
+        alert("Debes colocar fragmentos en el acta antes de entregar.");
+        return;
+      }
+      document.getElementById('finishModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('finishModal').style.display = 'none';
+    }
+
+    async function submitEvaluation() {
+      const name = document.getElementById('cadetName').value.trim();
+      if (!name) {
+        alert("Debes ingresar tu Apellido y Nombres.");
+        return;
+      }
+
+      clearInterval(timerInterval);
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = "Calificando...";
+
+      const placedChips = Array.from(targetBox.children);
+      let correctAnswers = 0;
+
+      placedChips.forEach((chip, i) => {
+        if (chip.dataset.text === correctSequence[i]) {
+          chip.classList.add('correct');
+          correctAnswers++;
+        } else {
+          chip.classList.add('incorrect');
+        }
+      });
+
+      const total = correctSequence.length;
+      const status = correctAnswers === total ? "Aprobado (Perfecto)" : "Revisar";
+      
+      const payload = {
+        nombre: name,
+        puntaje: correctAnswers,
+        total: total,
+        tiempoSegundos: seconds,
+        estado: status
+      };
+
+      try {
+        if (SCRIPT_URL !== "URL_DE_TU_GOOGLE_APPS_SCRIPT") {
+          await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      closeModal();
+      showResults(name, correctAnswers, total);
+    }
+
+    async function showResults(name, correct, total) {
+      document.getElementById('gameScreen').style.display = 'none';
+      const rankingScreen = document.getElementById('rankingScreen');
+      rankingScreen.style.display = 'block';
+
+      const scoreDisplay = document.getElementById('userScoreDisplay');
+      scoreDisplay.textContent = `Cadete: ${name} | Puntaje: ${correct}/${total} (${seconds} seg)`;
+      scoreDisplay.style.color = correct === total ? "var(--success)" : "var(--error)";
+
+      loadRanking(name, correct, seconds);
+    }
+
+    async function loadRanking(currentName, currentScore, currentSec) {
+      const tbody = document.getElementById('rankingBody');
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Cargando ranking...</td></tr>';
+
+      let data = [];
+      try {
+        if (SCRIPT_URL !== "URL_DE_TU_GOOGLE_APPS_SCRIPT") {
+          const res = await fetch(SCRIPT_URL);
+          data = await res.json();
+        }
+      } catch(e) {}
+
+      if (data.length === 0) {
+        data.push({ nombre: currentName, puntaje: `${currentScore} / ${correctSequence.length}`, tiempo: currentSec });
+      }
+
+      data.sort((a, b) => {
+        const scoreA = parseInt(a.puntaje) || 0;
+        const scoreB = parseInt(b.puntaje) || 0;
+        if (scoreB !== scoreA) return scoreB - scoreA;
+        return (parseInt(a.tiempo) || 0) - (parseInt(b.tiempo) || 0);
+      });
+
+      tbody.innerHTML = '';
+      data.forEach((row, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>#${idx + 1}</strong></td>
+          <td>${row.nombre}</td>
+          <td>${row.puntaje}</td>
+          <td>${row.tiempo}s</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
