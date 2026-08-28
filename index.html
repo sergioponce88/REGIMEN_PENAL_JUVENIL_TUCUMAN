@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Evaluación Práctica: Acta de Procedimiento</title>
   <style>
     :root {
       --primary: #1e3a8a;
       --accent: #0284c7;
-      --bg: #f8fafc;
+      --bg: #f1f5f9;
       --card: #ffffff;
       --success: #16a34a;
       --error: #dc2626;
@@ -26,83 +26,108 @@
     body {
       background-color: var(--bg);
       color: #0f172a;
-      padding: 12px;
-      font-size: 15px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 8px;
     }
 
-    .container {
-      max-width: 600px;
+    .app-container {
+      max-width: 650px;
+      width: 100%;
+      height: 100%;
       margin: 0 auto;
       background: var(--card);
       border-radius: 12px;
-      padding: 16px;
+      padding: 12px;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .header-box {
-      text-align: center;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
+    .header-compact {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 6px;
     }
 
     h1 {
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       color: var(--primary);
       text-transform: uppercase;
+      font-weight: 800;
     }
 
     .timer {
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--accent);
-      margin-top: 4px;
+      background: #e0f2fe;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .panel-section {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
     }
 
     .section-label {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
-      color: #64748b;
-      margin: 8px 0 4px;
+      color: #475569;
+      margin-bottom: 4px;
       display: flex;
       justify-content: space-between;
     }
 
-    .bank-box, .target-box {
+    .box-container {
       border: 1.5px solid var(--border);
       border-radius: 8px;
-      padding: 10px;
-      min-height: 120px;
+      padding: 8px;
+      flex: 1;
+      overflow-y: auto;
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
       align-content: flex-start;
-      margin-bottom: 12px;
+      background: #fafafa;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .bank-box {
-      background-color: #f1f5f9;
+    .bank-theme {
+      background-color: #f8fafc;
       border-style: dashed;
-      max-height: 200px;
-      overflow-y: auto;
+      border-color: #94a3b8;
     }
 
-    .target-box {
+    .target-theme {
       background-color: #ffffff;
-      min-height: 160px;
+      border-color: #3b82f6;
     }
 
     .chip {
       background: white;
       border: 1px solid #94a3b8;
-      padding: 8px 10px;
+      padding: 7px 10px;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
+      line-height: 1.25;
+      user-select: none;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-      line-height: 1.2;
+    }
+
+    .chip:active {
+      transform: scale(0.96);
     }
 
     .chip.placed {
@@ -125,13 +150,14 @@
 
     .btn {
       width: 100%;
-      padding: 12px;
+      padding: 11px;
       border: none;
       border-radius: 8px;
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .btn-primary {
@@ -149,7 +175,7 @@
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.65);
       align-items: center;
       justify-content: center;
       padding: 16px;
@@ -161,7 +187,7 @@
       border-radius: 12px;
       padding: 20px;
       width: 100%;
-      max-width: 420px;
+      max-width: 380px;
       text-align: center;
     }
 
@@ -170,7 +196,7 @@
       padding: 10px;
       border: 1.5px solid var(--border);
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin: 12px 0;
       text-transform: uppercase;
     }
@@ -179,8 +205,8 @@
     .ranking-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 12px;
-      font-size: 0.85rem;
+      margin-top: 8px;
+      font-size: 0.8rem;
     }
 
     .ranking-table th, .ranking-table td {
@@ -197,23 +223,29 @@
 </head>
 <body>
 
-  <div class="container" id="gameScreen">
-    <div class="header-box">
-      <h1>Estructura de Acta Policial</h1>
-      <div class="timer" id="timerDisplay">Tiempo: 00:00</div>
+  <div class="app-container" id="gameScreen">
+    <div class="header-compact">
+      <h1>Acta Policial</h1>
+      <div class="timer" id="timerDisplay">00:00</div>
     </div>
 
-    <div class="section-label">
-      <span>Palabras Disponibles</span>
-      <span id="bankCount">0</span>
+    <!-- Banco de Palabras -->
+    <div class="panel-section">
+      <div class="section-label">
+        <span>Palabras Disponibles</span>
+        <span id="bankCount">0</span>
+      </div>
+      <div class="box-container bank-theme" id="bankBox"></div>
     </div>
-    <div class="bank-box" id="bankBox"></div>
 
-    <div class="section-label">
-      <span>Acta en Redacción</span>
-      <span id="targetCount">0</span>
+    <!-- Redacción del Acta -->
+    <div class="panel-section">
+      <div class="section-label">
+        <span>Acta en Redacción (Tu orden)</span>
+        <span id="targetCount">0 / 31</span>
+      </div>
+      <div class="box-container target-theme" id="targetBox"></div>
     </div>
-    <div class="target-box" id="targetBox"></div>
 
     <button class="btn btn-primary" onclick="openFinishModal()">Finalizar y Entregar</button>
   </div>
@@ -221,35 +253,37 @@
   <!-- Modal de Calificación y Envío -->
   <div class="modal" id="finishModal">
     <div class="modal-content">
-      <h2>Registro del Cadete</h2>
-      <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Ingresa tus datos completos para registrar tu calificación.</p>
+      <h2 style="font-size: 1.1rem; color: var(--primary);">Registro del Cadete</h2>
+      <p style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Ingresa tus datos para calificar y guardar tu posición en el ranking.</p>
       
       <input type="text" id="cadetName" placeholder="APELLIDO Y NOMBRES" required>
       
       <button class="btn btn-primary" id="submitBtn" onclick="submitEvaluation()">Enviar Evaluación</button>
-      <button class="btn btn-secondary" onclick="closeModal()">Seguir Editando</button>
+      <button class="btn btn-secondary" onclick="closeModal()" style="margin-top: 6px;">Seguir Editando</button>
     </div>
   </div>
 
   <!-- Pantalla Final y Ranking -->
-  <div class="container" id="rankingScreen" style="display: none; margin-top: 16px;">
-    <div class="header-box">
+  <div class="app-container" id="rankingScreen" style="display: none; overflow-y: auto;">
+    <div class="header-compact">
       <h1>Resultado de Evaluación</h1>
-      <p id="userScoreDisplay" style="font-size: 1.1rem; font-weight: 700; margin-top: 6px;"></p>
     </div>
+    <p id="userScoreDisplay" style="font-size: 1rem; font-weight: 700; margin-top: 6px; text-align: center;"></p>
 
-    <div class="section-label">Ranking General</div>
-    <table class="ranking-table" id="rankingTable">
-      <thead>
-        <tr>
-          <th>Puesto</th>
-          <th>Cadete</th>
-          <th>Aciertos</th>
-          <th>Tiempo</th>
-        </tr>
-      </thead>
-      <tbody id="rankingBody"></tbody>
-    </table>
+    <div class="section-label" style="margin-top: 10px;">Tabla de Posiciones</div>
+    <div style="flex: 1; overflow-y: auto;">
+      <table class="ranking-table" id="rankingTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Cadete</th>
+            <th>Puntos</th>
+            <th>Tiempo</th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody"></tbody>
+      </table>
+    </div>
   </div>
 
   <script>
@@ -294,7 +328,7 @@
       seconds++;
       const min = String(Math.floor(seconds / 60)).padStart(2, '0');
       const sec = String(seconds % 60).padStart(2, '0');
-      document.getElementById('timerDisplay').textContent = `Tiempo: ${min}:${sec}`;
+      document.getElementById('timerDisplay').textContent = `${min}:${sec}`;
     }, 1000);
 
     const bankBox = document.getElementById('bankBox');
@@ -330,7 +364,7 @@
     }
 
     function updateCounts() {
-      document.getElementById('bankCount').textContent = bankBox.children.length;
+      document.getElementById('bankCount').textContent = `${bankBox.children.length} restantes`;
       document.getElementById('targetCount').textContent = `${targetBox.children.length} / ${correctSequence.length}`;
     }
 
@@ -355,7 +389,7 @@
 
       clearInterval(timerInterval);
       document.getElementById('submitBtn').disabled = true;
-      document.getElementById('submitBtn').textContent = "Calificando...";
+      document.getElementById('submitBtn').textContent = "Guardando...";
 
       const placedChips = Array.from(targetBox.children);
       let correctAnswers = 0;
@@ -381,16 +415,16 @@
       };
 
       try {
-        if (SCRIPT_URL !== "URL_DE_TU_GOOGLE_APPS_SCRIPT") {
-          await fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-        }
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        });
       } catch (e) {
-        console.error(e);
+        console.error("Error al conectar con Google Sheets:", e);
       }
 
       closeModal();
@@ -400,10 +434,10 @@
     async function showResults(name, correct, total) {
       document.getElementById('gameScreen').style.display = 'none';
       const rankingScreen = document.getElementById('rankingScreen');
-      rankingScreen.style.display = 'block';
+      rankingScreen.style.display = 'flex';
 
       const scoreDisplay = document.getElementById('userScoreDisplay');
-      scoreDisplay.textContent = `Cadete: ${name} | Puntaje: ${correct}/${total} (${seconds} seg)`;
+      scoreDisplay.textContent = `${name}: ${correct}/${total} correctas (${seconds}s)`;
       scoreDisplay.style.color = correct === total ? "var(--success)" : "var(--error)";
 
       loadRanking(name, correct, seconds);
@@ -411,18 +445,23 @@
 
     async function loadRanking(currentName, currentScore, currentSec) {
       const tbody = document.getElementById('rankingBody');
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Cargando ranking...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Cargando posiciones...</td></tr>';
 
       let data = [];
       try {
-        if (SCRIPT_URL !== "URL_DE_TU_GOOGLE_APPS_SCRIPT") {
-          const res = await fetch(SCRIPT_URL);
-          data = await res.json();
-        }
-      } catch(e) {}
+        const res = await fetch(SCRIPT_URL);
+        data = await res.json();
+      } catch(e) {
+        console.error("Error al cargar datos del ranking:", e);
+      }
 
-      if (data.length === 0) {
-        data.push({ nombre: currentName, puntaje: `${currentScore} / ${correctSequence.length}`, tiempo: currentSec });
+      const exists = data.some(r => r.nombre === currentName && r.tiempo == currentSec);
+      if (!exists) {
+        data.push({
+          nombre: currentName,
+          puntaje: `${currentScore} / ${correctSequence.length}`,
+          tiempo: currentSec
+        });
       }
 
       data.sort((a, b) => {
