@@ -256,7 +256,6 @@
       <div class="box-container target-theme" id="targetBox"></div>
     </div>
 
-    <!-- Botón visible fijo al pie -->
     <div class="footer-actions">
       <button class="btn btn-primary" onclick="openFinishModal()">Finalizar y Entregar</button>
     </div>
@@ -265,8 +264,8 @@
   <!-- Modal de Calificación y Envío -->
   <div class="modal" id="finishModal">
     <div class="modal-content">
-      <h2 style="font-size: 1.1rem; color: var(--primary);">Registro del Cadete</h2>
-      <p style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Ingresa tus datos para calificar y guardar tu posición en el ranking.</p>
+      <h2 style="font-size: 1.1rem; color: var(--primary);">¡Párrafo Completado!</h2>
+      <p style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Ingresa tu Apellido y Nombre para registrar tu calificación.</p>
       
       <input type="text" id="cadetName" placeholder="APELLIDO Y NOMBRES" required>
       
@@ -366,6 +365,13 @@
       chip.onclick = () => moveToBank(chip);
       targetBox.appendChild(chip);
       updateCounts();
+
+      // Disparador automático al colocar la última pieza
+      if (targetBox.children.length === correctSequence.length) {
+        setTimeout(() => {
+          openFinishModal();
+        }, 300);
+      }
     }
 
     function moveToBank(chip) {
@@ -386,6 +392,7 @@
         return;
       }
       document.getElementById('finishModal').style.display = 'flex';
+      document.getElementById('cadetName').focus();
     }
 
     function closeModal() {
