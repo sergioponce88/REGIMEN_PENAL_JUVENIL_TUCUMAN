@@ -446,6 +446,57 @@ h2 s{text-decoration:none;color:#7d8696}
 
 .rot{display:none;position:fixed;left:16px;right:16px;bottom:84px;z-index:50;text-align:center;font:600 15px var(--body);color:var(--ink);padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(20,22,28,.92)}
 body.portrait .rot{display:block}
+
+.key p.pn{font-size:18px;line-height:1.38}
+.key p.pn b{color:#fff}
+.acta{position:absolute;left:64px;bottom:14px;display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:10px;border:1px solid rgba(255,181,71,.5);background:rgba(255,181,71,.1);color:#ffe2b0;font-size:15px;z-index:3}
+.acta svg{color:#ffb547;flex:none}.acta b{color:#ffb547}
+.supflow{display:grid;grid-template-columns:1fr 40px 1.15fr 40px 1fr;flex:1;min-height:0}
+.sf{border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.012));transition:transform .3s,border-color .3s}
+.sf:hover{transform:translateY(-4px);border-color:rgba(63,208,255,.45)}
+.sf .l,.pc .l{font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.sf h4{font:800 30px/1.1 var(--display);letter-spacing:-.01em}
+.sf p{font-size:22px;line-height:1.45;color:#d5dbe4}.sf p b{color:#fff}
+.sf .art{margin-top:auto}
+.sic2{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:var(--cyan);border:1px solid rgba(63,208,255,.4);background:rgba(63,208,255,.1)}
+.sic2.big{width:64px;height:64px;color:var(--bg);background:var(--cyan);box-shadow:0 0 30px rgba(63,208,255,.6)}
+.sf.hl2{border-color:rgba(63,208,255,.55);background:linear-gradient(165deg,rgba(63,208,255,.18),rgba(63,208,255,.03));box-shadow:0 40px 110px -40px rgba(63,208,255,.6)}
+.sf.hl2 h4{font-size:38px}
+.supnote{display:grid;grid-template-columns:1fr 2fr;gap:14px}
+.sn{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:18px;line-height:1.4;color:#d5dbe4}
+.sn .l{font:600 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--coral);white-space:nowrap}
+.sn.hot{border-color:rgba(255,181,71,.5);background:rgba(255,181,71,.08)}.sn.hot b{color:#ffb547}
+.sicx{color:#ffb547;display:grid}
+.pithead{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:end}
+.pitdef{font-size:19px;line-height:1.45;color:#c9d0db;padding-left:22px;border-left:2px solid var(--cyan)}
+.pit{display:grid;grid-template-columns:1fr 1.2fr 1fr;grid-template-rows:auto 1fr;gap:14px;flex:1;min-height:0}
+.pc{border:1px solid var(--line);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.012))}
+.pc.wide{grid-column:1/3}
+.pc h4{font:800 28px/1.15 var(--display)}
+.pc p{font-size:21px;line-height:1.42;color:#d5dbe4}.pc p b{color:#fff}
+.pc p.small{font-size:15px;color:var(--muted)}
+.pc .art{margin-top:auto}
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tl>div{border-radius:12px;padding:10px 12px;border:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.tl b{font:900 38px/1 var(--display);color:#fff}
+.tl span{font-size:16px;line-height:1.3;color:#c9d0db}
+.tl .hl{border-color:var(--emerald);background:rgba(47,214,154,.14)}.tl .hl b{color:var(--emerald)}
+.ejes{display:flex;flex-wrap:wrap;gap:12px}
+.ejes span{font-size:21px;padding:10px 18px;border-radius:999px;border:1px solid rgba(47,214,154,.45);background:rgba(47,214,154,.08);color:#dff7ee}
+.femhead{display:flex;align-items:center;gap:26px}
+.rbadge.fem{--ac:#ff8fc7;--acs:rgba(255,143,199,.12);--acb:rgba(255,143,199,.45)}
+.femflow{display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr 30px 1fr;flex:1;min-height:0}
+.femflow .arrow::before{background:linear-gradient(90deg,transparent,#ff8fc7)}.femflow .arrow::after{border-color:#ff8fc7}
+.fc{border:1px solid rgba(255,143,199,.3);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(165deg,rgba(255,143,199,.09),rgba(255,255,255,.01));transition:transform .3s}
+.fc:hover{transform:translateY(-4px)}
+.fc h4{font:800 28px/1.1 var(--display)}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:18px;margin-top:6px}
+.fc li{font-size:21.5px;line-height:1.38;color:#e6e9ef;padding-left:18px;position:relative}
+.fc li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:#ff8fc7}
+.fc li b{color:#fff}
+.fc.dest{border-color:var(--emerald);background:linear-gradient(165deg,rgba(47,214,154,.16),rgba(47,214,154,.02))}
+.fc.dest li::before{background:var(--emerald)}
+
 /* Controles */
 .ctl{position:fixed;bottom:16px;z-index:40;display:flex;gap:8px;right:16px}
 .ctl button{font:600 13px var(--body);color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:9px 12px;cursor:pointer;backdrop-filter:blur(8px)}
@@ -528,7 +579,7 @@ body.portrait .rot{display:block}
           <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M6 20V9M10 20V9M14 20V9M18 20V9M3 9l9-5 9 5"/></svg></span><h5>Cualquier delito</h5><p>Responde por cualquier hecho del Código Penal o de leyes penales especiales.</p><span class="was"><i>Antes</i>Solo desde los 16, y no por delitos leves.</span><span class="art">art. 1</span></article>
           <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><h5>Garantías desde el primer acto</h5><p>Abogado defensor y derecho a no declarar desde el inicio.</p><span class="was"><i>Antes</i>Modelo tutelar: el juez decidía sobre el menor.</span><span class="art">art. 5 inc. c</span></article>
           <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 6.1A9.8 9.8 0 0112 6c5 0 9 6 9 6a17 17 0 01-3.2 3.8M6.1 7.9A16.7 16.7 0 003 12s4 6 9 6a9 9 0 004-.9"/></svg></span><h5>Identidad reservada</h5><p>Prohibido difundir nombre, apodo, foto, domicilio o familia.</p><span class="was"><i>Antes</i>Ya regía por Ley 20.056: se mantiene.</span><span class="art">art. 5 inc. i</span></article>
-          <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4v-4h4v-4h4V8h4"/></svg></span><h5>El encierro es el último recurso</h5><p>Primero penas alternativas. Máximo 15 años; perpetua prohibida.</p><span class="was"><i>Antes</i>Sin tope propio de pena.</span><span class="art">arts. 12 y 19</span></article>
+          <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4v-4h4v-4h4V8h4"/></svg></span><h5>La pena</h5><p class="pn"><b>Delitos comunes:</b> hasta 3 años. Da lugar a una posible condena condicional.</p><p class="pn"><b>Delitos graves:</b> pena máxima de 15 años. Perpetua prohibida.</p><span class="was"><i>Antes</i>Sin tope propio de pena.</span><span class="art">arts. 11 y 19</span></article>
         </div>
         <div class="takeaway"><span class="k">Idea clave</span><span>Un adolescente de 14 a 17 años que comete un delito es un <b>imputado con todas las garantías</b>. La actuación policial es la <b>base de ese proceso</b>.</span></div>
       </div>
@@ -545,14 +596,14 @@ body.portrait .rot{display:block}
           <article class="age">
             <div class="yr"><b>13</b><span>años</span></div>
             <span class="pill same" style="align-self:flex-start">No punible</span>
-            <div class="ph h"><span class="l">Qué corresponde</span><span class="v">Queda fuera del régimen penal. El hecho se investiga igual y se da intervención a los organismos de protección de derechos.</span></div>
+            <div class="ph h"><span class="l">Qué corresponde</span><span class="v">El proceso penal continúa su investigación hasta determinar su responsabilidad.</span></div>
             <div class="ph g"><span class="l">Atención</span><span class="v">No se le aplican medidas ni penas de la Ley 27.801.</span></div><span class="was"><i>Antes</i>No punible. Sin cambios.</span>
           </article>
           <article class="age hot">
             <div class="yr"><b>15</b><span>años</span></div>
             <span class="pill chg" style="align-self:flex-start">Punible</span>
             <div class="ph h"><span class="l">Qué corresponde</span><span class="v">Es imputado en un proceso penal juvenil: aviso a la justicia, información de sus derechos y defensor desde el primer acto.</span></div>
-            <div class="ph g"><span class="l">Atención</span><span class="v">Es el gran cambio de la ley: a esta edad ya responde penalmente.</span></div><span class="was"><i>Antes</i>No punible.</span>
+            <div class="ph g"><span class="l">La víctima</span><span class="v">Si no presta su consentimiento, <b>frena la mediación</b>. No reclama dinero en el proceso penal: sí en la <b>vía civil</b>, donde responden los padres. <span class="art">art. 7 · art. 42</span></span></div><span class="was"><i>Antes</i>No punible.</span>
           </article>
           <article class="age">
             <div class="yr"><b>17</b><span>años</span></div>
@@ -591,6 +642,43 @@ body.portrait .rot{display:block}
           <article class="role"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 12l2 2 4-4"/></svg></span><h4>Cumplimiento</h4><p><b>Supervisor</b> con entrevistas semanales e informes mensuales. Plan individual (PITP) en <b>30 días</b>.</p><span class="was"><i>Antes</i>Tratamiento tutelar, sin plazos.</span><span class="art">art. 23 · art. 30 Ley 10.011</span></article>
         </div>
         <div class="takeaway"><span class="k">Idea clave</span><span>La <b>policía abre</b> el caso, el <b>fiscal lo dirige</b>, el <b>juez garantiza y decide</b> y el <b>supervisor controla</b> el cumplimiento.</span></div>
+      </div>
+    </section>
+
+
+    <section class="slide" data-module="La ley nueva" aria-label="El juez controla a través del supervisor">
+      <div class="sc">
+        <div><span class="kicker"><i></i>Quién controla el caso</span>
+        <h2 style="margin-top:12px">El Juez de Menores controla <em>a través del supervisor</em></h2></div>
+        <div class="supflow">
+          <article class="sf"><span class="sic2"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M6 20V9M10 20V9M14 20V9M18 20V9M3 9l9-5 9 5"/></svg></span><span class="l">Lo nombra en el cargo</span><h4>Corte Suprema de Tucumán</h4><p>Integra el Cuerpo de Supervisores del Poder Judicial. Ningún juez puede nombrarlo.</p><span class="art">arts. 8 y 9 · Ley 10.011</span></article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="sf hl2"><span class="sic2 big"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14"/><path d="M5 8l-3 6a3 3 0 006 0L5 8zM19 8l-3 6a3 3 0 006 0l-3-6z"/></svg></span><span class="l">Lo asigna al caso y controla</span><h4>Juez de Menores</h4><p><b>Juez Penal de NNyA.</b> Asigna el supervisor con la OGA y mantiene el control permanente del caso.</p><span class="art">arts. 6 y 10 · Ley 10.011 · art. 23 Ley 27.801</span></article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="sf"><span class="sic2"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0114 0"/></svg></span><span class="l">Acompaña e informa</span><h4>Supervisor</h4><p>Entrevista al menos <b>una vez por semana</b> e informa al juez <b>todos los meses</b>, y de inmediato ante una urgencia.</p><span class="art">arts. 11 y 12 · Ley 10.011</span></article>
+        </div>
+        <div class="supnote">
+          <div class="sn"><span class="l">Lo que no hace</span><span>No tiene funciones policiales, judiciales ni disciplinarias.</span></div>
+          <div class="sn hot"><span class="sicx"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0112 0v5l2 2H4z"/><path d="M10 20a2 2 0 004 0"/></svg></span><span><b>Para la policía:</b> toda novedad con un adolescente que tiene una medida o pena se comunica al <b>supervisor asignado</b>, que informa al juez. <span class="art">arts. 11, 12 y 34</span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="La ley nueva" aria-label="El PITP">
+      <div class="sc">
+        <div class="pithead"><div><span class="kicker"><i></i>Plan Individual de Transformación Personal</span>
+        <h2 style="margin-top:12px">El <em>PITP</em>: el plan de cada adolescente</h2></div>
+        <p class="pitdef">Organiza qué tiene que hacer el adolescente para hacerse responsable, estudiar, formarse y no volver a delinquir. Se arma cuando el juez dispone una medida o una pena. <span class="art">art. 30 · Ley 10.011</span></p></div>
+        <div class="pit">
+          <article class="pc"><span class="l">Quién lo hace</span><h4>Equipo interdisciplinario + supervisor</h4><p>El adolescente <b>participa</b> y da su opinión. Se suma a la familia cuando conviene.</p><span class="art">art. 31</span></article>
+          <article class="pc"><span class="l">Plazos</span>
+            <div class="tl"><div><b>3 días</b><span>Comunicación del juez a la Autoridad de Aplicación</span></div><div><b>15 días</b><span>Informe inicial</span></div><div class="hl"><b>30 días</b><span>PITP listo</span></div></div>
+            <p class="small">Días hábiles. <span class="art">arts. 25, 29 y 30</span></p></article>
+          <article class="pc wide"><span class="l">De qué consta</span>
+            <div class="ejes"><span>Educación</span><span>Oficios y capacitación laboral</span><span>Salud física y mental</span><span>Consumos problemáticos</span><span>Familia y comunidad</span><span>Deporte y cultura</span><span>Reparación del daño</span><span>Preparación para el egreso</span></div>
+            <span class="art">art. 32</span></article>
+          <article class="pc"><span class="l">Límites y control</span><p>No cambia lo que decidió el juez y se le envía para su control. El supervisor hace el seguimiento.</p><span class="art">arts. 33 y 34</span></article>
+        </div>
       </div>
     </section>
 
@@ -653,6 +741,7 @@ body.portrait .rot{display:block}
           <span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Difundir nombre, foto o datos</span>
         </div>
       </div>
+      <div class="acta"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span><b>Todo queda en acta:</b> cada movimiento, situación o comunicación. Si no está documentado, el proceso puede caer.</span></div>
     </section>
 
     <!-- ================= PRINCIPIOS RECTORES ================= -->
@@ -700,6 +789,7 @@ body.portrait .rot{display:block}
           <div class="rkey"><span class="k">Idea clave</span><span>Lo que el suboficial ve, preserva y anota en los primeros minutos es la <b>base de todo el proceso</b>.</span></div>
         </div>
       </div>
+      <div class="acta"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span><b>Todo queda en acta:</b> cada movimiento, situación o comunicación. Si no está documentado, el proceso puede caer.</span></div>
     </section>
 
     <section class="slide" data-module="Suboficial y Oficial" aria-label="Oficial instructor">
@@ -718,6 +808,7 @@ body.portrait .rot{display:block}
           <div class="rkey"><span class="k">Idea clave</span><span>El oficial responde por la <b>legalidad del procedimiento</b>: un error en las actuaciones puede hacer caer la causa.</span></div>
         </div>
       </div>
+      <div class="acta"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span><b>Todo queda en acta:</b> cada movimiento, situación o comunicación. Si no está documentado, el proceso puede caer.</span></div>
     </section>
 
     <!-- ================= RUTA ================= -->
@@ -766,6 +857,7 @@ body.portrait .rot{display:block}
           </article>
         </div>
       </div>
+      <div class="acta"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span><b>Todo queda en acta:</b> cada movimiento, situación o comunicación. Si no está documentado, el proceso puede caer.</span></div>
     </section>
 
     <section class="slide" data-module="Ruta y reglas" aria-label="Tres reglas que no se negocian">
@@ -799,6 +891,25 @@ body.portrait .rot{display:block}
         </div>
       </div>
     </section>
+    <section class="slide" data-module="Ruta y reglas" aria-label="Adolescente mujer: perspectiva de género">
+      <div class="sc">
+        <div class="femhead"><span class="rbadge fem"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/></svg><span><small>Perspectiva de género</small><b>Adolescente mujer</b></span></span>
+        <div><span class="kicker" style="color:#ff8fc7"><i style="background:#ff8fc7"></i>De 14 a 17 años · trato diferenciado en cada etapa</span>
+        <h2 style="margin-top:10px">Siempre <em style="color:#ff8fc7">cuidando su dignidad</em></h2></div></div>
+        <div class="femflow">
+          <article class="fc "><h4>Requisa</h4><ul><li>Solo por <b>personal policial femenino</b></li><li>En un lugar reservado, sin exposición</li><li>Sin presencia de personal masculino</li></ul></article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="fc "><h4>Custodia y traslado</h4><ul><li>Custodia a cargo de <b>personal femenino</b></li><li>Separada de adultos y de varones</li><li>Precinto con criterio; esposas solo como última instancia</li></ul></article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="fc "><h4>Derivación especial</h4><ul><li>Consultar embarazo, lactancia o hijos a cargo y comunicarlo</li><li>Si hay indicios de violencia o explotación: <b>Autoridad Proteccional</b> de inmediato</li><li>Examen médico acompañada por personal femenino</li></ul></article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="fc dest"><h4>Hasta el CAD</h4><ul><li>Traslado y entrega con <b>personal femenino</b></li><li>Comunicación a todas las instancias, igual que siempre</li><li>Todo queda asentado en acta</li></ul></article>
+        </div>
+        <div class="takeaway" style="border-color:rgba(255,143,199,.4);background:linear-gradient(90deg,rgba(255,143,199,.12),rgba(255,143,199,.02))"><span class="k" style="color:#ff8fc7">La ley dice</span><span>A una adolescente imputada se le garantiza, <b>en cada etapa del proceso</b>, un trato diferenciado por su edad y desde una <b>perspectiva de género</b>. <span class="art">art. 395 CPP · art. 5 incs. f y g Ley 27.801</span></span></div>
+      </div>
+      <div class="acta"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span><b>Todo queda en acta:</b> cada movimiento, situación o comunicación. Si no está documentado, el proceso puede caer.</span></div>
+    </section>
+
 
     <!-- ================= NACIÓN Y TUCUMÁN ================= -->
     <section class="slide" data-module="Nación y Tucumán" aria-label="Cómo se combinan las dos leyes">
