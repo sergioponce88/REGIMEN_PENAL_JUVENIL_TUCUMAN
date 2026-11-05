@@ -431,8 +431,8 @@ h2 s{text-decoration:none;color:#7d8696}
 .clhead{display:flex;justify-content:space-between;align-items:flex-end}
 .prog{display:flex;align-items:baseline;gap:8px;padding:10px 20px;border-radius:16px;border:1px solid rgba(47,214,154,.4);background:rgba(47,214,154,.08)}
 .prog b{font:900 54px/1 var(--display);color:var(--emerald)}.prog span{font-size:18px;color:var(--muted)}
-.cklist{display:grid;grid-template-columns:1fr 1fr 1fr;grid-auto-rows:1fr;gap:12px;flex:1}
-.ck{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.035);cursor:pointer;font-size:22px;line-height:1.35;transition:all .25s}
+.cklist{display:grid;grid-template-columns:1fr 1fr 1fr;grid-auto-rows:1fr;gap:10px;flex:1;min-height:0}
+.ck{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.035);cursor:pointer;font-size:19px;line-height:1.35;transition:all .25s}
 .ck:hover{border-color:rgba(47,214,154,.5)}
 .ck input{position:absolute;opacity:0;width:1px;height:1px}
 .ck .bx{flex:none;width:30px;height:30px;border-radius:9px;border:2px solid rgba(47,214,154,.6);display:grid;place-items:center;transition:all .25s}
@@ -533,6 +533,7 @@ body.portrait .rot{display:block}
 .wa em.jm{display:block;font-style:normal;margin-top:8px;font-size:17px;color:#ffe2b0;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,181,71,.45);background:rgba(255,181,71,.08)}
 .wa em.jm b{color:#ffb547}
 
+.ck span b{color:var(--emerald)}
 /* Controles */
 .ctl{position:fixed;bottom:16px;z-index:40;display:flex;gap:8px;right:16px}
 .ctl button{font:600 13px var(--body);color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:9px 12px;cursor:pointer;backdrop-filter:blur(8px)}
@@ -1052,8 +1053,8 @@ body.portrait .rot{display:block}
       <div class="sc">
         <div class="clhead"><div><span class="kicker" style="color:var(--emerald)"><i style="background:var(--emerald)"></i>Antes de cerrar el procedimiento</span>
         <h2 style="margin-top:10px">Lista de control <em style="color:var(--emerald)">del buen proceder</em></h2></div>
-        <div class="prog"><b id="ckn">0</b><span>de 9</span></div></div>
-        <div class="cklist" id="cklist"><label class="ck"><input type="checkbox"><span class="bx"></span><span>Verifiqué la edad o apliqué la presunción de minoridad</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Comuniqué al MPF, al Juez de NNyA, al Ministerio Pupilar, a los padres y al defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Le informé sus derechos en palabras simples</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No le tomé ninguna declaración</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Usé precinto; esposas solo si corría peligro la vida del adolescente o de terceros</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Pasó por el centro asistencial público con sus padres o defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Lo alojé en el CAD, nunca en la comisaría</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No hay fotos ni datos difundidos</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Las actas registran horas, avisos y secuestros</span></label></div>
+        <div class="prog"><b id="ckn">0</b><span>de 12</span></div></div>
+        <div class="cklist" id="cklist"><label class="ck"><input type="checkbox"><span class="bx"></span><span>Verifiqué la edad con DNI o partidas; si hubo duda, lo traté como menor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Le informé sus derechos en palabras simples</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Avisé al <b>supervisor</b>, que avisa al Juez de Menores</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Comuniqué al MPF, al Ministerio Pupilar, a los padres y al defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No le tomé ninguna declaración, ni espontánea</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Usé precinto; esposas solo si corría peligro la vida del adolescente o de terceros</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Si es mujer: requisa y custodia con <b>personal femenino</b></span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Pasó por el centro asistencial público con sus padres o defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Entregué los secuestros de inmediato al MPF, con cadena de custodia</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Lo llevé al <b>CAD</b> con personal del mismo sexo, nota, informe médico y n.º de causa</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No hay fotos ni datos suyos difundidos</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Todo quedó en <b>acta</b>: horas, avisos, movimientos y secuestros</span></label></div>
         <div class="final"><span>Un procedimiento bien hecho protege a <b>la víctima</b>, al <b>adolescente</b> y <b>al policía</b>.</span></div>
       </div>
     </section>
