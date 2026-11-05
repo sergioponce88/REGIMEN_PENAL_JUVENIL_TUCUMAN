@@ -80,12 +80,12 @@ h1 .grad{background:linear-gradient(100deg,#fff 0%,#cfe9ff 45%,var(--cyan) 100%)
   border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted)}
 .step .t{font:600 22px/1.2 var(--body);color:#c9d0db}
 .step .d{font-size:15px;color:var(--muted);margin-top:4px}
-.step.key{margin:6px -16px;padding:20px 16px;border-radius:18px;background:linear-gradient(90deg,rgba(63,208,255,.14),rgba(63,208,255,.02));
+.step.hl{margin:6px -16px;padding:20px 16px;border-radius:18px;background:linear-gradient(90deg,rgba(63,208,255,.14),rgba(63,208,255,.02));
   border:1px solid rgba(63,208,255,.35);box-shadow:0 0 0 1px rgba(63,208,255,.08),0 20px 60px -20px rgba(63,208,255,.45)}
-.step.key .dot{border-color:var(--cyan);color:var(--bg);background:var(--cyan);box-shadow:0 0 30px rgba(63,208,255,.6)}
-.step.key .t{color:#fff;font-size:26px;font-family:var(--display);font-weight:800;letter-spacing:-.01em}
-.step.key .d{color:#bfefff}
-.step.key .badge{position:absolute;right:16px;top:-13px;background:var(--bg);font:600 12px var(--mono);letter-spacing:.14em;
+.step.hl .dot{border-color:var(--cyan);color:var(--bg);background:var(--cyan);box-shadow:0 0 30px rgba(63,208,255,.6)}
+.step.hl .t{color:#fff;font-size:26px;font-family:var(--display);font-weight:800;letter-spacing:-.01em}
+.step.hl .d{color:#bfefff}
+.step.hl .badge{position:absolute;right:16px;top:-13px;background:var(--bg);font:600 12px var(--mono);letter-spacing:.14em;
   color:var(--cyan);border:1px solid rgba(63,208,255,.4);padding:7px 10px;border-radius:999px;text-transform:uppercase}
 .pulse{animation:pulse 2.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 18px rgba(63,208,255,.45)}50%{box-shadow:0 0 42px rgba(63,208,255,.95)}}
@@ -478,14 +478,11 @@ body.portrait .rot{display:block}
           <img class="cover-logo" src="assets/escudo-policia.png" alt="Escudo de la Policía de Tucumán">
           <span class="eyebrow"><i></i>Curso de capacitación · 2026</span>
           <h1><span class="grad">Régimen Penal Juvenil</span><br>y actuación policial</h1>
-          <p class="sub">Qué cambia para el personal policial desde el primer contacto con un adolescente de 14 a 17 años.</p>
+          <p class="sub">Aplicación de la nueva ley provincial en menores de 14 a 18 años en conflicto con el Código Penal.</p>
           <div class="laws">
             <span class="chip n">Ley Nacional 27.801</span>
             <span class="chip t">Ley Provincial 10.011</span>
             <span class="chip p">Protocolo de Jefatura de Policía</span>
-          </div>
-          <div class="meta">
-            <span>Destinado a <b>Oficiales · Suboficiales · Cadetes del IESP</b></span>
           </div>
           <div class="meta">
             <span><b>San Miguel de Tucumán</b> · Noviembre 2026</span>
@@ -493,16 +490,18 @@ body.portrait .rot{display:block}
         </div>
 
         <div class="c-right">
-          <div class="chain" role="group" aria-label="El policía en el proceso penal juvenil">
-            <h3>El recorrido de un caso</h3>
-            <div class="step key">
+          <div class="chain" role="group" aria-label="La intervención policial paso a paso">
+            <h3>La intervención policial</h3>
+            <div class="step hl">
               <div class="dot pulse"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
-              <div><div class="t">Intervención policial</div><div class="d">Edad · derechos · aviso · resguardo · reserva de identidad</div></div>
-              <span class="badge">Primer eslabón</span>
+              <div><div class="t">Detención por el personal policial</div><div class="d">Verificar edad · informar derechos · reserva de identidad</div></div>
             </div>
-            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></div><div><div class="t">Ministerio Público Fiscal</div><div class="d">Investiga y acusa</div></div></div>
-            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14"/><path d="M5 8l-3 6a3 3 0 006 0L5 8zM19 8l-3 6a3 3 0 006 0l-3-6z"/></svg></div><div><div class="t">Juez Penal de NNyA</div><div class="d">Controla garantías, juzga y decide</div></div></div>
-            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h5a3 3 0 000-6h-2a3 3 0 010-6h5"/></svg></div><div><div class="t">Ejecución y supervisor</div><div class="d">Cumplimiento de medidas y penas</div></div></div>
+            <div class="step hl">
+              <div class="dot pulse"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></div>
+              <div><div class="t">Comunicación</div><div class="d">Supervisor · Ministerio Público Pupilar · Ministerio Público Fiscal · Juez de Menores</div></div>
+            </div>
+            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg></div><div><div class="t">Centro asistencial público</div><div class="d">Examen médico con sus padres o defensor</div></div></div>
+            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></div><div><div class="t">Alojamiento en el CAD</div><div class="d">Nunca en comisaría</div></div></div>
             <p class="quote">Lo que se hace bien o mal en la intervención policial condiciona todo lo que sigue.</p>
           </div>
         </div>
