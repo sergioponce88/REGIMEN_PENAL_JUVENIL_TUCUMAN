@@ -1,509 +1,1021 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Evaluación Práctica: Acta de Procedimiento</title>
-  <style>
-    :root {
-      --primary: #1e3a8a;
-      --accent: #0284c7;
-      --bg: #f1f5f9;
-      --card: #ffffff;
-      --success: #16a34a;
-      --error: #dc2626;
-      --border: #cbd5e1;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Régimen Penal Juvenil · Actuación Policial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Mundo único oscuro: proyección en aula. Lienzo fijo 1600x900 escalado al viewport. */
+  --bg:#0b0c10;
+  --surface:rgba(255,255,255,.045);
+  --line:rgba(255,255,255,.10);
+  --ink:#eef1f6;
+  --muted:#9aa3b2;
+  --cyan:#3fd0ff;      /* informativo / Nación */
+  --coral:#ff6b6b;     /* encierro */
+  --emerald:#2fd69a;   /* medidas alternativas */
+  --display:"Archivo", "Arial Black", system-ui, sans-serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--body);overflow:hidden}
+#viewport{position:fixed;inset:0;display:grid;place-items:center}
+#stage{position:relative;width:1600px;height:900px;transform-origin:center center;overflow:hidden;background:var(--bg);border-radius:6px}
+canvas#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
+/* ---------- Header fijo ---------- */
+.hdr{position:absolute;top:0;left:0;right:0;height:76px;display:flex;align-items:center;gap:22px;padding:0 40px;z-index:20;
+  background:linear-gradient(180deg,rgba(11,12,16,.92),rgba(11,12,16,.55));backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hdr img{height:58px;width:auto;filter:drop-shadow(0 2px 10px rgba(63,208,255,.25))}
+.hdr .org{display:flex;flex-direction:column;line-height:1.15}
+.hdr .org b{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.hdr .org span{font-size:12.5px;color:var(--muted);letter-spacing:.04em}
+.tabs{margin-left:auto;display:flex;gap:6px;padding:5px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03)}
+.tab{font:600 13px/1 var(--body);letter-spacing:.04em;color:var(--muted);padding:10px 16px;border-radius:999px;border:0;background:none;cursor:pointer;transition:all .25s}
+.tab[aria-current="true"]{color:var(--bg);background:var(--ink)}
+.tab:hover:not([aria-current="true"]){color:var(--ink);background:rgba(255,255,255,.06)}
+.tab:focus-visible,.ctl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.counter{font:600 13px var(--mono);color:var(--muted);min-width:64px;text-align:right}
 
-    body {
-      background-color: var(--bg);
-      color: #0f172a;
-      height: 100vh;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      padding: 6px;
-    }
+/* ---------- Slides ---------- */
+.slide{position:absolute;inset:0;padding:76px 0 0;opacity:0;visibility:hidden;transition:opacity .6s ease, visibility 0s .6s}
+.slide.on{opacity:1;visibility:visible;transition:opacity .6s ease}
+.presenter{position:absolute;right:40px;bottom:30px;font:600 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 
-    .app-container {
-      max-width: 650px;
-      width: 100%;
-      height: 100%;
-      margin: 0 auto;
-      background: var(--card);
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      overflow: hidden;
-    }
+/* ---------- Portada ---------- */
+.cover{position:absolute;inset:76px 0 0 0;display:grid;grid-template-columns:1.08fr .92fr;gap:40px;padding:56px 64px 48px}
+.big14{position:absolute;right:-40px;top:20px;font:900 720px/0.8 var(--display);letter-spacing:-.06em;
+  color:transparent;-webkit-text-stroke:2px rgba(63,208,255,.14);user-select:none;pointer-events:none}
+.cover-logo{height:150px;width:auto;align-self:flex-start;filter:drop-shadow(0 10px 40px rgba(63,208,255,.35))}
+.c-left{display:flex;flex-direction:column;justify-content:center;gap:18px;position:relative;z-index:2}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:600 14px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--cyan)}
+.eyebrow i{width:34px;height:1px;background:var(--cyan)}
+h1{font:900 76px/0.95 var(--display);letter-spacing:-.035em;text-wrap:balance}
+h1 .grad{background:linear-gradient(100deg,#fff 0%,#cfe9ff 45%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:22px;line-height:1.5;color:#c9d0db;max-width:30ch}
+.laws{display:flex;gap:12px;flex-wrap:wrap}
+.chip{font:600 15px var(--mono);padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);letter-spacing:.02em}
+.chip.n{border-color:rgba(63,208,255,.35);color:#bfefff}
+.chip.t{border-color:rgba(255,107,107,.35);color:#ffd0d0}
+.chip.p{border-color:rgba(47,214,154,.35);color:#c6f6e3}
+.meta{display:flex;gap:28px;margin-top:6px;color:var(--muted);font-size:15px;letter-spacing:.03em}
+.meta b{color:var(--ink);font-weight:600}
 
-    .header-compact {
-      flex-shrink: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1.5px solid var(--border);
-      padding-bottom: 6px;
-    }
+/* Cadena del proceso */
+.c-right{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center}
+.chain{position:relative;border:1px solid var(--line);border-radius:26px;padding:34px 34px 30px;
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015));backdrop-filter:blur(18px);
+  box-shadow:0 40px 120px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.08)}
+.chain h3{font:600 13px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+.step{position:relative;display:grid;grid-template-columns:54px 1fr;gap:18px;align-items:center;padding:14px 0}
+.step+.step::before{content:"";position:absolute;left:26px;top:-14px;height:28px;width:2px;background:linear-gradient(var(--line),rgba(255,255,255,.18))}
+.dot{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font:800 18px var(--display);
+  border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted)}
+.step .t{font:600 22px/1.2 var(--body);color:#c9d0db}
+.step .d{font-size:15px;color:var(--muted);margin-top:4px}
+.step.key{margin:6px -16px;padding:20px 16px;border-radius:18px;background:linear-gradient(90deg,rgba(63,208,255,.14),rgba(63,208,255,.02));
+  border:1px solid rgba(63,208,255,.35);box-shadow:0 0 0 1px rgba(63,208,255,.08),0 20px 60px -20px rgba(63,208,255,.45)}
+.step.key .dot{border-color:var(--cyan);color:var(--bg);background:var(--cyan);box-shadow:0 0 30px rgba(63,208,255,.6)}
+.step.key .t{color:#fff;font-size:26px;font-family:var(--display);font-weight:800;letter-spacing:-.01em}
+.step.key .d{color:#bfefff}
+.step.key .badge{position:absolute;right:16px;top:-13px;background:var(--bg);font:600 12px var(--mono);letter-spacing:.14em;
+  color:var(--cyan);border:1px solid rgba(63,208,255,.4);padding:7px 10px;border-radius:999px;text-transform:uppercase}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 18px rgba(63,208,255,.45)}50%{box-shadow:0 0 42px rgba(63,208,255,.95)}}
+.quote{margin-top:22px;font-size:17px;line-height:1.55;color:#c9d0db;border-left:2px solid var(--cyan);padding-left:16px}
 
-    h1 {
-      font-size: 0.95rem;
-      color: var(--primary);
-      text-transform: uppercase;
-      font-weight: 800;
-    }
 
-    .timer {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--accent);
-      background: #e0f2fe;
-      padding: 2px 8px;
-      border-radius: 6px;
-    }
+/* ---------- Slides de contenido ---------- */
+.sc{position:absolute;inset:76px 0 0 0;padding:36px 64px 64px;display:flex;flex-direction:column;gap:20px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font:600 13px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--cyan)}
+.kicker i{width:30px;height:1px;background:var(--cyan)}
+h2{font:900 46px/1.04 var(--display);letter-spacing:-.025em;text-wrap:balance;max-width:34ch}
+h2 em{font-style:normal;color:var(--cyan)}
+h2 s{text-decoration:none;color:#7d8696}
+.msg{font-size:20px;line-height:1.5;color:#c9d0db;max-width:70ch}
 
-    .panel-section {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-    }
+/* Comparativa */
+.cmp{display:grid;grid-template-columns:230px 1fr 56px 1fr;gap:0;align-items:stretch;flex:1}
+.cmp .hd{padding:0 22px 10px;display:flex;flex-direction:column;gap:6px}
+.lawno{font:900 44px/1 var(--display);letter-spacing:-.02em}
+.lawtag{font:600 12.5px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.old .lawno{color:#8b93a1}
+.old .lawtag{color:var(--coral)}
+.new .lawno{background:linear-gradient(100deg,#fff,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.new .lawtag{color:var(--cyan)}
+.row{display:contents}
+.row>div{padding:12px 22px;border-top:1px solid var(--line);font-size:18px;line-height:1.38;transition:background .25s}
+.row .lb{font:600 13.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-left:0;display:flex;align-items:center}
+.row .o{color:#8f98a7;background:rgba(255,255,255,.015)}
+.row .n{color:#eef1f6;background:rgba(63,208,255,.05);border-left:1px solid rgba(63,208,255,.25)}
+.row .ar{display:grid;place-items:center;color:var(--cyan);background:none}
+.row:hover>div.o{background:rgba(255,255,255,.04)}
+.row:hover>div.n{background:rgba(63,208,255,.12)}
+.row b{font-weight:600;color:#fff}
+.row .o b{color:#c3c9d3}
+.art{font:600 12.5px var(--mono);color:var(--cyan);opacity:.85;white-space:nowrap}
+.o .art{color:#7d8696}
+.stamp{position:absolute;font:900 22px var(--display);letter-spacing:.24em;color:var(--coral);border:2px solid var(--coral);padding:6px 14px;border-radius:6px;transform:rotate(-8deg);opacity:.75}
+.hdcell{position:relative}
+.big{font:900 30px var(--display);letter-spacing:-.01em}
+.o .big{color:#8b93a1;text-decoration:line-through;text-decoration-color:var(--coral);text-decoration-thickness:3px}
+.n .big{color:#fff}
+.takeaway{display:flex;gap:16px;align-items:center;padding:16px 20px;border-radius:14px;border:1px solid rgba(63,208,255,.3);
+  background:linear-gradient(90deg,rgba(63,208,255,.12),rgba(63,208,255,.02));font-size:19px;line-height:1.45}
+.takeaway b{color:#fff}
+.takeaway .k{font:600 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);white-space:nowrap}
 
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #475569;
-      margin-bottom: 3px;
-      display: flex;
-      justify-content: space-between;
-      flex-shrink: 0;
-    }
+/* Tres edades */
+.case{display:flex;gap:18px;align-items:center;font-size:19px;color:#c9d0db}
+.case .tag{font:600 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:var(--ink);padding:7px 11px;border-radius:7px}
+.ages{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;flex:1}
+.age{position:relative;border:1px solid var(--line);border-radius:22px;padding:24px 24px 22px;display:flex;flex-direction:column;gap:14px;
+  background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.012));backdrop-filter:blur(16px);
+  box-shadow:0 30px 90px -40px rgba(0,0,0,.9);transition:transform .35s, border-color .35s, box-shadow .35s}
+.age:hover{transform:translateY(-6px);border-color:rgba(63,208,255,.4);box-shadow:0 40px 100px -40px rgba(63,208,255,.35)}
+.age .yr{display:flex;align-items:baseline;gap:10px}
+.age .yr b{font:900 92px/0.85 var(--display);letter-spacing:-.05em}
+.age .yr span{font:600 15px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.age.hot{border-color:rgba(63,208,255,.45);box-shadow:0 0 0 1px rgba(63,208,255,.12),0 40px 110px -40px rgba(63,208,255,.55)}
+.age.hot .yr b{background:linear-gradient(180deg,#fff,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ph{border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;gap:5px}
+.ph .l{font:600 11.5px var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.ph .v{font-size:19.5px;line-height:1.42}
+.ph.a{background:rgba(255,255,255,.035);border:1px dashed rgba(255,255,255,.12)}
+.ph.a .l{color:#8b93a1}.ph.a .v{color:#9aa3b2}
+.ph.h{background:rgba(63,208,255,.07);border:1px solid rgba(63,208,255,.28)}
+.ph.h .l{color:var(--cyan)}.ph.h .v{color:#eef1f6}
+.verdict{margin-top:auto;display:flex;align-items:center;gap:10px;font:600 15px var(--body);padding-top:4px}
+.pill{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.pill.same{color:#c9d0db;border:1px solid var(--line)}
+.pill.chg{color:var(--bg);background:var(--cyan)}
+.pill.adj{color:#c6f6e3;border:1px solid rgba(47,214,154,.45)}
 
-    .box-container {
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 6px;
-      flex: 1;
-      overflow-y: auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      align-content: flex-start;
-      background: #fafafa;
-      -webkit-overflow-scrolling: touch;
-    }
 
-    .bank-theme {
-      background-color: #f8fafc;
-      border-style: dashed;
-      border-color: #94a3b8;
-    }
+/* Bento de roles */
+.bento{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;flex:1;min-height:0}
+.tile{position:relative;border:1px solid var(--line);border-radius:20px;padding:14px 18px;display:grid;grid-template-columns:1fr 1.35fr;grid-template-rows:auto 1fr;gap:10px 16px;
+  background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));backdrop-filter:blur(16px);transition:border-color .3s, box-shadow .3s, transform .3s}
+.tile:hover{border-color:rgba(63,208,255,.4);box-shadow:0 30px 90px -40px rgba(63,208,255,.45);transform:translateY(-3px)}
+.tile h4{grid-column:1/-1;display:flex;align-items:center;gap:12px;font:800 22px var(--display);letter-spacing:-.01em}
+.tile h4 .ic{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;color:var(--cyan);border:1px solid rgba(63,208,255,.35);background:rgba(63,208,255,.08)}
+.tile .ph .v{font-size:16.5px;line-height:1.42}
+.tile .ph{gap:6px}
 
-    .target-theme {
-      background-color: #ffffff;
-      border-color: #3b82f6;
-    }
 
-    .chip {
-      background: white;
-      border: 1px solid #94a3b8;
-      padding: 6px 9px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      line-height: 1.25;
-      user-select: none;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
+.legacy{margin-top:10px;font-size:16px;color:var(--muted)}
+.legacy b{color:var(--coral);font-weight:600}
+.ruler{display:grid;grid-template-columns:2fr 4fr 1fr;gap:6px}
+.seg{border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:6px;border:1px solid var(--line)}
+.ages2{display:flex;justify-content:space-around}
+.ages2 b{font:900 40px/1 var(--display);letter-spacing:-.02em}
+.seg .cap{font:600 12.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.seg.np{background:rgba(255,255,255,.03)}.seg.np b{color:#6f7787}.seg.np .cap{color:#8b93a1}
+.seg.rpj{background:linear-gradient(90deg,rgba(63,208,255,.22),rgba(63,208,255,.08));border-color:rgba(63,208,255,.5);box-shadow:0 20px 60px -25px rgba(63,208,255,.6)}
+.seg.rpj b{color:#fff}.seg.rpj .cap{color:var(--cyan)}
+.seg.ad{background:rgba(255,255,255,.03)}.seg.ad b{color:#6f7787}.seg.ad .cap{color:#8b93a1}
+.rnote{font-size:17px;color:#c9d0db;margin-top:-6px}
+.rnote b{color:#fff;font-weight:600}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;flex:1}
+.key{border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;
+  background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));transition:transform .3s,border-color .3s,box-shadow .3s}
+.key:hover{transform:translateY(-4px);border-color:rgba(63,208,255,.4);box-shadow:0 30px 80px -40px rgba(63,208,255,.5)}
+.key .ic{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;color:var(--cyan);border:1px solid rgba(63,208,255,.35);background:rgba(63,208,255,.08)}
+.key h5{font:800 25px/1.15 var(--display)}
+.key p{font-size:20px;line-height:1.45;color:#c9d0db}
+.key .art{margin-top:auto}
+.ph.g{background:rgba(47,214,154,.06);border:1px solid rgba(47,214,154,.28)}
+.ph.g .l{color:var(--emerald)}.ph.g .v{color:#dff7ee}
+.roles{display:grid;grid-template-columns:1.05fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;flex:1;min-height:0}
+.role{border:1px solid var(--line);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;
+  background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));transition:transform .3s,border-color .3s,box-shadow .3s}
+.role:hover{transform:translateY(-3px);border-color:rgba(63,208,255,.4);box-shadow:0 30px 80px -40px rgba(63,208,255,.5)}
+.role .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:var(--cyan);border:1px solid rgba(63,208,255,.35);background:rgba(63,208,255,.08)}
+.role h4{font:800 22px var(--display)}
+.role p{font-size:18.5px;line-height:1.42;color:#c9d0db}
+.role p b{color:#fff}
+.role .art{margin-top:auto}
+.role.police{grid-row:1/3;border-color:rgba(63,208,255,.5);background:linear-gradient(165deg,rgba(63,208,255,.18),rgba(63,208,255,.03));
+  box-shadow:0 0 0 1px rgba(63,208,255,.1),0 40px 110px -40px rgba(63,208,255,.6)}
+.role.police .ic.big{width:56px;height:56px;border-radius:16px;background:var(--cyan);color:var(--bg);box-shadow:0 0 30px rgba(63,208,255,.6)}
+.role.police .l{font:600 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-top:6px}
+.role.police h4{font-size:34px}
+.role.police ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.role.police li{font-size:20px;line-height:1.35;padding-left:22px;position:relative}
+.role.police li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:3px;background:var(--cyan)}
+.role.police .note{margin-top:auto;font-size:15px;color:#bfefff;border-top:1px solid rgba(63,208,255,.25);padding-top:10px}
 
-    .chip:active {
-      transform: scale(0.96);
-    }
 
-    .chip.placed {
-      background-color: #eff6ff;
-      border-color: #93c5fd;
-      color: var(--primary);
-    }
+.was{display:inline-flex;align-items:baseline;gap:8px;font-size:15px;line-height:1.35;color:#8b93a1}
+.was i{font:600 11px var(--mono);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);border:1px solid rgba(255,107,107,.4);padding:2px 6px;border-radius:5px;white-space:nowrap;transform:translateY(-1px)}
+.key .was,.role .was{margin-top:auto}
+.key .was+.art,.role .was+.art{margin-top:0}
+.age .was{margin-top:auto}
+.role.police .was{margin-top:auto}
+.role.police .was+.note{margin-top:0}
 
-    .chip.correct {
-      background-color: #dcfce7 !important;
-      border-color: var(--success) !important;
-      color: #15803d !important;
-    }
 
-    .chip.incorrect {
-      background-color: #fee2e2 !important;
-      border-color: var(--error) !important;
-      color: var(--error) !important;
-    }
+.was-strip{margin-top:-6px}
+.was-strip .was{font-size:17px}
+.flow{display:grid;grid-template-columns:1fr 34px 1.35fr 34px 1fr 34px 1fr;align-items:stretch;flex:1;min-height:0}
+.stage{position:relative;border:1px solid var(--line);border-radius:20px;padding:20px 20px;display:flex;flex-direction:column;gap:10px;
+  background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.012));backdrop-filter:blur(16px);transition:transform .3s,border-color .3s,box-shadow .3s}
+.stage:hover{transform:translateY(-4px);border-color:rgba(63,208,255,.45);box-shadow:0 30px 90px -40px rgba(63,208,255,.55)}
+.sic{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;color:var(--cyan);border:1px solid rgba(63,208,255,.4);background:rgba(63,208,255,.1)}
+.stage h4{font:800 25px/1.1 var(--display);letter-spacing:-.01em}
+.stage ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.stage li{font-size:18.5px;line-height:1.35;color:#d5dbe4;padding-left:18px;position:relative}
+.stage li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:2px;background:var(--cyan)}
+.stage li b,.stage p b{color:#fff}
+.stage p{font-size:18.5px;line-height:1.4;color:#d5dbe4}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1}
+.w{display:flex;flex-direction:column;justify-content:center;gap:3px;border-radius:12px;padding:12px 14px;border:1px solid rgba(63,208,255,.28);background:rgba(63,208,255,.07)}
+.w b{font-size:18.5px;font-weight:600;color:#fff}
+.w small{font:600 11.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.arrow{position:relative}
+.arrow::before{content:"";position:absolute;left:6px;right:6px;top:50%;height:2px;background:linear-gradient(90deg,rgba(63,208,255,.2),var(--cyan))}
+.arrow::after{content:"";position:absolute;right:4px;top:50%;width:9px;height:9px;border-top:2px solid var(--cyan);border-right:2px solid var(--cyan);transform:translateY(-50%) rotate(45deg)}
+.stage.dest{border-color:rgba(47,214,154,.5);background:linear-gradient(165deg,rgba(47,214,154,.16),rgba(47,214,154,.03));box-shadow:0 40px 100px -40px rgba(47,214,154,.5)}
+.stage.dest .sic{color:var(--bg);background:var(--emerald);border-color:var(--emerald);box-shadow:0 0 28px rgba(47,214,154,.55)}
+.stage.dest h4{font-size:27px}
+.nev{font:600 15px var(--body);color:#ffd0d0;border:1px solid rgba(255,107,107,.45);background:rgba(255,107,107,.1);border-radius:10px;padding:9px 12px}
+.stage .art{margin-top:auto}
+.donts{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-radius:14px;border:1px solid rgba(255,107,107,.35);background:linear-gradient(90deg,rgba(255,107,107,.12),rgba(255,107,107,.02))}
+.donts .k{font:600 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin-right:6px}
+.dn{display:inline-flex;align-items:center;gap:7px;font-size:17px;color:#ffe3e3}
+.dn svg{color:var(--coral)}
+.dn+.dn{padding-left:12px;border-left:1px solid rgba(255,107,107,.25)}
 
-    .footer-actions {
-      flex-shrink: 0;
-      padding-top: 4px;
-    }
 
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+.prhead{display:grid;grid-template-columns:1fr 560px;gap:28px;align-items:end}
+.goal{border-radius:16px;padding:14px 18px;border:1px solid rgba(47,214,154,.45);background:linear-gradient(120deg,rgba(47,214,154,.16),rgba(47,214,154,.03));display:flex;flex-direction:column;gap:6px}
+.goal .l{font:600 11.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--emerald)}
+.goal .v{font-size:19px;line-height:1.4;color:#e6fbf3}.goal b{color:#fff}
+.prgrid{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr 1fr;gap:12px;flex:1;min-height:0}
+.pr{border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;flex-direction:column;gap:6px;
+  background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));transition:transform .3s,border-color .3s,box-shadow .3s}
+.pr:hover{transform:translateY(-4px);border-color:rgba(63,208,255,.45);box-shadow:0 30px 80px -40px rgba(63,208,255,.55)}
+.pr .inc{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+.pr h5{font:800 21px/1.1 var(--display);letter-spacing:-.01em}
+.pr .q{font-size:15px;line-height:1.38;color:#aab2c0}
+.pr .st{margin-top:auto;border-radius:11px;padding:9px 11px;background:rgba(63,208,255,.08);border:1px solid rgba(63,208,255,.28);display:flex;flex-direction:column;gap:3px}
+.pr .st .l{font:600 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.pr .st .v{font-size:16px;line-height:1.36;color:#fff}
+.tucu{display:flex;flex-wrap:nowrap;align-items:center;gap:7px;padding:10px 14px;border-radius:14px;border:1px solid rgba(255,107,107,.3);background:rgba(255,107,107,.05)}
+.tucu .k{font:600 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin-right:6px}
+.tucu .c{font-size:14px;white-space:nowrap;color:#ffe3e3;border:1px solid rgba(255,107,107,.3);border-radius:999px;padding:5px 11px}
 
-    .btn-primary {
-      background-color: var(--primary);
-      color: white;
-    }
 
-    .btn-secondary {
-      background-color: #e2e8f0;
-      color: #334155;
-    }
+.rolesl{--ac:var(--cyan);--acs:rgba(63,208,255,.10);--acb:rgba(63,208,255,.38)}
+.rolesl.r-ofi{--ac:#ffb547;--acs:rgba(255,181,71,.10);--acb:rgba(255,181,71,.4)}
+.rolesl h2 em{color:var(--ac)}
+.rolesl .kicker{color:var(--ac)}.rolesl .kicker i{background:var(--ac)}
+.rhead{display:flex;align-items:center;gap:26px}
+.rbadge{display:flex;align-items:center;gap:14px;padding:14px 20px 14px 14px;border-radius:20px;border:1px solid var(--acb);background:linear-gradient(140deg,var(--acs),rgba(255,255,255,.01));box-shadow:0 30px 80px -40px var(--ac)}
+.rbadge svg{width:56px;height:56px;padding:12px;border-radius:15px;background:var(--ac);color:var(--bg)}
+.rbadge span{display:flex;flex-direction:column}
+.rbadge small{font:600 11.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.rbadge b{font:900 32px/1.05 var(--display);letter-spacing:-.02em;white-space:nowrap}
+.phases{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;flex:1;min-height:0}
+.phases .arrow::before{background:linear-gradient(90deg,transparent,var(--ac))}
+.phases .arrow::after{border-color:var(--ac)}
+.phs{border:1px solid var(--line);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;
+  background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.012));transition:transform .3s,border-color .3s,box-shadow .3s}
+.phs:hover{transform:translateY(-4px);border-color:var(--acb);box-shadow:0 30px 90px -40px var(--ac)}
+.phs .pt{font:600 11.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ac)}
+.phs h4{font:800 30px var(--display);letter-spacing:-.01em}
+.phs ul{list-style:none;display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.phs li{padding-left:24px;font-size:22px;line-height:1.36;color:#d5dbe4;padding-left:20px;position:relative}
+.phs li::before{content:"";position:absolute;left:0;top:.45em;width:9px;height:9px;border-radius:3px;border:2px solid var(--ac)}
+.phs li b{color:#fff}
+.rfoot{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+.rfoot .donts{flex-wrap:wrap;row-gap:8px}
+.rkey{display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:14px;border:1px solid var(--acb);background:var(--acs);font-size:16.5px;line-height:1.4}
+.rkey .k{font:600 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ac);white-space:nowrap}
+.rkey b{color:#fff}
 
-    /* Modal Registro */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.65);
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 100;
-    }
 
-    .modal-content {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-    }
+.routehead{display:grid;grid-template-columns:1fr 760px;gap:28px;align-items:center}
+.nocom{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nocom>div{border-radius:22px;padding:16px 22px;justify-content:center;display:flex;flex-direction:column;gap:2px}
+.nocom span{font:600 13px var(--mono);letter-spacing:.2em;text-transform:uppercase}
+.nocom b{font:900 70px/1 var(--display);letter-spacing:-.03em}
+.nocom .no{border:2px solid rgba(255,107,107,.6);background:rgba(255,107,107,.1)}
+.nocom .no span{color:var(--coral)}
+.nocom .no b{color:#ffb3b3;text-decoration:line-through;text-decoration-color:var(--coral);text-decoration-thickness:6px}
+.nocom .yes{border:2px solid var(--emerald);background:linear-gradient(140deg,rgba(47,214,154,.28),rgba(47,214,154,.06));box-shadow:0 0 60px -10px rgba(47,214,154,.55)}
+.nocom .yes span{color:var(--emerald)}
+.nocom .yes b{color:#fff;font-size:92px}
+.nocom small{grid-column:1/-1;font:600 14px var(--mono);letter-spacing:.08em;color:var(--muted);text-align:center}
+.route{display:grid;grid-template-columns:1.15fr 34px 1.1fr 34px 1fr 34px .8fr;flex:1;min-height:0}
+.rn{border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:8px;
+  background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.012));transition:transform .3s,border-color .3s,box-shadow .3s}
+.rn:hover{transform:translateY(-4px);border-color:rgba(63,208,255,.45);box-shadow:0 30px 90px -40px rgba(63,208,255,.55)}
+.rn .pt{font:600 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-top:4px}
+.rn h4{font:800 28px/1.1 var(--display)}
+.rn p{font-size:22px;line-height:1.4;color:#d5dbe4}.rn p b{color:#fff}
+.rn p.small{font-size:18px;color:var(--muted)}
+.rcv{display:flex;flex-direction:column;gap:7px}
+.rcv span{font-size:19.5px;color:#c9d0db;padding:8px 12px;border-radius:10px;border:1px solid rgba(63,208,255,.25);background:rgba(63,208,255,.06)}
+.rcv b{color:#fff;font-weight:600}
+.lvl{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:5px;font-size:19.5px;line-height:1.38;color:#d5dbe4}
+.lvl b{color:#fff}
+.lvl .lt{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.lvl.l1{border:1px solid rgba(63,208,255,.3);background:rgba(63,208,255,.07)}.lvl.l1 .lt{color:var(--cyan)}
+.lvl.l3{border:1px solid rgba(255,107,107,.4);background:rgba(255,107,107,.08)}.lvl.l3 .lt{color:var(--coral)}
+.rn.dest{border-color:var(--emerald);background:linear-gradient(165deg,rgba(47,214,154,.2),rgba(47,214,154,.03));box-shadow:0 40px 100px -40px rgba(47,214,154,.6)}
+.rn.dest .sic{color:var(--bg);background:var(--emerald);border-color:var(--emerald)}
+.rn.dest .pt{color:var(--emerald)}
+.rn.dest h4{font-size:72px;letter-spacing:-.03em}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1;min-height:0}
+.rule{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);
+  background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.012));transition:transform .3s,box-shadow .3s}
+.rule:hover{transform:translateY(-5px)}
+.rule .ric{width:64px;height:64px;border-radius:18px;display:grid;place-items:center}
+.rule h4{font:800 32px/1.1 var(--display);letter-spacing:-.01em}
+.rule .big2{font-size:28px;line-height:1.35;color:#e6eaf0}.rule .big2 b{color:#fff}
+.rule ul{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.rule li{font-size:22px;line-height:1.38;color:#c9d0db;padding-left:20px;position:relative}
+.rule li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:2px}
+.rule .art{margin-top:auto}
+.rule.ok{border-color:rgba(63,208,255,.45)}.rule.ok .ric{color:var(--bg);background:var(--cyan);box-shadow:0 0 30px rgba(63,208,255,.5)}
+.rule.ok li::before{background:var(--cyan)}.rule.ok:hover{box-shadow:0 30px 90px -40px rgba(63,208,255,.6)}
+.rule.ban{border-color:rgba(255,107,107,.45);background:linear-gradient(165deg,rgba(255,107,107,.1),rgba(255,107,107,.015))}
+.rule.ban .ric{color:#fff;background:var(--coral);box-shadow:0 0 30px rgba(255,107,107,.45)}
+.rule.ban li::before{background:var(--coral)}.rule.ban:hover{box-shadow:0 30px 90px -40px rgba(255,107,107,.6)}
 
-    .modal input {
-      width: 100%;
-      padding: 10px;
-      border: 1.5px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.95rem;
-      margin: 12px 0;
-      text-transform: uppercase;
-    }
+.tg{display:inline-block;font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:999px;white-space:nowrap}
+.tg.eq{color:#d6dbe3;border:1px solid rgba(255,255,255,.25)}
+.tg.add{color:#ffd0d0;border:1px solid rgba(255,107,107,.5);background:rgba(255,107,107,.1)}
+.tg.tuc{color:var(--bg);background:var(--coral)}
+.tg.apl{color:#c6f6e3;border:1px solid rgba(47,214,154,.5);background:rgba(47,214,154,.08)}
+.tg.fed{color:#bfefff;border:1px dashed rgba(63,208,255,.55)}
+.tg.nac{color:var(--bg);background:var(--cyan)}
+.duo{display:grid;grid-template-columns:1fr 60px 1fr;align-items:stretch}
+.dl{border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.dl .l{font:600 12.5px var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.dl h3{font:900 46px/1 var(--display);letter-spacing:-.02em}
+.dl p{font-size:20px;line-height:1.45;color:#d5dbe4}.dl p b{color:#fff}
+.dl.nat{border:1px solid rgba(63,208,255,.45);background:linear-gradient(150deg,rgba(63,208,255,.16),rgba(63,208,255,.02))}
+.dl.nat .l,.dl.nat h3 b{color:var(--cyan)}
+.dl.tuc{border:1px solid rgba(255,107,107,.45);background:linear-gradient(150deg,rgba(255,107,107,.14),rgba(255,107,107,.02))}
+.dl.tuc .l,.dl.tuc h3 b{color:var(--coral)}
+.plus{display:grid;place-items:center;font:900 48px var(--display);color:var(--muted)}
+.when{display:grid;grid-template-columns:170px repeat(3,1fr);gap:14px;align-items:stretch;flex:1}
+.wk{font:800 22px/1.15 var(--display);display:flex;align-items:center}
+.wc{border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.035);transition:transform .3s,border-color .3s}
+.wc:hover{transform:translateY(-4px);border-color:rgba(47,214,154,.5)}
+.wl{font:800 25px var(--display)}
+.wv{font-size:18px;color:var(--muted)}
+.wa{margin-top:auto;font-size:21px;line-height:1.4;color:#c6f6e3;border-top:1px solid var(--line);padding-top:10px}
+.wa i{font-style:normal;color:var(--muted)}
+.legend{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.legend .k{font:600 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.ctab{display:flex;flex-direction:column;flex:1;min-height:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.02)}
+.chd,.cr{display:grid;grid-template-columns:190px 1fr 1fr 200px}
+.chd>div{padding:12px 18px;font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04)}
+.chd .n{color:var(--cyan)}.chd .t{color:var(--coral)}
+.cr{flex:1;border-top:1px solid var(--line);transition:background .25s}
+.cr:hover{background:rgba(255,255,255,.04)}
+.cr>div{padding:10px 18px;display:flex;align-items:center;font-size:17.5px;line-height:1.38}
+.ct{font:800 19px/1.2 var(--display)!important}
+.cn{color:#d5dbe4;border-left:2px solid rgba(63,208,255,.35);display:block!important;align-self:center}
+.cu{color:#eef1f6;border-left:2px solid rgba(255,107,107,.4);display:block!important;align-self:center}
+.cu b,.cn b{color:#fff}
+.cr .art{margin-left:6px}
+.ixhead{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:end}
+.ixctl{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.srch{display:flex;align-items:center;gap:10px;width:520px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted)}
+.srch:focus-within{border-color:var(--cyan)}
+.srch input{flex:1;background:none;border:0;outline:0;color:var(--ink);font:400 17px var(--body)}
+.flt{display:flex;gap:6px}
+.flt button{font:600 14px var(--body);color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.flt button[aria-pressed="true"]{color:var(--bg);background:var(--ink);border-color:var(--ink)}
+.flt button.pol[aria-pressed="true"]{background:var(--cyan);border-color:var(--cyan)}
+.flt button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.ixlist{flex:1;min-height:0;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;align-content:start;gap:8px;padding-right:6px}
+.ixlist::-webkit-scrollbar{width:8px}.ixlist::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:8px}
+.ix{display:grid;grid-template-columns:auto auto 1fr;grid-template-rows:auto auto;column-gap:10px;row-gap:3px;align-items:center;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.ix.hot{border-color:rgba(63,208,255,.4);background:rgba(63,208,255,.06)}
+.ix .ia{font:600 14px var(--mono);color:#fff;white-space:nowrap}
+.ix .it{font:800 17px var(--display)}
+.ix .id{grid-column:1/-1;font-size:16px;line-height:1.38;color:#c9d0db}
+.ix .tg{grid-column:1/-1;justify-self:start}
+.lb{font:600 11px var(--mono);letter-spacing:.06em;padding:4px 7px;border-radius:6px;white-space:nowrap}
+.lb.n{color:var(--bg);background:var(--cyan)}.lb.p{color:var(--bg);background:var(--coral)}.lb.c{color:var(--bg);background:#ffb547}
+.ixfoot{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted)}
+.ixfoot .lg{display:flex;gap:8px;align-items:center}
+.none{color:var(--muted);font-size:18px;padding:20px}
+.cons{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cs{border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;border:1px solid rgba(255,107,107,.35);background:linear-gradient(160deg,rgba(255,107,107,.12),rgba(255,107,107,.015));transition:transform .3s,box-shadow .3s}
+.cs:hover{transform:translateY(-4px);box-shadow:0 30px 90px -40px rgba(255,107,107,.6)}
+.cs .cl{font:600 11.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--coral)}
+.cs h4{font:900 30px/1.05 var(--display);letter-spacing:-.02em}
+.cs p{font-size:17.5px;line-height:1.42;color:#e3e7ee}.cs p b{color:#fff}
+.cs p.r{margin-top:auto;color:#ffd0d0;font-weight:600}
+.errs{flex:1;min-height:0;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.eh,.er{display:grid;grid-template-columns:1fr 1.25fr}
+.eh>div{padding:10px 18px;font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04)}
+.er{flex:1;border-top:1px solid var(--line)}
+.er>div{padding:10px 18px;display:flex;align-items:center;gap:10px;font-size:18px;line-height:1.38}
+.er>div:first-child{color:#ffe3e3;font-weight:600}.er>div:first-child svg{color:var(--coral);flex:none}
+.er>div:last-child{color:#d5dbe4;border-left:1px solid var(--line)}
+.er:hover{background:rgba(255,107,107,.06)}
+.clhead{display:flex;justify-content:space-between;align-items:flex-end}
+.prog{display:flex;align-items:baseline;gap:8px;padding:10px 20px;border-radius:16px;border:1px solid rgba(47,214,154,.4);background:rgba(47,214,154,.08)}
+.prog b{font:900 54px/1 var(--display);color:var(--emerald)}.prog span{font-size:18px;color:var(--muted)}
+.cklist{display:grid;grid-template-columns:1fr 1fr 1fr;grid-auto-rows:1fr;gap:12px;flex:1}
+.ck{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.035);cursor:pointer;font-size:22px;line-height:1.35;transition:all .25s}
+.ck:hover{border-color:rgba(47,214,154,.5)}
+.ck input{position:absolute;opacity:0;width:1px;height:1px}
+.ck .bx{flex:none;width:30px;height:30px;border-radius:9px;border:2px solid rgba(47,214,154,.6);display:grid;place-items:center;transition:all .25s}
+.ck input:checked+.bx{background:var(--emerald);border-color:var(--emerald)}
+.ck input:checked+.bx::after{content:"";width:9px;height:15px;border:solid var(--bg);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-2px)}
+.ck:has(input:checked){border-color:rgba(47,214,154,.55);background:rgba(47,214,154,.1)}
+.ck input:focus-visible+.bx{outline:2px solid var(--emerald);outline-offset:3px}
+.final{padding:18px 24px;border-radius:18px;text-align:center;font:800 26px/1.3 var(--display);letter-spacing:-.01em;border:1px solid rgba(47,214,154,.45);background:linear-gradient(90deg,rgba(47,214,154,.05),rgba(47,214,154,.18),rgba(47,214,154,.05))}
+.final b{color:var(--emerald)}
+.sc.done .final{box-shadow:0 0 80px -10px rgba(47,214,154,.6)}
 
-    /* Ranking */
-    .ranking-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-      font-size: 0.8rem;
-    }
+/* Controles */
+.ctl{position:fixed;bottom:16px;z-index:40;display:flex;gap:8px;right:16px}
+.ctl button{font:600 13px var(--body);color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:9px 12px;cursor:pointer;backdrop-filter:blur(8px)}
+.ctl button:hover{background:rgba(255,255,255,.12)}
+.ctl button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.ctl{opacity:.18;transition:opacity .3s}
+.ctl:hover,.ctl:focus-within{opacity:1}
 
-    .ranking-table th, .ranking-table td {
-      border: 1px solid var(--border);
-      padding: 6px 8px;
-      text-align: left;
-    }
-
-    .ranking-table th {
-      background-color: #f1f5f9;
-      color: var(--primary);
-    }
-  </style>
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide.on{transition:none}
+  .pulse{animation:none}
+}
+</style>
 </head>
 <body>
+<div id="viewport">
+  <div id="stage">
+    <canvas id="fx" aria-hidden="true"></canvas>
 
-  <div class="app-container" id="gameScreen">
-    <div class="header-compact">
-      <h1>Acta Policial</h1>
-      <div class="timer" id="timerDisplay">00:00</div>
-    </div>
+    <header class="hdr">
+            <div class="org"><b>Policía de Tucumán</b><span>Capacitación · Régimen Penal Juvenil</span></div>
+      <nav class="tabs" id="tabs" aria-label="Módulos"></nav>
+    </header>
 
-    <!-- Banco de Palabras -->
-    <div class="panel-section">
-      <div class="section-label">
-        <span>Palabras Disponibles</span>
-        <span id="bankCount">0</span>
+    <!-- ================= DIAPOSITIVA 1 · PORTADA ================= -->
+    <section class="slide" data-module="Portada" aria-label="Portada">
+      <div class="big14" aria-hidden="true">14</div>
+      <div class="cover">
+        <div class="c-left">
+          <img class="cover-logo" src="assets/escudo-policia.png" alt="Escudo de la Policía de Tucumán">
+          <span class="eyebrow"><i></i>Curso de capacitación · 2026</span>
+          <h1><span class="grad">Régimen Penal Juvenil</span><br>y actuación policial</h1>
+          <p class="sub">Qué cambia para el personal policial desde el primer contacto con un adolescente de 14 a 17 años.</p>
+          <div class="laws">
+            <span class="chip n">Ley Nacional 27.801</span>
+            <span class="chip t">Ley Provincial 10.011</span>
+            <span class="chip p">Protocolo de Jefatura de Policía</span>
+          </div>
+          <div class="meta">
+            <span>Destinado a <b>Oficiales · Suboficiales · Cadetes del IESP</b></span>
+          </div>
+          <div class="meta">
+            <span><b>San Miguel de Tucumán</b> · Noviembre 2026</span>
+          </div>
+        </div>
+
+        <div class="c-right">
+          <div class="chain" role="group" aria-label="El policía en el proceso penal juvenil">
+            <h3>El recorrido de un caso</h3>
+            <div class="step key">
+              <div class="dot pulse"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+              <div><div class="t">Intervención policial</div><div class="d">Edad · derechos · aviso · resguardo · reserva de identidad</div></div>
+              <span class="badge">Primer eslabón</span>
+            </div>
+            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></div><div><div class="t">Ministerio Público Fiscal</div><div class="d">Investiga y acusa</div></div></div>
+            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14"/><path d="M5 8l-3 6a3 3 0 006 0L5 8zM19 8l-3 6a3 3 0 006 0l-3-6z"/></svg></div><div><div class="t">Juez Penal de NNyA</div><div class="d">Controla garantías, juzga y decide</div></div></div>
+            <div class="step"><div class="dot"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h5a3 3 0 000-6h-2a3 3 0 010-6h5"/></svg></div><div><div class="t">Ejecución y supervisor</div><div class="d">Cumplimiento de medidas y penas</div></div></div>
+            <p class="quote">Lo que se hace bien o mal en la intervención policial condiciona todo lo que sigue.</p>
+          </div>
+        </div>
       </div>
-      <div class="box-container bank-theme" id="bankBox"></div>
-    </div>
+    </section>
 
-    <!-- Redacción del Acta -->
-    <div class="panel-section">
-      <div class="section-label">
-        <span>Acta en Redacción (Tu orden)</span>
-        <span id="targetCount">0 / 31</span>
+    <!-- ================= LA LEY NUEVA ================= -->
+    <section class="slide" data-module="La ley nueva" aria-label="Ley 27.801: a quién se aplica">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>Ley Nacional 27.801 · vigente desde el 05/09/2026</span>
+          <h2 style="margin-top:12px">Una ley nueva para adolescentes de <em>14 a 17 años</em></h2>
+          <p class="legacy">Reemplaza a la Ley 22.278 de 1980, que quedó <b>derogada</b>. Desde ahora se trabaja solo con la ley nueva.</p>
+        </div>
+
+        <div class="ruler" role="img" aria-label="Escala de edades: hasta 13 años no punible; de 14 a 17 Régimen Penal Juvenil; desde 18 adultos">
+          <div class="seg np"><span class="ages2"><b>12</b><b>13</b></span><span class="cap">No punible · protección de derechos</span></div>
+          <div class="seg rpj"><span class="ages2"><b>14</b><b>15</b><b>16</b><b>17</b></span><span class="cap">Régimen Penal Juvenil · Ley 27.801</span></div>
+          <div class="seg ad"><span class="ages2"><b>18</b></span><span class="cap">Adultos</span></div>
+        </div>
+        <p class="rnote">Desde los 14 años hasta las <b>0 horas del día en que cumple 18</b>. La edad se toma <b>al momento del hecho</b>. <span class="art">arts. 1 y 2</span> <span class="was"><i>Antes</i>Desde los 16.</span></p>
+
+        <div class="keys">
+          <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M6 20V9M10 20V9M14 20V9M18 20V9M3 9l9-5 9 5"/></svg></span><h5>Cualquier delito</h5><p>Responde por cualquier hecho del Código Penal o de leyes penales especiales.</p><span class="was"><i>Antes</i>Solo desde los 16, y no por delitos leves.</span><span class="art">art. 1</span></article>
+          <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><h5>Garantías desde el primer acto</h5><p>Abogado defensor y derecho a no declarar desde el inicio.</p><span class="was"><i>Antes</i>Modelo tutelar: el juez decidía sobre el menor.</span><span class="art">art. 5 inc. c</span></article>
+          <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 6.1A9.8 9.8 0 0112 6c5 0 9 6 9 6a17 17 0 01-3.2 3.8M6.1 7.9A16.7 16.7 0 003 12s4 6 9 6a9 9 0 004-.9"/></svg></span><h5>Identidad reservada</h5><p>Prohibido difundir nombre, apodo, foto, domicilio o familia.</p><span class="was"><i>Antes</i>Ya regía por Ley 20.056: se mantiene.</span><span class="art">art. 5 inc. i</span></article>
+          <article class="key"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4v-4h4v-4h4V8h4"/></svg></span><h5>El encierro es el último recurso</h5><p>Primero penas alternativas. Máximo 15 años; perpetua prohibida.</p><span class="was"><i>Antes</i>Sin tope propio de pena.</span><span class="art">arts. 12 y 19</span></article>
+        </div>
+        <div class="takeaway"><span class="k">Idea clave</span><span>Un adolescente de 14 a 17 años que comete un delito es un <b>imputado con todas las garantías</b>. La actuación policial es la <b>base de ese proceso</b>.</span></div>
       </div>
-      <div class="box-container target-theme" id="targetBox"></div>
-    </div>
+    </section>
 
-    <div class="footer-actions">
-      <button class="btn btn-primary" onclick="openFinishModal()">Finalizar y Entregar</button>
-    </div>
+    <section class="slide" data-module="La ley nueva" aria-label="Mismo hecho, tres edades">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>En la práctica</span>
+          <h2 style="margin-top:12px">Mismo hecho, tres edades: <em>¿qué corresponde?</em></h2>
+        </div>
+        <div class="case"><span class="tag">El hecho</span><span>Le arrebatan el celular a una persona en la vía pública, con empujones. Hay tres adolescentes involucrados.</span></div>
+        <div class="ages">
+          <article class="age">
+            <div class="yr"><b>13</b><span>años</span></div>
+            <span class="pill same" style="align-self:flex-start">No punible</span>
+            <div class="ph h"><span class="l">Qué corresponde</span><span class="v">Queda fuera del régimen penal. El hecho se investiga igual y se da intervención a los organismos de protección de derechos.</span></div>
+            <div class="ph g"><span class="l">Atención</span><span class="v">No se le aplican medidas ni penas de la Ley 27.801.</span></div><span class="was"><i>Antes</i>No punible. Sin cambios.</span>
+          </article>
+          <article class="age hot">
+            <div class="yr"><b>15</b><span>años</span></div>
+            <span class="pill chg" style="align-self:flex-start">Punible</span>
+            <div class="ph h"><span class="l">Qué corresponde</span><span class="v">Es imputado en un proceso penal juvenil: aviso a la justicia, información de sus derechos y defensor desde el primer acto.</span></div>
+            <div class="ph g"><span class="l">Atención</span><span class="v">Es el gran cambio de la ley: a esta edad ya responde penalmente.</span></div><span class="was"><i>Antes</i>No punible.</span>
+          </article>
+          <article class="age">
+            <div class="yr"><b>17</b><span>años</span></div>
+            <span class="pill chg" style="align-self:flex-start">Punible</span>
+            <div class="ph h"><span class="l">Qué corresponde</span><span class="v">Mismo proceso penal juvenil, con las mismas garantías que el de 15 años.</span></div>
+            <div class="ph g"><span class="l">Atención</span><span class="v">Si cumple 18 durante el proceso, sigue en el régimen juvenil: cuenta la edad del día del hecho.</span></div><span class="was"><i>Antes</i>Punible, con pena recién después de los 18.</span>
+          </article>
+        </div>
+        <div class="takeaway"><span class="k">Para el procedimiento</span><span>Verificar la edad con <b>DNI o partidas</b>. Si no se puede comprobar, <b>se presume que es menor</b>. <span class="art">art. 2</span></span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="La ley nueva" aria-label="Quién hace qué en el proceso">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>Quién hace qué en el proceso</span>
+          <h2 style="margin-top:12px">Cada actor tiene <em>un rol definido</em></h2>
+        </div>
+        <div class="roles">
+          <article class="role police">
+            <span class="ic big"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <span class="l">Primer contacto</span>
+            <h4>Policía</h4>
+            <ul>
+              <li>Verifica la edad</li>
+              <li>Da aviso a la justicia</li>
+              <li>Informa sus derechos</li>
+              <li>Resguarda al adolescente: nunca con adultos ni en comisaría</li>
+              <li>Preserva la prueba y la reserva de identidad</li>
+            </ul>
+            <span class="was"><i>Antes</i>Daba intervención al juez de menores.</span><span class="note">Actúa bajo la dirección del fiscal.</span>
+          </article>
+          <article class="role"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span><h4>Fiscal especializado</h4><p><b>Investiga y acusa.</b> Pide medidas de coerción, decide salidas alternativas y arma el Plan de Reinserción.</p><span class="was"><i>Antes</i>Papel secundario.</span><span class="art">art. 38 · arts. 399 a 404 CPP</span></article>
+          <article class="role"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14"/><path d="M5 8l-3 6a3 3 0 006 0L5 8zM19 8l-3 6a3 3 0 006 0l-3-6z"/></svg></span><h4>Juez Penal de NNyA</h4><p><b>Controla garantías y juzga.</b> La pena la decide otro juez, y solo un juez puede modificarla.</p><span class="was"><i>Antes</i>El juez de menores decidía todo.</span><span class="art">art. 60 LOPJ · art. 404 CPP</span></article>
+          <article class="role"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v5M12 12l-6 5M12 12l6 5"/></svg></span><h4>Coordinación</h4><p>La OGA comunica en <b>3 días</b> a la Autoridad de Aplicación. Salud, Educación, Seguridad, Trabajo y Desarrollo Social tienen deberes concretos.</p><span class="was"><i>Antes</i>Derivación a institutos de minoridad.</span><span class="art">arts. 14 a 19 y 25 · Ley 10.011</span></article>
+          <article class="role"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 12l2 2 4-4"/></svg></span><h4>Cumplimiento</h4><p><b>Supervisor</b> con entrevistas semanales e informes mensuales. Plan individual (PITP) en <b>30 días</b>.</p><span class="was"><i>Antes</i>Tratamiento tutelar, sin plazos.</span><span class="art">art. 23 · art. 30 Ley 10.011</span></article>
+        </div>
+        <div class="takeaway"><span class="k">Idea clave</span><span>La <b>policía abre</b> el caso, el <b>fiscal lo dirige</b>, el <b>juez garantiza y decide</b> y el <b>supervisor controla</b> el cumplimiento.</span></div>
+      </div>
+    </section>
+
+    <!-- ================= PROCEDIMIENTO POLICIAL ================= -->
+    <section class="slide" data-module="Procedimiento policial" aria-label="Cómo debe actuar la policía">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>Procedimiento policial con un adolescente de 14 a 17 años</span>
+          <h2 style="margin-top:12px">Qué hacer, <em>en este orden</em></h2>
+        </div>
+        <div class="was-strip"><span class="was"><i>Antes</i>Se daba aviso al juez de menores y el menor quedaba a su disposición o se lo entregaba a sus padres.</span></div>
+
+        <div class="flow">
+          <article class="stage">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <h4>Lugar del hecho</h4>
+            <ul>
+              <li>Preservar la escena y la prueba</li>
+              <li>Verificar la edad con DNI o partidas</li>
+              <li>Informarle sus derechos, en lenguaje claro</li>
+              <li>Reservar su identidad</li>
+            </ul>
+          </article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="stage wide">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></span>
+            <h4>Comunicar de inmediato</h4>
+            <div class="who">
+              <span class="w"><b>MPF Tucumán</b><small>Fiscal que dirige</small></span>
+              <span class="w"><b>Juez Penal de NNyA</b><small>Ex juez de menores</small></span>
+              <span class="w"><b>Ministerio Pupilar</b><small>Ministerio de menores</small></span>
+              <span class="w"><b>Padres o responsables</b><small>Adulto referente</small></span>
+            </div>
+          </article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="stage">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg></span>
+            <h4>Centro asistencial</h4>
+            <ul>
+              <li>Examen médico</li>
+              <li><b>En presencia de los padres</b> o responsables</li>
+              <li>Dejar constancia en las actuaciones</li>
+            </ul>
+          </article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="stage dest">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span>
+            <h4>Alojamiento en el CAD</h4>
+            <p>Centro de Admisión y Derivación de Tucumán.</p>
+            <span class="nev">Nunca en comisaría ni con adultos</span>
+            <span class="art">art. 402 inc. 9 CPP · art. 5 inc. k</span>
+          </article>
+        </div>
+
+        <div class="donts">
+          <span class="k">Nunca</span>
+          <span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Alojarlo en comisaría o dependencia policial</span>
+          <span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Ponerlo junto a mayores de edad</span>
+          <span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Tomarle declaración sin defensor</span>
+          <span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Difundir nombre, foto o datos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRINCIPIOS RECTORES ================= -->
+    <section class="slide" data-module="Principios rectores" aria-label="Principios rectores">
+      <div class="sc" style="gap:14px;padding-top:28px">
+        <div class="prhead">
+          <div>
+            <span class="kicker"><i></i>Principios rectores · Ley 27.801</span>
+            <h2 style="margin-top:12px">Las reglas que <em>se respetan siempre</em></h2>
+          </div>
+          <div class="goal"><span class="l">Finalidad de la ley · art. 4</span><span class="v">Que el adolescente <b>se haga responsable</b> de sus actos y logre <b>educarse e integrarse</b> a la sociedad.</span></div>
+        </div>
+        <div class="was-strip"><span class="was"><i>Antes</i>Modelo tutelar: el menor era objeto de protección, sin estas garantías escritas.</span></div>
+        <div class="prgrid">
+          <article class="pr"><span class="inc">Art. 5 inc. a</span><h5>Legalidad</h5><p class="q">Solo medidas previstas en la ley.</p><div class="st"><span class="l">En la calle</span><span class="v">Cada restricción debe tener base legal. Nada improvisado.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. b</span><h5>Mínima intervención</h5><p class="q">La medida debe ser necesaria, proporcional y la menos lesiva.</p><div class="st"><span class="l">En la calle</span><span class="v">Fuerza y restricciones solo si son indispensables.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. c</span><h5>Defensa</h5><p class="q">Abogado desde el inicio, imputación clara y derecho a callar.</p><div class="st"><span class="l">En la calle</span><span class="v">Decirle en palabras simples qué se le atribuye y que puede no declarar. No interrogarlo.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. f · g</span><h5>Respeto y dignidad</h5><p class="q">Trato digno y sin discriminación.</p><div class="st"><span class="l">En la calle</span><span class="v">Sin insultos, apodos ni malos tratos. El mismo trato para todos.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. h</span><h5>Celeridad</h5><p class="q">Juicio en plazo razonable, sin demoras.</p><div class="st"><span class="l">En la calle</span><span class="v">Actuaciones completas y rápidas: la demora perjudica el proceso.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. i</span><h5>Reserva de identidad</h5><p class="q">Prohibido difundir nombre, foto o datos.</p><div class="st"><span class="l">En la calle</span><span class="v">No sacar fotos ni dar datos a la prensa o redes. Se sanciona.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. j</span><h5>Privación de libertad</h5><p class="q">Solo por orden fundada del juez, ante riesgo procesal.</p><div class="st"><span class="l">En la calle</span><span class="v">Comunicar de inmediato para que el juez decida si sigue privado de libertad.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. k</span><h5>Lugar de alojamiento</h5><p class="q">En dependencias especiales y nunca con adultos.</p><div class="st"><span class="l">En la calle</span><span class="v">Al CAD. Nunca a la comisaría ni con mayores.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. l</span><h5>Padres informados</h5><p class="q">Los padres o responsables deben conocer el hecho y el proceso.</p><div class="st"><span class="l">En la calle</span><span class="v">Ubicar y avisar a los padres o responsables.</span></div></article>
+          <article class="pr"><span class="inc">Art. 5 inc. n</span><h5>Víctima y sociedad</h5><p class="q">Protección de la víctima, su familia y la seguridad pública.</p><div class="st"><span class="l">En la calle</span><span class="v">Asistir a la víctima y resguardar su información.</span></div></article>
+        </div>
+        <div class="tucu"><span class="k">Tucumán suma · art. 394 CPP</span>
+          <span class="c">Oralidad</span><span class="c">Desformalización</span><span class="c">Interés superior del niño</span><span class="c">Mínima intervención</span><span class="c">Especialidad</span><span class="c">Justicia restaurativa</span><span class="c">Perspectiva de género</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="Suboficial y Oficial" aria-label="Suboficial">
+      <div class="sc rolesl r-sub">
+        <div class="rhead">
+          <span class="rbadge"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/></svg><span><small>Cómo actúa</small><b>Suboficial</b></span></span>
+          <div>
+            <span class="kicker"><i></i>Primer contacto en el lugar del hecho</span>
+            <h2 style="margin-top:10px">Llega primero: <em>protege, verifica y avisa</em></h2>
+          </div>
+        </div>
+        <div class="was-strip"><span class="was"><i>Antes</i>Lo trasladaba a la dependencia y se esperaba la decisión del juez de menores.</span></div>
+        <div class="phases"><article class="phs"><span class="pt">Al llegar</span><h4>En el lugar</h4><ul><li>Asistir a la víctima y garantizar la seguridad</li><li>Preservar la escena y la prueba</li><li>Aprehender solo si es flagrancia, con la fuerza mínima indispensable</li></ul></article><span class="arrow" aria-hidden="true"></span><article class="phs"><span class="pt">Durante la intervención</span><h4>Con el adolescente</h4><ul><li>Verificar la edad con DNI. Si hay duda, <b>tratarlo como menor</b></li><li>Decirle en palabras simples por qué interviene y que <b>no está obligado a declarar</b></li><li>Trato respetuoso: sin insultos, apodos ni exhibición</li></ul></article><span class="arrow" aria-hidden="true"></span><article class="phs"><span class="pt">Antes de trasladar</span><h4>Avisar y registrar</h4><ul><li>Avisar de inmediato al <b>oficial a cargo</b></li><li>Anotar hora, lugar, testigos y lo que se secuestró</li><li>Trasladarlo separado de adultos, según lo que indique el oficial</li></ul></article></div>
+        <div class="rfoot">
+          <div class="donts"><span class="k">Nunca</span><span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Interrogarlo</span><span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Sacarle fotos o difundir datos</span><span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Ponerlo con mayores</span><span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Dejarlo en la comisaría</span></div>
+          <div class="rkey"><span class="k">Idea clave</span><span>Lo que el suboficial ve, preserva y anota en los primeros minutos es la <b>base de todo el proceso</b>.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="Suboficial y Oficial" aria-label="Oficial instructor">
+      <div class="sc rolesl r-ofi">
+        <div class="rhead">
+          <span class="rbadge"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span><small>Cómo actúa</small><b>Oficial instructor</b></span></span>
+          <div>
+            <span class="kicker"><i></i>Quien instruye la causa bajo la dirección del fiscal</span>
+            <h2 style="margin-top:10px">Toma el control: <em>comunica, documenta y resguarda</em></h2>
+          </div>
+        </div>
+        <div class="was-strip"><span class="was"><i>Antes</i>Daba aviso al juez de menores, que decidía qué hacer con el menor.</span></div>
+        <div class="phases"><article class="phs"><span class="pt">De inmediato</span><h4>Comunicar</h4><ul><li><b>MPF Tucumán</b>: recibir las directivas del fiscal</li><li><b>Juez Penal de NNyA</b> y <b>Ministerio Pupilar</b></li><li><b>Defensor</b> y <b>padres o responsables</b></li><li>Dejar constancia de hora y destinatario de cada aviso</li></ul></article><span class="arrow" aria-hidden="true"></span><article class="phs"><span class="pt">En las actuaciones</span><h4>Documentar</h4><ul><li>Acta de procedimiento detallada</li><li>Constancia de lectura de derechos</li><li>Acreditación de la edad. Si hay duda, pedir informes por el fiscal</li><li>Secuestros con cadena de custodia</li></ul></article><span class="arrow" aria-hidden="true"></span><article class="phs"><span class="pt">Hasta el CAD</span><h4>Resguardar</h4><ul><li>Examen médico <b>en presencia de los padres</b></li><li>Traslado y alojamiento en el <b>CAD</b></li><li>Identidad reservada en todas las actuaciones</li><li>Elevar lo actuado al fiscal <b>sin demora</b></li></ul></article></div>
+        <div class="rfoot">
+          <div class="donts"><span class="k">Nunca</span><span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Tomarle declaración: solo ante el fiscal y con defensor</span><span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Alojarlo en comisaría</span><span class="dn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Demorar las comunicaciones</span></div>
+          <div class="rkey"><span class="k">Idea clave</span><span>El oficial responde por la <b>legalidad del procedimiento</b>: un error en las actuaciones puede hacer caer la causa.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RUTA ================= -->
+    <section class="slide" data-module="Ruta y reglas" aria-label="Ruta de comunicaciones y traslado">
+      <div class="sc" style="gap:16px">
+        <div class="routehead">
+          <div>
+            <span class="kicker"><i></i>Ruta de comunicaciones y traslado</span>
+            <h2 style="margin-top:10px">Del móvil al CAD, <em>sin escalas</em></h2>
+            <div class="was-strip" style="margin-top:10px"><span class="was"><i>Antes</i>Se lo trasladaba a la dependencia policial.</span></div>
+          </div>
+          <div class="nocom" role="img" aria-label="No a la comisaría, sí al CAD: adolescentes de 14 a 17 años">
+            <div class="no"><span>No</span><b>Comisaría</b></div>
+            <div class="yes"><span>Sí</span><b>CAD</b></div>
+            <small>Adolescentes de 14 a 17 años · art. 402 inc. 9 CPP</small>
+          </div>
+        </div>
+
+        <div class="route">
+          <article class="rn">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 16l1.5-5a2 2 0 012-1.5h7a2 2 0 012 1.5L19 16"/><rect x="3" y="16" width="18" height="4" rx="1.5"/><path d="M10 6h4M12 4v2"/></svg></span><span class="pt">Desde el móvil</span><h4>Comunicar a</h4>
+            <div class="rcv">
+              <span><b>MPF Tucumán</b> fiscal de turno</span>
+              <span><b>Juez Penal de NNyA</b></span>
+              <span><b>Ministerio Pupilar</b></span>
+              <span><b>Padres</b> o responsables</span>
+              <span><b>Defensor</b></span>
+            </div>
+          </article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="rn">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><span class="pt">Durante el traslado</span><h4>Sujeción</h4>
+            <div class="lvl l1"><span class="lt">Regla</span><span><b>Precinto</b>, evaluando el comportamiento y la condición del adolescente y del procedimiento.</span></div>
+            <div class="lvl l3"><span class="lt">Última instancia</span><span><b>Esposas</b>, solo si corre peligro el procedimiento.</span></div>
+          </article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="rn">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg></span><span class="pt">Siempre, después de comunicar</span><h4>Centro asistencial público</h4>
+            <p>Examen médico <b>acompañado de sus padres o del defensor</b>.</p>
+            <p class="small">Dejar constancia del examen en las actuaciones.</p>
+          </article>
+          <span class="arrow" aria-hidden="true"></span>
+          <article class="rn dest">
+            <span class="sic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span><span class="pt">Destino</span><h4>CAD</h4>
+            <p>Centro de Admisión y Derivación de Tucumán.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="Ruta y reglas" aria-label="Tres reglas que no se negocian">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>En todo el procedimiento</span>
+          <h2 style="margin-top:12px">Tres reglas que <em>no se negocian</em></h2>
+        </div>
+        <div class="rules">
+          <article class="rule ok">
+            <span class="ric"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h3"/></svg></span>
+            <h4>Presunción de minoridad</h4>
+            <p class="big2">Si no se puede acreditar la edad, <b>se presume que es menor</b>.</p>
+            <ul><li>Acreditar con DNI o partidas</li><li>Si no hay documento, informes o peritajes por el fiscal</li><li>Mientras tanto, se lo trata como menor</li></ul>
+            <span class="art">art. 2 Ley 27.801 · art. 393 CPP</span>
+          </article>
+          <article class="rule ban">
+            <span class="ric"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M9 5h6l1.5 2H20a1 1 0 011 1v9M17 19H4a1 1 0 01-1-1V8a1 1 0 011-1h3"/><circle cx="12" cy="13" r="3"/></svg></span>
+            <h4>Prohibido fotografiar y difundir datos</h4>
+            <p class="big2">Ni fotos ni videos, <b>por ningún medio</b>.</p>
+            <ul><li>Nombre, apodo, domicilio, familia o cualquier dato que lo identifique</li><li>Ni a la prensa, ni a redes, ni a grupos de mensajería</li><li>El incumplimiento se sanciona (Ley 20.056)</li></ul>
+            <span class="art">art. 5 inc. i Ley 27.801</span>
+          </article>
+          <article class="rule ban">
+            <span class="ric"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a3 3 0 013 3v5a3 3 0 01-6 0V6a3 3 0 013-3z"/><path d="M5 11a7 7 0 0014 0M12 18v3"/><path d="M3 3l18 18"/></svg></span>
+            <h4>Prohibido tomarle declaraciones</h4>
+            <p class="big2">Ninguna declaración: <b>ni espontánea ni de ningún tipo</b>.</p>
+            <ul><li>No preguntarle sobre el hecho</li><li>Tiene derecho a guardar silencio</li><li>Solo declara ante el fiscal y con su defensor</li></ul>
+            <span class="art">art. 5 inc. c Ley 27.801</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NACIÓN Y TUCUMÁN ================= -->
+    <section class="slide" data-module="Nación y Tucumán" aria-label="Cómo se combinan las dos leyes">
+      <div class="sc">
+        <div><span class="kicker"><i></i>Ley Nacional 27.801 y Ley Provincial 10.011</span>
+        <h2 style="margin-top:12px">Dos leyes que <em>se usan juntas</em></h2></div>
+        <div class="duo">
+          <article class="dl nat"><span class="l">Ley Nacional 27.801</span><h3>Fija el <b>qué</b></h3>
+            <p>A quién se aplica, principios, penas y sus límites. Rige en <b>todo el país</b>, siempre.</p>
+            <span class="tg fed">Ojo: arts. 37 a 47 son para la justicia nacional y federal</span></article>
+          <span class="plus" aria-hidden="true">+</span>
+          <article class="dl tuc"><span class="l">Ley Provincial 10.011</span><h3>Fija el <b>cómo</b></h3>
+            <p>Cómo se investiga, se juzga y se cumple la pena <b>en Tucumán</b>. Reforma el CPP (arts. 393 a 407) y la Ley Orgánica del Poder Judicial.</p></article>
+        </div>
+        <div class="when">
+          <span class="wk">¿Cuándo uso cada una?</span>
+          <article class="wc"><span class="wl">Delito común en Tucumán</span><span class="wv">Robo, lesiones, amenazas…</span><span class="wa">27.801 <i>(fondo)</i> + CPP Tucumán arts. 393 a 407</span></article>
+          <article class="wc"><span class="wl">Delito federal</span><span class="wv">Contrabando, moneda falsa…</span><span class="wa">27.801 completa, incluidos arts. 37 a 47 + CPP Federal</span></article>
+          <article class="wc"><span class="wl">Cumplimiento de la pena</span><span class="wv">Supervisor, plan, instituto</span><span class="wa">27.801 + Ley 10.011 arts. 1 a 53</span></article>
+        </div>
+        <div class="legend"><span class="k">Cómo leer las comparaciones</span>
+          <span class="tg eq">Igual</span><span class="tg add">Tucumán agrega</span><span class="tg tuc">Solo Tucumán</span><span class="tg apl">Tucumán la aplica</span><span class="tg fed">Justicia federal</span></div>
+      </div>
+    </section>
+    <section class="slide" data-module="Nación y Tucumán" aria-label="Comparación · Ámbito, principios y víctima">
+      <div class="sc" style="gap:14px">
+        <div><span class="kicker"><i></i>Comparación · Ámbito, principios y víctima</span><h2 style="margin-top:10px;font-size:42px">A quién se aplica y <em>qué reglas valen siempre</em></h2></div>
+        <div class="ctab">
+          <div class="chd"><div>Tema</div><div class="n">Ley Nacional 27.801</div><div class="t">Tucumán · Ley 10.011 y CPP</div><div>Relación</div></div>
+          <div class="cr"><div class="ct">Edad</div><div class="cn">Desde los 14 hasta las 0 h del día que cumple 18. <span class="art">art. 1</span></div><div class="cu">La misma franja. <span class="art">art. 393 CPP</span></div><div class="cg"><span class="tg eq">Igual</span></div></div><div class="cr"><div class="ct">Duda sobre la edad</div><div class="cn">Se presume menor. <span class="art">art. 2</span></div><div class="cu">Se presume menor <b>o no punible</b> hasta confirmarla. <span class="art">art. 393 CPP</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div><div class="cr"><div class="ct">Principios</div><div class="cn">14 garantías: defensa, reserva, proporcionalidad… <span class="art">art. 5</span></div><div class="cu">Suma oralidad, justicia restaurativa, género. <span class="art">art. 394 CPP</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div><div class="cr"><div class="ct">Defensa</div><div class="cn">Abogado desde el primer acto; asesoría tutelar. <span class="art">art. 5 c y n</span></div><div class="cu">Defensa + Ministerio Pupilar en todas las etapas; defensorías de niñez. <span class="art">art. 394 · art. 57</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div><div class="cr"><div class="ct">Derechos vulnerados</div><div class="cn">No lo regula.</div><div class="cu">Derivación inmediata a la Autoridad Proteccional. <span class="art">art. 395 CPP</span></div><div class="cg"><span class="tg tuc">Solo Tucumán</span></div></div><div class="cr"><div class="ct">Víctima</div><div class="cn">Juez y fiscal la protegen; padres responden civilmente. <span class="art">arts. 6 y 7</span></div><div class="cu">Es oída antes de decisiones clave. <b>No puede querellar</b>. <span class="art">art. 396 CPP</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div>
+        </div>
+        <div class="takeaway"><span class="k">En la práctica</span><span>Para la edad y los principios, las dos leyes dicen lo mismo. Tucumán <b>agrega</b> la presunción de no punibilidad y la derivación proteccional.</span></div>
+      </div>
+    </section>
+    <section class="slide" data-module="Nación y Tucumán" aria-label="Comparación · Intervención y medidas durante el proceso">
+      <div class="sc" style="gap:14px">
+        <div><span class="kicker"><i></i>Comparación · Intervención y medidas durante el proceso</span><h2 style="margin-top:10px;font-size:42px">Lo que más <em>impacta en el trabajo policial</em></h2></div>
+        <div class="ctab">
+          <div class="chd"><div>Tema</div><div class="n">Ley Nacional 27.801</div><div class="t">Tucumán · Ley 10.011 y CPP</div><div>Relación</div></div>
+          <div class="cr"><div class="ct">Alojamiento</div><div class="cn">Dependencias especiales, nunca con adultos. <span class="art">art. 5 k</span></div><div class="cu"><b>Prohibido en comisarías</b> y dependencias policiales. <span class="art">art. 402 inc. 9 CPP</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div><div class="cr"><div class="ct">Privación de libertad</div><div class="cn">Solo por auto fundado en riesgo procesal. <span class="art">art. 5 j</span></div><div class="cu">Provisional y excepcional, último recurso. <span class="art">art. 402 CPP</span></div><div class="cg"><span class="tg eq">Igual</span></div></div><div class="cr"><div class="ct">Medidas de coerción</div><div class="cn">Solo por fuga u obstaculización. <span class="art">art. 39</span></div><div class="cu">9 medidas de menor a mayor; máximo 6 meses + 6. <span class="art">art. 402 CPP</span></div><div class="cg"><span class="tg fed">Justicia federal</span></div></div><div class="cr"><div class="ct">Reserva de identidad</div><div class="cn">Prohibido difundir datos; sanción Ley 20.056. <span class="art">art. 5 i</span></div><div class="cu">Confidencialidad y legajo reservado. <span class="art">art. 396 CPP · art. 27</span></div><div class="cg"><span class="tg eq">Igual</span></div></div><div class="cr"><div class="ct">Monitoreo electrónico</div><div class="cn">Es una pena posible. <span class="art">art. 12 g</span></div><div class="cu">Seguridad lo instala y controla, <b>sin contactos policiales innecesarios</b>. <span class="art">art. 17</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div><div class="cr"><div class="ct">Juez competente</div><div class="cn">Jueces, fiscales y defensores especializados. <span class="art">art. 38</span></div><div class="cu">Juez Penal de NNyA, <b>aunque participe un adulto</b>. <span class="art">art. 60 LOPJ</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div>
+        </div>
+        <div class="takeaway"><span class="k">En la práctica</span><span>En Tucumán la regla es más estricta que la nacional: el adolescente <b>no puede quedar en una comisaría</b>, ni siquiera de forma transitoria.</span></div>
+      </div>
+    </section>
+    <section class="slide" data-module="Nación y Tucumán" aria-label="Comparación · Salidas sin juicio">
+      <div class="sc" style="gap:14px">
+        <div><span class="kicker"><i></i>Comparación · Salidas sin juicio</span><h2 style="margin-top:10px;font-size:42px">¿Se puede <em>terminar el caso sin juicio?</em></h2></div>
+        <div class="ctab">
+          <div class="chd"><div>Tema</div><div class="n">Ley Nacional 27.801</div><div class="t">Tucumán · Ley 10.011 y CPP</div><div>Relación</div></div>
+          <div class="cr"><div class="ct">Archivo</div><div class="cn">No lo prevé.</div><div class="cu">Lo piden fiscal o defensa antes del debate. <span class="art">art. 398 CPP</span></div><div class="cg"><span class="tg tuc">Solo Tucumán</span></div></div><div class="cr"><div class="ct">Criterio de oportunidad</div><div class="cn">Pena máxima hasta 6 años, sin muerte ni violencia grave. <span class="art">art. 41</span></div><div class="cu">Insignificancia, mínima culpabilidad o daño sufrido. <span class="art">art. 399 CPP</span></div><div class="cg"><span class="tg fed">Justicia federal</span></div></div><div class="cr"><div class="ct">Remisión</div><div class="cn">No la prevé.</div><div class="cu">A programas comunitarios, con acuerdo de víctima y fiscal. <span class="art">art. 400 CPP</span></div><div class="cg"><span class="tg tuc">Solo Tucumán</span></div></div><div class="cr"><div class="ct">Mediación</div><div class="cn">Hasta 6 años; la víctima debe aceptar; el fiscal puede vetar. <span class="art">art. 42</span></div><div class="cu">Mismas condiciones, hasta la etapa intermedia. <span class="art">art. 401 CPP</span></div><div class="cg"><span class="tg fed">Justicia federal</span></div></div><div class="cr"><div class="ct">Suspensión a prueba</div><div class="cn">Pena mínima hasta 3 años; de 1 a 3 años de prueba. <span class="art">art. 43</span></div><div class="cu">El nuevo título del CPP no la menciona.</div><div class="cg"><span class="tg fed">Justicia federal</span></div></div>
+        </div>
+        <div class="takeaway"><span class="k">En la práctica</span><span>En causas de la justicia de Tucumán se usan los <b>arts. 398 a 401 del CPP</b>. Los arts. 41 a 43 nacionales son para la justicia nacional y federal.</span></div>
+      </div>
+    </section>
+    <section class="slide" data-module="Nación y Tucumán" aria-label="Comparación · Juicio, penas y cumplimiento">
+      <div class="sc" style="gap:14px">
+        <div><span class="kicker"><i></i>Comparación · Juicio, penas y cumplimiento</span><h2 style="margin-top:10px;font-size:42px">Del juicio <em>al cumplimiento de la pena</em></h2></div>
+        <div class="ctab">
+          <div class="chd"><div>Tema</div><div class="n">Ley Nacional 27.801</div><div class="t">Tucumán · Ley 10.011 y CPP</div><div>Relación</div></div>
+          <div class="cr"><div class="ct">Juicio</div><div class="cn">Lo regula cada provincia; en lo federal, CPP Federal. <span class="art">art. 47</span></div><div class="cu">Dos etapas: responsabilidad → plan ≥ 1 año → <b>otro juez</b> fija la pena. <span class="art">art. 404 CPP</span></div><div class="cg"><span class="tg tuc">Solo Tucumán</span></div></div><div class="cr"><div class="ct">Penas</div><div class="cn">9 penas; reemplazo de prisión; máx. 15 años; sin perpetua. <span class="art">arts. 11 a 21</span></div><div class="cu">Son las de la ley nacional: no las cambia.</div><div class="cg"><span class="tg apl">Tucumán la aplica</span></div></div><div class="cr"><div class="ct">Supervisor</div><div class="cn">Lo designa el juez; entrevistas semanales, informes mensuales. <span class="art">art. 23</span></div><div class="cu">Cuerpo judicial nombrado por la Corte; el juez lo asigna. <span class="art">arts. 8 a 13</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div><div class="cr"><div class="ct">Plan de ejecución</div><div class="cn">Informe trimestral del instituto. <span class="art">art. 34</span></div><div class="cu">PITP en 30 días hábiles; informe inicial en 15. <span class="art">arts. 25 a 34</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div><div class="cr"><div class="ct">Deberes del Estado</div><div class="cn">No lo regula.</div><div class="cu">La falta de cupos no se le carga al joven. <span class="art">art. 14</span></div><div class="cg"><span class="tg tuc">Solo Tucumán</span></div></div><div class="cr"><div class="ct">Al cumplir 18</div><div class="cn">Pasa a adultos; puede quedarse hasta fin de año. <span class="art">art. 30</span></div><div class="cu">Igual, con autorización judicial y protocolo 90 días antes. <span class="art">arts. 24 y 45</span></div><div class="cg"><span class="tg add">Tucumán agrega</span></div></div>
+        </div>
+        <div class="takeaway"><span class="k">En la práctica</span><span>La pena y sus límites los fija <b>la Nación</b>. Quién la impone, cómo se controla y dónde se cumple lo fija <b>Tucumán</b>.</span></div>
+      </div>
+    </section>
+    <section class="slide" data-module="Nación y Tucumán" aria-label="Consulta artículo por artículo">
+      <div class="sc" style="gap:14px">
+        <div class="ixhead">
+          <div><span class="kicker"><i></i>Consulta artículo por artículo</span><h2 style="margin-top:10px;font-size:42px">Cada artículo, <em>en una línea</em></h2></div>
+          <div class="ixctl">
+            <label class="srch" for="ixq"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><input id="ixq" type="search" placeholder="Buscar: comisaría, edad, víctima…" autocomplete="off"></label>
+            <div class="flt" role="group" aria-label="Filtrar por ley">
+              <button data-f="all" aria-pressed="true">Todas</button>
+              <button data-f="n" aria-pressed="false">Ley 27.801</button>
+              <button data-f="p" aria-pressed="false">Ley 10.011</button>
+              <button data-f="c" aria-pressed="false">CPP Tucumán</button>
+              <button data-f="pol" aria-pressed="false" class="pol">Clave para la policía</button>
+            </div>
+          </div>
+        </div>
+        <div class="ixlist" id="ixlist" tabindex="0" aria-label="Lista de artículos"></div>
+        <div class="ixfoot"><span id="ixcount"></span><span class="lg"><span class="lb n">27.801</span>Nación <span class="lb p">10.011</span>Tucumán <span class="lb c">CPP</span>Código Procesal de Tucumán <span class="tg fed">Justicia federal</span></span></div>
+      </div>
+    </section>
+    <!-- ================= CONCIENTIZACIÓN ================= -->
+    <section class="slide" data-module="El buen proceder" aria-label="Las consecuencias de un mal procedimiento">
+      <div class="sc" style="gap:16px">
+        <div><span class="kicker" style="color:var(--coral)"><i style="background:var(--coral)"></i>Por qué importa el buen proceder</span>
+        <h2 style="margin-top:10px">Un error en el procedimiento <em style="color:var(--coral)">tiene consecuencias</em></h2></div>
+        <div class="cons">
+          <article class="cs"><span class="cl">Para la causa</span><h4>Se puede caer</h4><p>Un acto hecho sin las garantías puede ser <b>declarado nulo</b>, y con él la prueba que depende de ese acto.</p><p class="r">La víctima se queda sin respuesta.</p></article>
+          <article class="cs"><span class="cl">Para el policía</span><h4>Responsabilidad legal</h4><p>Difundir la identidad se sanciona (Ley 20.056). Un abuso en la detención puede encuadrar en delitos de funcionario (arts. 144 bis y 248 CP).</p><p class="r">La responsabilidad es personal.</p></article>
+          <article class="cs"><span class="cl">Para la institución</span><h4>Sanción administrativa</h4><p>Sumario administrativo y sanciones disciplinarias según el régimen policial.</p><p class="r">Afecta la carrera y la imagen de la Policía.</p></article>
+        </div>
+        <div class="errs">
+          <div class="eh"><div>Si se hace esto…</div><div>…pasa esto</div></div>
+          <div class="er"><div><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Se lo aloja en una comisaría</div><div>Viola el art. 402 inc. 9 CPP: planteo inmediato de la defensa y sumario.</div></div>
+          <div class="er"><div><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Se le toma declaración, aunque sea espontánea</div><div>Viola el derecho de defensa (art. 5 c): puede ser nula y perjudicar la causa.</div></div>
+          <div class="er"><div><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Se sube una foto o un dato a un grupo o red</div><div>Viola la reserva (art. 5 i): sanción de la Ley 20.056 y sumario.</div></div>
+          <div class="er"><div><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Se demoran los avisos al fiscal o a los padres</div><div>Pone en duda la legalidad de la aprehensión y la actuación policial.</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" data-module="El buen proceder" aria-label="Lista de control antes de cerrar el procedimiento">
+      <div class="sc">
+        <div class="clhead"><div><span class="kicker" style="color:var(--emerald)"><i style="background:var(--emerald)"></i>Antes de cerrar el procedimiento</span>
+        <h2 style="margin-top:10px">Lista de control <em style="color:var(--emerald)">del buen proceder</em></h2></div>
+        <div class="prog"><b id="ckn">0</b><span>de 9</span></div></div>
+        <div class="cklist" id="cklist"><label class="ck"><input type="checkbox"><span class="bx"></span><span>Verifiqué la edad o apliqué la presunción de minoridad</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Comuniqué al MPF, al Juez de NNyA, al Ministerio Pupilar, a los padres y al defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Le informé sus derechos en palabras simples</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No le tomé ninguna declaración</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Usé precinto y evalué; esposas solo como última instancia</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Pasó por el centro asistencial público con sus padres o defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Lo alojé en el CAD, nunca en la comisaría</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No hay fotos ni datos difundidos</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Las actas registran horas, avisos y secuestros</span></label></div>
+        <div class="final"><span>Un procedimiento bien hecho protege a <b>la víctima</b>, al <b>adolescente</b> y <b>al policía</b>.</span></div>
+      </div>
+    </section>
   </div>
+</div>
 
-  <!-- Modal de Calificación y Envío -->
-  <div class="modal" id="finishModal">
-    <div class="modal-content">
-      <h2 style="font-size: 1.1rem; color: var(--primary);">¡Párrafo Completado!</h2>
-      <p style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Ingresa tu Apellido y Nombre para registrar tu calificación.</p>
-      
-      <input type="text" id="cadetName" placeholder="APELLIDO Y NOMBRES" required>
-      
-      <button class="btn btn-primary" id="submitBtn" onclick="submitEvaluation()">Enviar Evaluación</button>
-      <button class="btn btn-secondary" onclick="closeModal()" style="margin-top: 6px;">Seguir Editando</button>
-    </div>
-  </div>
+<div class="ctl">
+  <button id="prev" aria-label="Diapositiva anterior">←</button>
+  <button id="next" aria-label="Diapositiva siguiente">→</button>
+  <button id="fsb">Pantalla completa</button>
+</div>
 
-  <!-- Pantalla Final y Ranking -->
-  <div class="app-container" id="rankingScreen" style="display: none; overflow-y: auto;">
-    <div class="header-compact">
-      <h1>Resultado de Evaluación</h1>
-    </div>
-    <p id="userScoreDisplay" style="font-size: 1rem; font-weight: 700; margin-top: 6px; text-align: center;"></p>
+<script>
+(()=>{
+  const stage=document.getElementById('stage');
+  const slides=[...document.querySelectorAll('.slide')];
+  const tabs=document.getElementById('tabs');
+    let i=0;
 
-    <div class="section-label" style="margin-top: 10px;">Tabla de Posiciones</div>
-    <div style="flex: 1; overflow-y: auto;">
-      <table class="ranking-table" id="rankingTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Cadete</th>
-            <th>Puntos</th>
-            <th>Tiempo</th>
-          </tr>
-        </thead>
-        <tbody id="rankingBody"></tbody>
-      </table>
-    </div>
-  </div>
+  // Escalado del lienzo 1600x900
+  function fit(){
+    const s=Math.min(innerWidth/1600, innerHeight/900);
+    stage.style.transform=`scale(${s})`;
+  }
+  addEventListener('resize',fit); fit();
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTUTsYG4jYlm5q5xTP0pZpQYUgTuqzC9rDE3PhASyAO_DB3v0_Q77qUBBI5Ml-r82rpw/exec";
+  // Tabs por módulo (primer slide de cada módulo)
+  const modules=[];
+  slides.forEach((s,idx)=>{const m=s.dataset.module; if(!modules.find(x=>x.name===m)) modules.push({name:m,idx});});
+  modules.forEach((m,k)=>{
+    const b=document.createElement('button');b.className='tab';
+    b.textContent=m.name;
+    b.onclick=()=>go(m.idx);tabs.appendChild(b);
+  });
 
-    const correctSequence = [
-      "ACTA PARA DOCUMENTAR PROCEDIMIENTO:",
-      "En la CIUDAD de",
-      "San Miguel de Tucumán,",
-      "Departamento Capital,",
-      "Provincia de Tucumán,",
-      "República Argentina,",
-      "a los 28 días",
-      "del mes de Agosto",
-      "del año 2026,",
-      "siendo las 14:45 horas,",
-      "quien suscribe,",
-      "Oficial Auxiliar",
-      "PONCE SERGIO EDGARDO,",
-      "Legajo Personal N° 28.450,",
-      "con prestación de servicios en",
-      "Comisaría Seccional 1°",
-      "y en el mismo cumpliendo las funciones de",
-      "Oficial de Servicio,",
-      "secundado en este acto por el",
-      "Cabo Primero",
-      "TESEIRA ROQUE FRANCO JESUS,",
-      "Legajo Personal N° 34.120,",
-      "con funciones de",
-      "Chofer / Auxiliar de Guardia,",
-      "ambos pertenecientes al",
-      "Departamento General de Policía,",
-      "conforme al Artículo 107 “FORMAS”",
-      "del C.P.P.T.,",
-      "redacto la presente",
-      "a los fines y efectos legales",
-      "de dejar debidamente documentado lo siguiente:"
-    ];
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+    const mod=slides[i].dataset.module;
+    [...tabs.children].forEach((b,k)=>b.setAttribute('aria-current',modules[k].name===mod));
+    try{ if(location.hash!=='#s'+(i+1)) history.replaceState(null,'','#s'+(i+1)); }catch(e){}
+  }
+  const fromHash=()=>{const m=location.hash.match(/^#s(\d+)$/);return m?+m[1]-1:0};
+  addEventListener('hashchange',()=>go(fromHash()));
+  go(fromHash());
 
-    let seconds = 0;
-    let timerInterval = setInterval(() => {
-      seconds++;
-      const min = String(Math.floor(seconds / 60)).padStart(2, '0');
-      const sec = String(seconds % 60).padStart(2, '0');
-      document.getElementById('timerDisplay').textContent = `${min}:${sec}`;
-    }, 1000);
+  addEventListener('keydown',e=>{
+    if(e.target.closest&&e.target.closest('input,textarea,.ixlist'))return;
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1)}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
+    if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+    if(e.key==='f'||e.key==='F')toggleFs();
+  });
+  document.getElementById('prev').onclick=()=>go(i-1);
+  document.getElementById('next').onclick=()=>go(i+1);
+  function toggleFs(){
+    try{
+      if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{});}
+      else{document.exitFullscreen().catch(()=>{});}
+    }catch(e){}
+  }
+  document.getElementById('fsb').onclick=toggleFs;
+  document.addEventListener('fullscreenchange',()=>document.body.classList.toggle('fs',!!document.fullscreenElement));
 
-    const bankBox = document.getElementById('bankBox');
-    const targetBox = document.getElementById('targetBox');
 
-    function init() {
-      bankBox.innerHTML = '';
-      targetBox.innerHTML = '';
-      const shuffled = [...correctSequence].sort(() => Math.random() - 0.5);
-      shuffled.forEach(text => {
-        const chip = document.createElement('div');
-        chip.classList.add('chip');
-        chip.textContent = text;
-        chip.dataset.text = text;
-        chip.onclick = () => moveToTarget(chip);
-        bankBox.appendChild(chip);
-      });
-      updateCounts();
+  // Índice artículo por artículo
+  (function(){
+    const D=[{"l": "n", "a": "Art. 1", "t": "Objeto", "d": "Régimen para adolescentes de 14 a 17 años imputados de un delito.", "s": "all", "p": 1}, {"l": "n", "a": "Art. 2", "t": "Presunción de edad", "d": "Edad al momento del hecho; DNI o partidas; si hay duda, se presume menor.", "s": "all", "p": 1}, {"l": "n", "a": "Art. 3", "t": "Supletoriedad", "d": "El Código Penal se aplica en lo que no contradiga esta ley.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 4", "t": "Finalidad", "d": "Responsabilidad, educación, resocialización e integración.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 5", "t": "Principios y garantías", "d": "Legalidad, defensa, reserva, plazo razonable, alojamiento sin adultos, aviso a padres (incs. a–n).", "s": "all", "p": 1}, {"l": "n", "a": "Art. 6", "t": "Protección de la víctima", "d": "Juez y fiscal velan por los derechos de las víctimas.", "s": "all", "p": 1}, {"l": "n", "a": "Art. 7", "t": "Derechos de la víctima", "d": "La víctima conserva sus derechos; los padres responden civilmente.", "s": "all", "p": 1}, {"l": "n", "a": "Art. 8", "t": "Medidas complementarias", "d": "Escuela, oficio, salud, tratamiento, trabajo, no consumir (a–j).", "s": "all", "p": 0}, {"l": "n", "a": "Art. 9", "t": "Custodia", "d": "Si la familia no es adecuada, ámbitos alternativos u organismos de niñez.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 10", "t": "Control de las medidas", "d": "Control judicial; si incumple, se ejecuta la pena o sigue el proceso.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 11", "t": "Reemplazo de la prisión", "d": "Obligatorio hasta 3 años; posible de 3 a 10 con requisitos.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 12", "t": "Catálogo de penas", "d": "Amonestación, prohibiciones, servicios comunitarios, monitoreo, reparación, privación de libertad.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 13", "t": "Amonestación", "d": "La hace el juez en persona, en audiencia privada, junto con otra pena.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 14", "t": "Límites de las prohibiciones", "d": "No pueden cortar vínculos, estudio, trabajo ni salud.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 15", "t": "Duración", "d": "Las penas b) a g) no superan 3 años.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 16", "t": "Control de cumplimiento", "d": "Control periódico; si incumple, privación de libertad.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 17", "t": "Privación de libertad", "d": "En domicilio, instituto abierto o especializado; resolución fundada.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 18", "t": "Otras medidas", "d": "Siempre con medidas de educación y trabajo.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 19", "t": "Máximo y perpetua", "d": "Máximo 15 años; prohibida la perpetua; a los 2/3 puede seguir sin encierro.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 20", "t": "Penas combinadas", "d": "Varias medidas y penas, a la vez o sucesivas.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 21", "t": "Incumplimiento", "d": "Incumplimiento injustificado: pena más severa.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 22", "t": "Prescripción", "d": "Se suspende por cuestiones previas, mediación o salud mental.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 23", "t": "Supervisor", "d": "Lo designa el juez; entrevistas semanales e informes mensuales.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 24", "t": "Inimputables", "d": "No reciben sanciones, pero el hecho se sigue investigando.", "s": "all", "p": 1}, {"l": "n", "a": "Art. 25", "t": "Determinar la inimputabilidad", "d": "Antes: peritajes, informe ambiental y equipo interdisciplinario.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 26", "t": "Responsabilidad civil", "d": "Queda a salvo ante los tribunales civiles.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 27", "t": "Lugar de alojamiento", "d": "Instituto adecuado con personal capacitado.", "s": "all", "p": 1}, {"l": "n", "a": "Art. 28", "t": "Dirección", "d": "El lugar lo dirige personal capacitado.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 29", "t": "Características", "d": "La detención se orienta a la educación y la reinserción.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 30", "t": "Condiciones de detención", "d": "Sin contacto con adultos; a los 18 pasa a adultos.", "s": "all", "p": 1}, {"l": "n", "a": "Art. 31", "t": "Atención de salud", "d": "Médica y psicológica; salidas solo con orden judicial salvo urgencia.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 32", "t": "Formación laboral", "d": "Derecho a capacitación y talleres.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 33", "t": "Deporte y cultura", "d": "Deporte, cultura, religión, recreación e información.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 34", "t": "Informe trimestral", "d": "El director informa al juez cada 3 meses.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 35", "t": "Consumo problemático", "d": "Equipo interdisciplinario y tratamiento adecuado.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 36", "t": "Internación", "d": "El juez penal envía copia al juez civil.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 37", "t": "Demora injustificada", "d": "Falta grave de juez y fiscal.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 38", "t": "Especialización", "d": "Jueces, fiscales, defensores y personal especializados.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 39", "t": "Medidas de coerción", "d": "Solo por fuga u obstaculización; tope de la prisión preventiva.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 40", "t": "Derechos de las víctimas", "d": "Asistencia, patrocinio gratuito y mediación.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 41", "t": "Criterio de oportunidad", "d": "Pena máxima hasta 6 años, sin muerte ni violencia grave.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 42", "t": "Mediación", "d": "Hasta 6 años; consentimiento de la víctima; veto del fiscal.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 43", "t": "Suspensión a prueba", "d": "Pena mínima hasta 3 años; de 1 a 3 años de prueba.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 44", "t": "Condiciones", "d": "Pueden incluir las medidas del art. 8.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 45", "t": "Cumplimiento", "d": "Si cumple, se extingue la acción penal.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 46", "t": "Supervisor federal", "d": "De una lista del Ministerio de Justicia.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 47", "t": "Sistema acusatorio", "d": "Rige el Código Procesal Penal Federal.", "s": "fed", "p": 0}, {"l": "n", "a": "Art. 48", "t": "Derogación", "d": "Deroga la Ley 22.278.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 49", "t": "Adecuación provincial", "d": "Invita a las provincias a adecuar sus leyes.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 50", "t": "Implementación", "d": "La controla el Poder Ejecutivo nacional.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 51", "t": "Presupuesto", "d": "Asignación presupuestaria.", "s": "all", "p": 0}, {"l": "n", "a": "Art. 52", "t": "Vigencia", "d": "A los 180 días de publicada: 05/09/2026.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 1", "t": "Objeto", "d": "Régimen de ejecución de medidas y penas de la 27.801 en la provincia.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 2", "t": "Finalidad", "d": "Cumplir la decisión judicial, educar, reducir la reiteración.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 3", "t": "Ámbito", "d": "Desde que un juez dispone una medida o pena.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 4", "t": "Marco normativo", "d": "Constituciones, tratados, 27.801, CPP y leyes de niñez.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 5", "t": "Reserva jurisdiccional", "d": "Solo el juez modifica, agrava o termina una medida o pena.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 6", "t": "Control judicial", "d": "Control permanente; todos deben informar al juez.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 7", "t": "Principios de ejecución", "d": "16 principios: interés superior, dignidad, confidencialidad…", "s": "all", "p": 0}, {"l": "p", "a": "Art. 8", "t": "Cuerpo de Supervisores", "d": "Organismo del Poder Judicial.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 9", "t": "Designación", "d": "Los nombra solo la Corte Suprema.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 10", "t": "Asignación", "d": "El juez asigna el supervisor al caso con la OGA.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 11", "t": "Funciones del supervisor", "d": "Acompaña, verifica e informa. Sin funciones policiales.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 12", "t": "Informes", "d": "Entrevistas al menos semanales; informes mensuales.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 13", "t": "Continuidad", "d": "Sigue acompañando después de los 18.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 14", "t": "Deber de cooperación", "d": "La falta de cupos no se le carga al joven.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 15", "t": "Salud", "d": "Turnos prioritarios y salud mental.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 16", "t": "Educación", "d": "La escolaridad no se interrumpe.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 17", "t": "Ministerio de Seguridad", "d": "Monitoreo electrónico sin estigmatizar ni contactos policiales innecesarios.", "s": "all", "p": 1}, {"l": "p", "a": "Art. 18", "t": "Trabajo", "d": "Capacitación e inserción laboral.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 19", "t": "Desarrollo Social", "d": "Documentación, vivienda y apoyo familiar.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 20", "t": "Coordinación", "d": "Directa, sin crear nuevos organismos.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 21", "t": "Establecimientos", "d": "Solo los autorizados por la 27.801; separación absoluta de adultos.", "s": "all", "p": 1}, {"l": "p", "a": "Art. 22", "t": "Instituto «Cura Brochero»", "d": "Crea el instituto especializado de la provincia.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 23", "t": "Informes del director", "d": "Informe trimestral al juez.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 24", "t": "Mayoría de edad", "d": "Puede quedarse hasta fin de año con autorización judicial.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 25", "t": "Comunicación judicial", "d": "La OGA comunica en 3 días hábiles.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 26", "t": "Inicio", "d": "La Autoridad de Aplicación interviene de inmediato.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 27", "t": "Legajo reservado", "d": "Legajo administrativo confidencial.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 28", "t": "Evaluación integral", "d": "Salud, familia, educación, consumos.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 29", "t": "Informe inicial", "d": "En 15 días hábiles.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 30", "t": "PITP", "d": "Plan individual en 30 días hábiles; no presume culpa.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 31", "t": "Participación", "d": "El joven participa de su plan.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 32", "t": "Contenido del plan", "d": "Educación, oficios, salud, familia, reparación, egreso.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 33", "t": "Límites del plan", "d": "No cambia lo que decidió el juez.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 34", "t": "Seguimiento", "d": "Revisión periódica del plan.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 35", "t": "Educación", "d": "No se interrumpe la escolaridad obligatoria.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 36", "t": "Formación para el trabajo", "d": "Oficios y capacitación.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 37", "t": "Salud y consumos", "d": "Salidas con orden judicial; las urgencias se comunican.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 38", "t": "Internación", "d": "Copia al juez civil.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 39", "t": "Familia y cultura", "d": "Vínculos, deporte, religión, información.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 40", "t": "Progresividad", "d": "La Autoridad de Aplicación no modifica la pena por sí.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 41", "t": "Propuestas técnicas", "d": "Se elevan al juez, que resuelve.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 42", "t": "Preparación para el egreso", "d": "Escuela, trabajo, salud, vivienda.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 43", "t": "Acompañamiento posterior", "d": "Voluntario y sin carácter penal.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 44", "t": "Continuidad", "d": "Las políticas públicas continúan.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 45", "t": "Protocolo de transición", "d": "90 días antes de cumplir 18.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 46", "t": "Adecuación del plan", "d": "Pasa a adultos sin perder avances.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 47", "t": "Legajo de continuidad", "d": "Acompaña al joven al pasar a adultos.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 48", "t": "Evaluación", "d": "Sistema de seguimiento e indicadores.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 49", "t": "Coordinación institucional", "d": "Ejecutivo, Corte, MPF y Ministerio Pupilar.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 50", "t": "Coordinación federal", "d": "Mesa Federal (Decreto 875/2026).", "s": "all", "p": 0}, {"l": "p", "a": "Art. 51", "t": "Reglamentación", "d": "En 120 días desde la publicación.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 52", "t": "Presupuesto", "d": "Partidas y convenios.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 53", "t": "Adecuación administrativa", "d": "Adecuar establecimientos y protocolos.", "s": "all", "p": 0}, {"l": "p", "a": "Art. 57", "t": "Defensorías de niñez", "d": "Asistencia letrada desde el primer acto.", "s": "all", "p": 1}, {"l": "p", "a": "Art. 58", "t": "Transitorio", "d": "Mientras tanto, actúan los defensores oficiales penales.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 393 CPP", "t": "Ámbito y presunción", "d": "14 a 17 años; edad del hecho; si hay duda, se presume menor o no punible.", "s": "all", "p": 1}, {"l": "c", "a": "Art. 394 CPP", "t": "Derechos y principios", "d": "Defensa y Ministerio Pupilar en todas las etapas.", "s": "all", "p": 1}, {"l": "c", "a": "Art. 395 CPP", "t": "Finalidad", "d": "Derecho a ser oído; perspectiva de género; derivación proteccional.", "s": "all", "p": 1}, {"l": "c", "a": "Art. 396 CPP", "t": "Víctima", "d": "Oída antes de decisiones; mediación; sin querella.", "s": "all", "p": 1}, {"l": "c", "a": "Art. 397 CPP", "t": "Supervisor Territorial", "d": "Remite a la Ley 10.011.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 398 CPP", "t": "Archivo", "d": "Lo piden fiscal o defensa antes del debate.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 399 CPP", "t": "Oportunidad", "d": "Insignificancia, mínima culpabilidad; reparación posible.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 400 CPP", "t": "Remisión", "d": "A programas comunitarios.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 401 CPP", "t": "Mediación", "d": "Hasta la etapa intermedia; veto del fiscal.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 402 CPP", "t": "Medidas de coerción", "d": "9 medidas; prohibida la comisaría; máximo 6 + 6 meses.", "s": "all", "p": 1}, {"l": "c", "a": "Art. 403 CPP", "t": "Reglas del debate", "d": "Público o reservado según el adolescente.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 404 CPP", "t": "Juicio en dos etapas", "d": "Plan de reinserción ≥ 1 año; otro juez fija la pena.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 405 CPP", "t": "Abreviado", "d": "Solo resuelve la responsabilidad.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 406 CPP", "t": "Ejecución", "d": "Juez de integración; a los 18, juez de ejecución de adultos.", "s": "all", "p": 0}, {"l": "c", "a": "Art. 407 CPP", "t": "Recursos", "d": "Todas las decisiones importantes se pueden recurrir.", "s": "all", "p": 0}, {"l": "c", "a": "LOPJ 60", "t": "Juez de NNyA", "d": "Investiga, juzga y controla; también si participa un adulto.", "s": "all", "p": 1}];const list=document.getElementById('ixlist');if(!list)return;
+    const q=document.getElementById('ixq'),cnt=document.getElementById('ixcount');let f='all';
+    const lbl={n:'27.801',p:'10.011',c:'CPP'};
+    const norm=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    function render(){
+      const k=norm(q.value.trim());
+      const r=D.filter(d=>(f==='all'||(f==='pol'?d.p:d.l===f))&&(!k||norm(d.a+' '+d.t+' '+d.d).includes(k)));
+      list.innerHTML=r.map(d=>`<article class="ix ${d.p?'hot':''}"><span class="lb ${d.l}">${lbl[d.l]}</span><span class="ia">${d.a}</span><span class="it">${d.t}</span><span class="id">${d.d}</span>${d.s==='fed'?'<span class="tg fed">Justicia federal</span>':''}</article>`).join('')||'<p class="none">No hay artículos con esa búsqueda.</p>';
+      cnt.textContent=r.length+' artículos';
     }
+    q.addEventListener('input',render);
+    document.querySelectorAll('.flt button').forEach(b=>b.onclick=()=>{f=b.dataset.f;document.querySelectorAll('.flt button').forEach(x=>x.setAttribute('aria-pressed',x===b));render();});
+    render();
+  })();
+  // Lista de control
+  (function(){const l=document.getElementById('cklist');if(!l)return;const n=document.getElementById('ckn');
+    l.addEventListener('change',()=>{const c=l.querySelectorAll('input:checked').length;n.textContent=c;l.closest('.sc').classList.toggle('done',c===l.querySelectorAll('input').length);});})();
 
-    function moveToTarget(chip) {
-      chip.classList.add('placed');
-      chip.onclick = () => moveToBank(chip);
-      targetBox.appendChild(chip);
-      updateCounts();
-
-      // Disparador automático al colocar la última pieza
-      if (targetBox.children.length === correctSequence.length) {
-        setTimeout(() => {
-          openFinishModal();
-        }, 300);
-      }
-    }
-
-    function moveToBank(chip) {
-      chip.classList.remove('placed');
-      chip.onclick = () => moveToTarget(chip);
-      bankBox.appendChild(chip);
-      updateCounts();
-    }
-
-    function updateCounts() {
-      document.getElementById('bankCount').textContent = `${bankBox.children.length} restantes`;
-      document.getElementById('targetCount').textContent = `${targetBox.children.length} / ${correctSequence.length}`;
-    }
-
-    function openFinishModal() {
-      if (targetBox.children.length === 0) {
-        alert("Debes colocar fragmentos en el acta antes de entregar.");
-        return;
-      }
-      document.getElementById('finishModal').style.display = 'flex';
-      document.getElementById('cadetName').focus();
-    }
-
-    function closeModal() {
-      document.getElementById('finishModal').style.display = 'none';
-    }
-
-    async function submitEvaluation() {
-      const name = document.getElementById('cadetName').value.trim();
-      if (!name) {
-        alert("Debes ingresar tu Apellido y Nombres.");
-        return;
-      }
-
-      clearInterval(timerInterval);
-      document.getElementById('submitBtn').disabled = true;
-      document.getElementById('submitBtn').textContent = "Guardando...";
-
-      const placedChips = Array.from(targetBox.children);
-      let correctAnswers = 0;
-
-      placedChips.forEach((chip, i) => {
-        if (chip.dataset.text === correctSequence[i]) {
-          chip.classList.add('correct');
-          correctAnswers++;
-        } else {
-          chip.classList.add('incorrect');
-        }
-      });
-
-      const total = correctSequence.length;
-      const status = correctAnswers === total ? "Aprobado (Perfecto)" : "Revisar";
-      
-      const payload = {
-        nombre: name,
-        puntaje: correctAnswers,
-        total: total,
-        tiempoSegundos: seconds,
-        estado: status
-      };
-
-      try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          },
-          body: JSON.stringify(payload)
-        });
-      } catch (e) {
-        console.error("Error al conectar con Google Sheets:", e);
-      }
-
-      closeModal();
-      showResults(name, correctAnswers, total);
-    }
-
-    async function showResults(name, correct, total) {
-      document.getElementById('gameScreen').style.display = 'none';
-      const rankingScreen = document.getElementById('rankingScreen');
-      rankingScreen.style.display = 'flex';
-
-      const scoreDisplay = document.getElementById('userScoreDisplay');
-      scoreDisplay.textContent = `${name}: ${correct}/${total} correctas (${seconds}s)`;
-      scoreDisplay.style.color = correct === total ? "var(--success)" : "var(--error)";
-
-      loadRanking(name, correct, seconds);
-    }
-
-    async function loadRanking(currentName, currentScore, currentSec) {
-      const tbody = document.getElementById('rankingBody');
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Cargando posiciones...</td></tr>';
-
-      let data = [];
-      try {
-        const res = await fetch(SCRIPT_URL);
-        data = await res.json();
-      } catch(e) {
-        console.error("Error al cargar datos del ranking:", e);
-      }
-
-      const exists = data.some(r => r.nombre === currentName && r.tiempo == currentSec);
-      if (!exists) {
-        data.push({
-          nombre: currentName,
-          puntaje: `${currentScore} / ${correctSequence.length}`,
-          tiempo: currentSec
-        });
-      }
-
-      data.sort((a, b) => {
-        const scoreA = parseInt(a.puntaje) || 0;
-        const scoreB = parseInt(b.puntaje) || 0;
-        if (scoreB !== scoreA) return scoreB - scoreA;
-        return (parseInt(a.tiempo) || 0) - (parseInt(b.tiempo) || 0);
-      });
-
-      tbody.innerHTML = '';
-      data.forEach((row, idx) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>#${idx + 1}</strong></td>
-          <td>${row.nombre}</td>
-          <td>${row.puntaje}</td>
-          <td>${row.tiempo}s</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    init();
-  </script>
+  // Fondo: grilla técnica + halos que respiran (cian / coral)
+  const cv=document.getElementById('fx'),cx=cv.getContext('2d');
+  const W=cv.width=1600,H=cv.height=900;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function draw(t){
+    cx.clearRect(0,0,W,H);
+    const a=Math.sin(t/4200)*.5+.5;
+    let g=cx.createRadialGradient(1180,380,0,1180,380,620);
+    g.addColorStop(0,`rgba(63,208,255,${.16+.06*a})`);g.addColorStop(1,'rgba(63,208,255,0)');
+    cx.fillStyle=g;cx.fillRect(0,0,W,H);
+    g=cx.createRadialGradient(160,860,0,160,860,560);
+    g.addColorStop(0,`rgba(255,107,107,${.10+.05*(1-a)})`);g.addColorStop(1,'rgba(255,107,107,0)');
+    cx.fillStyle=g;cx.fillRect(0,0,W,H);
+    cx.strokeStyle='rgba(255,255,255,.035)';cx.lineWidth=1;
+    for(let x=0;x<=W;x+=64){cx.beginPath();cx.moveTo(x+.5,0);cx.lineTo(x+.5,H);cx.stroke();}
+    for(let y=0;y<=H;y+=64){cx.beginPath();cx.moveTo(0,y+.5);cx.lineTo(W,y+.5);cx.stroke();}
+    // línea de barrido
+    const sy=(t/30)%(H+200)-100;
+    const sg=cx.createLinearGradient(0,sy-80,0,sy);
+    sg.addColorStop(0,'rgba(63,208,255,0)');sg.addColorStop(1,'rgba(63,208,255,.05)');
+    cx.fillStyle=sg;cx.fillRect(0,sy-80,W,80);
+    if(!reduce)requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
 </body>
 </html>
