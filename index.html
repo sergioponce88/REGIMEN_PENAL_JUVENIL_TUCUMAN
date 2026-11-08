@@ -1242,37 +1242,117 @@ body.portrait .rot{display:block}
       <text x="${w/2}" y="40" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="21" font-weight="600" fill="${err?'#ffd0d0':'#111'}">${txt}</text></g>`;
     const mark=(x,y,r=70)=>`<g class="errmark"><circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#ff6b6b" stroke-width="4" stroke-dasharray="10 8"/><circle cx="${x}" cy="${y}" r="${r+14}" fill="none" stroke="#ff6b6b" stroke-width="2" opacity=".4"/></g>`;
     const sign=(x,y,txt,col,crossed)=>`<g transform="translate(${x} ${y})"><rect x="-4" y="0" width="8" height="150" fill="#2a3042"/><rect x="-150" y="-74" width="300" height="74" rx="10" fill="${col}" opacity=".92"/><text x="0" y="-27" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="27" fill="#0b0c10">${txt}</text>${crossed?'<path d="M-140 -66 L140 -8 M140 -66 L-140 -8" stroke="#ff2a2a" stroke-width="9" stroke-linecap="round"/>':''}</g>`;
-    const defs=`<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070d"/><stop offset="1" stop-color="#121a2c"/></linearGradient>
+    const defs0=`<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070d"/><stop offset="1" stop-color="#121a2c"/></linearGradient>
       <radialGradient id="gR"><stop offset="0" stop-color="#ff3b3b" stop-opacity=".35"/><stop offset="1" stop-color="#ff3b3b" stop-opacity="0"/></radialGradient>
       <radialGradient id="gB"><stop offset="0" stop-color="#2f7bff" stop-opacity=".35"/><stop offset="1" stop-color="#2f7bff" stop-opacity="0"/></radialGradient>
       <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></radialGradient></defs>`;
+    // Ilustración de personas en SVG (estilo editorial con sombreado)
+    const P={};
+    P.defs=`<defs>
+    <linearGradient id="uni" x1="0" x2="1"><stop offset="0" stop-color="#1d2d4f"/><stop offset=".55" stop-color="#16233f"/><stop offset="1" stop-color="#0d1630"/></linearGradient>
+    <linearGradient id="shirt" x1="0" x2="1"><stop offset="0" stop-color="#8fb3d9"/><stop offset="1" stop-color="#5f86b3"/></linearGradient>
+    <linearGradient id="pant" x1="0" x2="1"><stop offset="0" stop-color="#1a2440"/><stop offset="1" stop-color="#0b1226"/></linearGradient>
+    <linearGradient id="hood" x1="0" x2="1"><stop offset="0" stop-color="#5b616e"/><stop offset=".6" stop-color="#454a55"/><stop offset="1" stop-color="#30343c"/></linearGradient>
+    <linearGradient id="jean" x1="0" x2="1"><stop offset="0" stop-color="#3d5a86"/><stop offset="1" stop-color="#253b5c"/></linearGradient>
+    <radialGradient id="skinA" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#e6b48f"/><stop offset="1" stop-color="#b9805c"/></radialGradient>
+    <radialGradient id="skinB" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#c98f66"/><stop offset="1" stop-color="#8f5a3a"/></radialGradient>
+    <radialGradient id="skinC" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#f0c7a5"/><stop offset="1" stop-color="#c9926d"/></radialGradient>
+    <linearGradient id="vest" x1="0" x2="1"><stop offset="0" stop-color="#20304f"/><stop offset="1" stop-color="#111b33"/></linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+    </defs>`;
+    // cabeza: dir 1 mira a la derecha (3/4)
+    P.head=(o)=>{const sk=o.skin||'skinA',hair=o.hair||'#1b1410';const ex=o.look||0;
+     return `<g>
+     <path d="M-10 -6 L10 -6 L12 22 L-12 22 Z" fill="url(#${sk})" opacity=".95"/>
+     <ellipse cx="0" cy="-40" rx="31" ry="38" fill="url(#${sk})"/>
+     <ellipse cx="-30" cy="-36" rx="6" ry="10" fill="url(#${sk})"/><ellipse cx="30" cy="-36" rx="6" ry="10" fill="url(#${sk})"/>
+     ${o.cap?`<path d="M-34 -58 Q-30 -96 0 -98 Q30 -96 34 -58 Z" fill="#101a33"/><path d="M-36 -60 L36 -60 L44 -52 L-30 -52 Z" fill="#070d1c"/><rect x="-34" y="-66" width="68" height="6" fill="#d9b44a" opacity=".85"/><path d="M-6 -88 l6 -8 l6 8 l-6 10 z" fill="#e3c25a"/>`:
+      `<path d="M-32 -46 Q-36 -86 -4 -84 Q30 -88 33 -50 Q26 -70 6 -70 Q-18 -72 -32 -46 Z" fill="${hair}"/>`}
+     ${o.hoodUp?`<path d="M-44 -30 Q-48 -92 0 -94 Q48 -92 44 -30 Q40 2 30 14 L26 -40 Q20 -76 0 -76 Q-20 -76 -26 -40 L-30 14 Q-40 2 -44 -30 Z" fill="url(#hood)"/>`:''}
+     <path d="M${-17+ex} -52 q7 -4 13 0" stroke="#2a1a12" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M${5+ex} -52 q7 -4 13 0" stroke="#2a1a12" stroke-width="3" fill="none" stroke-linecap="round"/>
+     <ellipse cx="${-10+ex}" cy="-42" rx="4.5" ry="3.6" fill="#fff"/><ellipse cx="${12+ex}" cy="-42" rx="4.5" ry="3.6" fill="#fff"/>
+     <circle cx="${-9+ex*1.4}" cy="-42" r="2.4" fill="#2a1a10"/><circle cx="${13+ex*1.4}" cy="-42" r="2.4" fill="#2a1a10"/>
+     <path d="M${2+ex} -38 q-4 12 3 14" stroke="rgba(90,50,30,.55)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+     ${o.mouth==='talk'?`<ellipse cx="${2+ex}" cy="-14" rx="7" ry="4.5" fill="#5a2a22"/>`:o.mouth==='worried'?`<path d="M${-6+ex} -12 q8 -5 16 0" stroke="#6a3328" stroke-width="2.6" fill="none" stroke-linecap="round"/>`:`<path d="M${-6+ex} -15 q8 4 16 0" stroke="#6a3328" stroke-width="2.6" fill="none" stroke-linecap="round"/>`}
+     ${o.beard?`<path d="M-26 -30 Q-24 2 0 6 Q24 2 26 -30 Q22 -10 0 -8 Q-22 -10 -26 -30 Z" fill="${hair}" opacity=".55"/>`:''}
+     </g>`};
+    // policía. pose: 'idle' | 'point' | 'phone' | 'radio' | 'hold'
+    P.cop=(x,y,s,o={})=>{const sk=o.skin||'skinA',f=o.flip?-1:1,pose=o.pose||'idle';
+     const armR={idle:`<path d="M44 -150 Q62 -110 58 -60 L44 -58 Q42 -100 30 -138 Z" fill="url(#shirt)"/><circle cx="52" cy="-52" r="10" fill="url(#${sk})"/>`,
+      point:`<path d="M42 -152 Q90 -146 128 -128 L122 -114 Q84 -126 38 -128 Z" fill="url(#shirt)"/><circle cx="132" cy="-122" r="10" fill="url(#${sk})"/>`,
+      phone:`<path d="M42 -152 Q70 -170 82 -212 L96 -206 Q86 -160 50 -130 Z" fill="url(#shirt)"/><circle cx="90" cy="-216" r="10" fill="url(#${sk})"/><rect x="80" y="-262" width="26" height="46" rx="5" fill="#0b0d12" stroke="#cfd6e3" stroke-width="2"/><circle cx="93" cy="-252" r="3.5" fill="#fff"/>`,
+      radio:`<path d="M42 -152 Q56 -176 44 -214 L30 -210 Q38 -178 30 -140 Z" fill="url(#shirt)"/><circle cx="36" cy="-218" r="10" fill="url(#${sk})"/><rect x="30" y="-262" width="18" height="40" rx="4" fill="#111"/><rect x="40" y="-280" width="4" height="20" fill="#111"/>`,
+      hold:`<path d="M42 -152 Q86 -132 112 -112 L104 -98 Q76 -116 36 -128 Z" fill="url(#shirt)"/><circle cx="112" cy="-104" r="10" fill="url(#${sk})"/>`}[pose];
+     return `<g transform="translate(${x} ${y}) scale(${s*f} ${s})">
+     <ellipse cx="0" cy="4" rx="60" ry="10" fill="#000" opacity=".45"/>
+     <path d="M-30 -60 L-34 -4 L-8 -4 L-2 -60 Z M2 -60 L8 -4 L34 -4 L30 -60 Z" fill="url(#pant)"/>
+     <path d="M-38 -6 h32 v8 h-36 z M6 -6 h34 v8 h-32 z" fill="#05070b"/>
+     <path d="M-44 -150 Q-62 -110 -58 -60 L-44 -58 Q-42 -100 -30 -138 Z" fill="url(#shirt)"/><circle cx="-52" cy="-52" r="10" fill="url(#${sk})"/>
+     <path d="M-44 -156 Q0 -170 44 -156 L40 -62 L-40 -62 Z" fill="url(#shirt)"/>
+     <path d="M-40 -150 Q0 -162 40 -150 L38 -80 L-38 -80 Z" fill="url(#vest)"/>
+     <text transform="scale(${f} 1)" x="0" y="-104" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="15" fill="#e8eef7" letter-spacing="1.5">POLICÍA</text>
+     <path d="M-26 -140 l8 0 l0 12 l-4 4 l-4 -4 z" fill="#d9b44a"/><rect x="12" y="-140" width="16" height="10" rx="2" fill="#3fd0ff" opacity=".7"/>
+     <rect x="-40" y="-70" width="80" height="11" fill="#090d18"/><rect x="-6" y="-70" width="12" height="11" fill="#9aa6ba"/><rect x="20" y="-74" width="14" height="20" rx="3" fill="#151a26"/>
+     <path d="M-12 -156 L0 -142 L12 -156" stroke="#4d6f99" stroke-width="3" fill="none"/>
+     ${armR}
+     <g transform="translate(0 -160)">${P.head({skin:sk,cap:true,look:o.look??3,mouth:o.mouth,beard:o.beard})}</g>
+     </g>`};
+    // adolescente. pose: 'idle' | 'back' (manos atrás) | 'sit'
+    P.teen=(x,y,s,o={})=>{const sk=o.skin||'skinB',f=o.flip?-1:1;
+     return `<g transform="translate(${x} ${y}) scale(${s*f} ${s})">
+     <ellipse cx="0" cy="4" rx="54" ry="9" fill="#000" opacity=".45"/>
+     <path d="M-28 -64 L-30 -4 L-8 -4 L-2 -64 Z M2 -64 L8 -4 L30 -4 L28 -64 Z" fill="url(#jean)"/>
+     <path d="M-34 -8 h28 q6 0 6 8 h-36 z M6 -8 h28 q6 0 6 8 h-34 z" fill="#e9ecf2"/><path d="M-34 -1 h40 M6 -1 h40" stroke="#b8bfcc" stroke-width="2"/>
+     ${o.pose==='back'?`<path d="M-38 -146 Q-50 -110 -40 -76 L-28 -78 Q-34 -110 -26 -134 Z" fill="url(#hood)"/><path d="M38 -146 Q50 -110 40 -76 L28 -78 Q34 -110 26 -134 Z" fill="url(#hood)"/>`:
+     `<path d="M-38 -146 Q-56 -110 -50 -66 L-36 -64 Q-38 -104 -26 -134 Z" fill="url(#hood)"/><circle cx="-44" cy="-60" r="9" fill="url(#${sk})"/><path d="M38 -146 Q56 -110 50 -66 L36 -64 Q38 -104 26 -134 Z" fill="url(#hood)"/><circle cx="44" cy="-60" r="9" fill="url(#${sk})"/>`}
+     <path d="M-40 -150 Q0 -162 40 -150 L36 -62 L-36 -62 Z" fill="url(#hood)"/>
+     <path d="M-22 -100 h44 v26 h-44 z" fill="#3a3e48"/><path d="M-6 -150 v30 M6 -150 v30" stroke="#d6d9df" stroke-width="2.4"/>
+     <g transform="translate(0 -154) scale(.94)">${P.head({skin:sk,hair:'#120d0a',look:o.look??-2,mouth:o.mouth||'worried',hoodUp:o.hoodUp})}</g>
+     </g>`};
+    P.car=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})">
+     <ellipse cx="0" cy="6" rx="190" ry="16" fill="#000" opacity=".5"/>
+     <path d="M-180 0 L-172 -50 Q-162 -64 -128 -66 L-86 -108 L84 -108 L126 -66 Q168 -62 178 -44 L182 0 Z" fill="#eef2f8"/>
+     <path d="M-180 -40 L182 -40 L182 -18 L-180 -18 Z" fill="#1a3d7c"/>
+     <text x="0" y="-24" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="13" fill="#fff" letter-spacing="3">POLICÍA DE TUCUMÁN</text>
+     <path d="M-76 -100 L76 -100 L112 -68 L-112 -68 Z" fill="#101827"/><path d="M-4 -100 v32" stroke="#eef2f8" stroke-width="5"/>
+     <rect x="-50" y="-122" width="48" height="14" rx="4" fill="#ff3b3b" class="sirR"/><rect x="2" y="-122" width="48" height="14" rx="4" fill="#2f7bff" class="sirB"/>
+     <circle cx="-116" cy="0" r="26" fill="#07090d"/><circle cx="-116" cy="0" r="12" fill="#7d8798"/><circle cx="116" cy="0" r="26" fill="#07090d"/><circle cx="116" cy="0" r="12" fill="#7d8798"/>
+     <rect x="168" y="-56" width="14" height="10" rx="3" fill="#ffe7a0"/></g>`;
+    P.plaza=()=>`<rect width="1000" height="600" fill="url(#sky)"/>
+     <g opacity=".9"><rect x="560" y="150" width="380" height="250" fill="#141b2c"/><path d="M560 150 L750 96 L940 150 Z" fill="#182035"/><rect x="730" y="60" width="40" height="60" fill="#182035"/><path d="M724 60 L750 30 L776 60 Z" fill="#1d2640"/>
+     ${[...Array(10)].map((_,i)=>`<rect x="${585+i*35}" y="190" width="18" height="44" rx="9" fill="#f6c76b" opacity=".35"/><rect x="${585+i*35}" y="270" width="18" height="44" rx="9" fill="#f6c76b" opacity=".22"/>`).join('')}</g>
+     <g opacity=".85">${[90,200,330].map(x=>`<rect x="${x}" y="300" width="10" height="120" fill="#1c160f"/><circle cx="${x+5}" cy="285" r="62" fill="#0f1d14"/><circle cx="${x-25}" cy="305" r="42" fill="#12241a"/><circle cx="${x+35}" cy="300" r="46" fill="#0e1a12"/>`).join('')}</g>
+     <rect y="420" width="1000" height="180" fill="#151922"/><rect y="420" width="1000" height="8" fill="#2a3042"/>
+     <g><rect x="470" y="200" width="7" height="220" fill="#2c3245"/><circle cx="473" cy="196" r="10" fill="#ffe2a0"/><ellipse cx="473" cy="200" rx="90" ry="60" fill="#ffd27a" opacity=".13"/></g>`;
+    
+    const defs=defs0+P.defs;
     const S=[
       {t:'21:41:05',place:'Plaza Independencia · San Miguel de Tucumán',
-       scene:()=>street()+car(700,470,1)+youth(380,440,1.15,{hands:'back'})+officer(300,440,1.15,{arm:'fwd'})+officer(500,440,1.1,{flip:true}),
+       scene:()=>P.plaza()+glow+P.car(800,500,.85)+P.cop(240,470,1.3,{pose:'hold',skin:'skinC',beard:true,look:4})+P.teen(400,470,1.3,{pose:'back',look:-4})+P.cop(580,470,1.25,{pose:'idle',flip:true,look:-3}),
        story:'Llamado al 911: le arrebataron el celular a una mujer, con empujones. El móvil del <b>Sargento Díaz</b> y el <b>Cabo Ruiz</b> llega en 3 minutos y alcanza a un joven que corría con el teléfono. El joven forcejea un poco y después se queda quieto.',
        q:'El Cabo Ruiz quiere esposarlo "por las dudas". ¿Qué corresponde?',
        o:[['Esposarlo enseguida: es lo más seguro',0],['Precinto, evaluando su comportamiento. Esposas solo si corre peligro la vida del joven o de terceros',1],['No sujetarlo de ninguna forma',0]],
        fb:'La sujeción se gradúa: <b>precinto</b> como regla, evaluando la conducta y la condición del joven. Las <b>esposas</b> son la última instancia, solo si corre peligro la vida del adolescente o de terceros.',art:'Principio de mínima intervención · art. 5 inc. b Ley 27.801'},
       {t:'21:42:30',place:'Plaza Independencia',
-       scene:()=>street()+officer(330,440,1.25,{arm:'fwd'})+youth(560,440,1.3)+bubble(600,120,230,'"Tengo 19, jefe"')+`<g transform="translate(150 150)"><rect width="150" height="96" rx="10" fill="#e8ecf3"/><rect x="12" y="14" width="44" height="54" rx="4" fill="#b8c2d3"/><rect x="66" y="20" width="70" height="8" fill="#9aa6ba"/><rect x="66" y="38" width="56" height="8" fill="#9aa6ba"/><path d="M0 0 L150 96 M150 0 L0 96" stroke="#ff4d4d" stroke-width="8"/></g>`,
+       scene:()=>P.plaza()+P.cop(290,480,1.45,{pose:'point',skin:'skinC',beard:true,look:4})+P.teen(620,480,1.5,{mouth:'talk',look:-4})+bubble(640,90,240,'"Tengo 19, jefe"')+`<g transform="translate(80 110)"><rect width="150" height="96" rx="10" fill="#e8ecf3"/><rect x="12" y="14" width="44" height="54" rx="4" fill="#b8c2d3"/><rect x="66" y="20" width="70" height="8" fill="#9aa6ba"/><rect x="66" y="38" width="56" height="8" fill="#9aa6ba"/><path d="M0 0 L150 96 M150 0 L0 96" stroke="#ff4d4d" stroke-width="8"/></g>`,
        story:'No tiene documento. Dice que tiene 19 años, pero por su aspecto podría ser menor.',
        q:'¿Cómo lo tratan?',
        o:[['Como adulto: él dijo que tiene 19',0],['Como menor, hasta que se acredite la edad con DNI o partidas',1],['Lo dejan ir: sin documento no se puede hacer nada',0]],
        fb:'Rige la <b>presunción de minoridad</b>: si la edad no se puede acreditar, se lo trata como menor hasta que se compruebe. Lo que diga el joven no alcanza.',art:'art. 2 Ley 27.801 · art. 393 CPP Tucumán'},
       {t:'21:43:12',place:'Plaza Independencia',err:true,
-       scene:()=>street()+youth(360,440,1.3,{hands:'back'})+officer(620,440,1.3,{arm:'up',flip:true})+`<g transform="translate(520 205) rotate(-12)"><rect width="34" height="58" rx="6" fill="#0b0d12" stroke="#cfd6e3" stroke-width="2"/><circle cx="17" cy="12" r="5" fill="#fff"/></g><g class="flash"><circle cx="537" cy="215" r="60" fill="#fff" opacity=".35"/><circle cx="537" cy="215" r="24" fill="#fff" opacity=".7"/></g>`+mark(537,225,80),
+       scene:()=>P.plaza()+P.car(840,500,.85)+P.teen(380,470,1.35,{pose:'back',look:3})+P.cop(620,470,1.35,{pose:'phone',flip:true,look:-3})+P.cop(170,470,1.25,{pose:'idle',skin:'skinC',beard:true,look:4})+`<g class="flash"><circle cx="494" cy="128" r="70" fill="#fff" opacity=".35"/><circle cx="494" cy="128" r="26" fill="#fff" opacity=".8"/></g>`+mark(494,140,80),
        story:'Mientras esperan, el <b>Cabo Ruiz</b> saca su celular y le toma una foto al joven: "es para el grupo de la comisaría, así lo tienen identificado".',
        q:'¿Qué está mal en esta escena?',
        o:[['Nada: es para identificarlo',0],['Viola la reserva de identidad: no se fotografía ni se difunde ningún dato del adolescente',1],['Solo está mal si la publica en redes',0]],
        fb:'Está <b>prohibido</b> fotografiar o difundir el nombre, la imagen o cualquier dato que identifique al adolescente, por cualquier medio, incluidos los grupos de mensajería. El incumplimiento se sanciona y genera sumario.',art:'art. 5 inc. i Ley 27.801 · Ley 20.056'},
       {t:'21:45:40',place:'Junto al móvil',err:true,
-       scene:()=>street()+car(760,470,.95)+youth(520,440,1.2,{hands:'back'})+officer(330,440,1.3,{arm:'fwd'})+bubble(110,110,420,'"Decime por qué lo hiciste y te va mejor"',true)+mark(320,142,90),
+       scene:()=>P.plaza()+glow+P.car(820,500,.85)+P.teen(560,470,1.35,{pose:'back',look:-4})+P.cop(360,470,1.4,{pose:'point',skin:'skinC',beard:true,mouth:'talk',look:4})+bubble(60,60,440,'"Decime por qué lo hiciste y te va mejor"',true)+mark(280,92,90),
        story:'El <b>Sargento Díaz</b> se acerca al joven y le habla en voz baja.',
        q:'¿Qué error comete el Sargento?',
        o:[['Ninguno: solo quiere saber qué pasó',0],['Le pregunta sobre el hecho: no se le toma ninguna declaración, ni siquiera informal',1],['Solo es error si lo anota en el acta',0]],
        fb:'El adolescente tiene derecho a <b>no declarar</b> y a tener un abogado desde el primer momento. No se le pregunta sobre el hecho ni se le toma declaración de ningún tipo, tampoco espontánea. Lo que se le dice es <b>por qué interviene la policía y cuáles son sus derechos</b>.',art:'art. 5 inc. c Ley 27.801'},
       {t:'21:47:02',place:'Desde el móvil',
-       scene:()=>street()+car(560,470,1.15)+officer(260,440,1.3,{arm:'up'})+bubble(320,90,360,'"Comisaría, tengo un menor..."',true)+`<g transform="translate(300 260)"><rect width="22" height="44" rx="5" fill="#0b0d12" stroke="#9aa6ba" stroke-width="2"/><rect x="8" y="-14" width="5" height="16" fill="#9aa6ba"/></g>`,
+       scene:()=>street()+P.car(620,500,1.05)+P.cop(260,480,1.45,{pose:'radio',skin:'skinC',beard:true,mouth:'talk',look:3})+bubble(330,70,370,'"Comisaría, tengo un menor..."',true),
        story:'El Sargento Díaz toma la radio para dar aviso.',
        q:'¿A quién tiene que comunicar?',
        o:[['Solo a su comisaría, que se encarga del resto',0],['Al supervisor de turno (que avisa al Juez de Menores), al MPF, al Ministerio Pupilar, a los padres y al defensor',1],['Solo a los padres del joven',0]],
@@ -1284,7 +1364,7 @@ body.portrait .rot{display:block}
        o:[['A la comisaría "un rato": es solo transitorio',0],['Al centro asistencial público con un pedido médico, acompañado de sus padres o defensor, y después al CAD',1],['Directo a la casa de los padres',0]],
        fb:'Está <b>prohibido</b> alojarlo en comisarías o dependencias policiales, aunque sea por un rato. Primero va al <b>centro asistencial público</b>, con un pedido médico y acompañado de sus padres o defensor. Después, al <b>CAD</b>.',art:'art. 402 inc. 9 CPP Tucumán · art. 5 inc. k Ley 27.801'},
       {t:'23:08:44',place:'Ingreso al CAD',
-       scene:()=>`<rect width="1000" height="600" fill="url(#sky)"/><rect y="440" width="1000" height="160" fill="#10131b"/><rect x="520" y="150" width="400" height="290" fill="#14202a" stroke="#2fd69a" stroke-width="3"/><rect x="560" y="182" width="320" height="60" rx="8" fill="#2fd69a"/><text x="720" y="225" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="40" fill="#0b0c10">CAD</text><rect x="660" y="300" width="120" height="140" fill="#0a1016" stroke="#2fd69a" stroke-width="2"/><rect x="672" y="312" width="96" height="128" fill="#2fd69a" opacity=".12"/>`+officer(330,440,1.2,{arm:'fwd'})+youth(480,440,1.2)+`<g transform="translate(150 200)"><rect width="110" height="140" rx="6" fill="#e8ecf3"/><rect x="14" y="20" width="80" height="8" fill="#9aa6ba"/><rect x="14" y="40" width="64" height="8" fill="#9aa6ba"/><rect x="14" y="60" width="72" height="8" fill="#9aa6ba"/><circle cx="80" cy="112" r="16" fill="none" stroke="#2fd69a" stroke-width="4"/><path d="M73 112 l5 5 l9 -10" stroke="#2fd69a" stroke-width="4" fill="none"/></g>`,
+       scene:()=>`<rect width="1000" height="600" fill="url(#sky)"/><rect y="440" width="1000" height="160" fill="#10131b"/><rect x="540" y="140" width="400" height="300" fill="#14202a" stroke="#2fd69a" stroke-width="3"/><rect x="580" y="172" width="320" height="60" rx="8" fill="#2fd69a"/><text x="740" y="215" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="40" fill="#0b0c10">CAD</text><rect x="680" y="300" width="120" height="140" fill="#0a1016" stroke="#2fd69a" stroke-width="2"/><rect x="692" y="312" width="96" height="128" fill="#2fd69a" opacity=".12"/>`+P.cop(300,480,1.35,{pose:'hold',look:3})+P.teen(470,480,1.35,{look:2})+`<g transform="translate(70 190)"><rect width="110" height="140" rx="6" fill="#e8ecf3"/><rect x="14" y="20" width="80" height="8" fill="#9aa6ba"/><rect x="14" y="40" width="64" height="8" fill="#9aa6ba"/><rect x="14" y="60" width="72" height="8" fill="#9aa6ba"/><circle cx="80" cy="112" r="16" fill="none" stroke="#2fd69a" stroke-width="4"/><path d="M73 112 l5 5 l9 -10" stroke="#2fd69a" stroke-width="4" fill="none"/></g>`,
        story:'Después del examen médico, llegan al CAD.',
        q:'¿Cómo debe ser el ingreso?',
        o:[['Lo deja cualquier efectivo, sin papeles: el CAD se encarga',0],['Con personal del mismo sexo, el pedido y el informe del médico, y el número de causa. Lo recibe el coordinador del CAD',1],['Solo con el acta de aprehensión',0]],
@@ -1319,7 +1399,8 @@ body.portrait .rot{display:block}
       root.querySelector('.cs-n').textContent=`Escena ${i+1} de ${S.length}`;
       root.classList.toggle('has-err',!!c.err);
       st.innerHTML=c.story;qq.textContent=c.q;
-      op.innerHTML=c.o.map(([t,ok],k)=>`<button class="cs-o" data-ok="${ok}">${String.fromCharCode(65+k)}<span>${t}</span></button>`).join('');
+      const ORD=[[0,2,1],[1,0,2],[2,1,0],[2,0,1],[1,2,0],[0,2,1],[0,1,2],[1,0,2]];
+      op.innerHTML=(ORD[i]||[0,1,2]).map(j=>c.o[j]).map(([t,ok],k)=>`<button class="cs-o" data-ok="${ok}">${String.fromCharCode(65+k)}<span>${t}</span></button>`).join('');
       fb.className='cs-fb';fb.innerHTML='';
       if(ans[i]!==undefined)reveal(null);
       nx.textContent=i===S.length-1?'Ver resultado':'Siguiente escena';pv.disabled=i===0;
