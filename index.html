@@ -37,7 +37,7 @@ canvas#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .hdr .org b{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
 .hdr .org span{font-size:12.5px;color:var(--muted);letter-spacing:.04em}
 .tabs{margin-left:auto;display:flex;gap:6px;padding:5px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03)}
-.tab{font:600 13px/1 var(--body);letter-spacing:.04em;color:var(--muted);padding:10px 16px;border-radius:999px;border:0;background:none;cursor:pointer;transition:all .25s}
+.tab{font:600 13px/1 var(--body);letter-spacing:.02em;white-space:nowrap;color:var(--muted);padding:10px 12px;border-radius:999px;border:0;background:none;cursor:pointer;transition:all .25s}
 .tab[aria-current="true"]{color:var(--bg);background:var(--ink)}
 .tab:hover:not([aria-current="true"]){color:var(--ink);background:rgba(255,255,255,.06)}
 .tab:focus-visible,.ctl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
@@ -572,6 +572,62 @@ body.portrait .rot{display:block}
 .us.dest .up{color:var(--emerald)}.us.dest h4{font-size:40px;letter-spacing:-.02em}
 .us.dest li::before{background:var(--emerald)}
 
+
+.cs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.cs-dots{display:flex;gap:8px;padding-bottom:8px}
+.cs-dots span{width:30px;height:8px;border-radius:4px;background:rgba(255,255,255,.12);transition:all .3s}
+.cs-dots span.on{background:#fff;width:46px}.cs-dots span.ok{background:var(--emerald)}.cs-dots span.bad{background:var(--coral)}
+.cs-dots span.on.ok,.cs-dots span.on.bad{outline:2px solid #fff;outline-offset:2px}
+.caso{display:grid;grid-template-columns:1.32fr 1fr;gap:18px;flex:1;min-height:0}
+.cs-view{position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#000;box-shadow:0 40px 120px -40px rgba(0,0,0,.9)}
+.cs-scene,.cs-scene svg{position:absolute;inset:0;width:100%;height:100%}
+.cs-scene svg{display:block}
+.cs-view::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px);mix-blend-mode:overlay}
+.cs-hud{position:absolute;top:14px;left:16px;right:16px;display:flex;gap:18px;font:600 14px var(--mono);letter-spacing:.08em;color:rgba(255,255,255,.85);text-shadow:0 1px 4px #000}
+.cs-hud .cs-time{margin-left:auto}
+.rec{display:inline-flex;align-items:center;gap:7px;color:#ff5a5a}
+.rec i{width:11px;height:11px;border-radius:50%;background:#ff3b3b;animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+.cs-cap{position:absolute;left:16px;bottom:14px;display:flex;flex-direction:column;gap:3px;text-shadow:0 1px 6px #000}
+.cs-n{font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#ffb547}
+.cs-place{font:800 20px var(--display);color:#fff}
+.cs-fic{position:absolute;right:14px;bottom:14px;font:600 11px var(--mono);color:rgba(255,255,255,.5);letter-spacing:.06em}
+.cs-alert{position:absolute;top:50px;left:16px;display:none;font:800 16px var(--display);color:#fff;background:#d93030;padding:7px 12px;border-radius:8px;box-shadow:0 0 30px rgba(255,59,59,.7);animation:pulse2 1.6s ease-in-out infinite}
+.caso.has-err .cs-alert{display:inline-block}
+.caso.has-err.answered .cs-alert{display:none}
+@keyframes pulse2{50%{transform:scale(1.06)}}
+.errmark{opacity:0;transition:opacity .4s}
+.caso.answered .errmark{opacity:1;animation:pulse3 1.4s ease-in-out infinite}
+@keyframes pulse3{50%{opacity:.45}}
+.sirR{animation:sirR 1s steps(2) infinite}.sirB{animation:sirB 1s steps(2) infinite}
+@keyframes sirR{50%{opacity:.2}}@keyframes sirB{0%{opacity:.2}50%{opacity:1}}
+.flash{animation:flash 2.4s ease-out infinite}@keyframes flash{0%,70%{opacity:0}75%{opacity:1}100%{opacity:0}}
+.cs-panel{display:flex;flex-direction:column;gap:12px;min-height:0}
+.cs-story{font-size:18.5px;line-height:1.48;color:#d5dbe4}.cs-story b{color:#fff}
+.cs-q{font:800 22px/1.25 var(--display);color:#fff}
+.cs-opts{display:flex;flex-direction:column;gap:9px}
+.cs-o{display:flex;align-items:flex-start;gap:12px;text-align:left;font:700 15px var(--mono);color:var(--muted);padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer;transition:all .2s}
+.cs-o span{font:500 17px/1.38 var(--body);color:#e6e9ef}
+.cs-o:hover:not(:disabled){border-color:rgba(63,208,255,.5);background:rgba(63,208,255,.08)}
+.cs-o:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.cs-o:disabled{cursor:default;opacity:.55}
+.cs-o.right{opacity:1;border-color:var(--emerald);background:rgba(47,214,154,.14);color:var(--emerald)}
+.cs-o.wrong{opacity:1;border-color:var(--coral);background:rgba(255,107,107,.14);color:var(--coral)}
+.cs-fb{display:none;border-radius:12px;padding:11px 14px;font-size:16px;line-height:1.42}
+.cs-fb.show{display:flex;flex-direction:column;gap:5px}
+.cs-fb.ok{border:1px solid rgba(47,214,154,.5);background:rgba(47,214,154,.1);color:#dff7ee}
+.cs-fb.no{border:1px solid rgba(255,107,107,.5);background:rgba(255,107,107,.1);color:#ffe3e3}
+.cs-fb .v{font:800 18px var(--display)}.cs-fb.ok .v{color:var(--emerald)}.cs-fb.no .v{color:var(--coral)}
+.cs-fb b{color:#fff}
+.cs-nav{margin-top:auto;display:flex;justify-content:space-between;gap:10px}
+.cs-nav button{font:700 15px var(--body);padding:11px 18px;border-radius:12px;cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink)}
+.cs-nav .cs-next{background:#fff;color:var(--bg);border-color:#fff}
+.cs-nav button:disabled{opacity:.3;cursor:default}
+.cs-nav button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.cs-sum{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cs-sum li{font-size:16.5px;padding:9px 12px;border-radius:10px;border:1px solid rgba(255,107,107,.4);background:rgba(255,107,107,.08);color:#ffe3e3}
+@media (prefers-reduced-motion:reduce){.sirR,.sirB,.flash,.rec i,.cs-alert,.caso.answered .errmark{animation:none}}
+
 /* Controles */
 .ctl{position:fixed;bottom:16px;z-index:40;display:flex;gap:8px;right:16px}
 .ctl button{font:600 13px var(--body);color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:9px 12px;cursor:pointer;backdrop-filter:blur(8px)}
@@ -762,7 +818,7 @@ body.portrait .rot{display:block}
     </section>
 
         <!-- ================= PROCEDIMIENTO UNIFICADO ================= -->
-    <section class="slide" data-module="Procedimiento policial" aria-label="Procedimiento policial: del lugar del hecho al CAD">
+    <section class="slide" data-module="Procedimiento" aria-label="Procedimiento policial: del lugar del hecho al CAD">
       <div class="sc u5">
         <div class="u5head">
           <div>
@@ -807,7 +863,7 @@ body.portrait .rot{display:block}
     </section>
 
     <!-- ================= PRINCIPIOS RECTORES ================= -->
-    <section class="slide" data-module="Principios rectores" aria-label="Principios rectores">
+    <section class="slide" data-module="Principios" aria-label="Principios rectores">
       <div class="sc" style="gap:10px;padding-top:22px;padding-bottom:56px">
         <div class="prhead">
           <div>
@@ -1008,6 +1064,30 @@ body.portrait .rot{display:block}
         <div class="ixfoot"><span id="ixcount"></span><span class="lg"><span class="lb n">27.801</span>Nación <span class="lb p">10.011</span>Tucumán <span class="lb c">CPP</span>Código Procesal de Tucumán <span class="tg fed">Justicia federal</span></span></div>
       </div>
     </section>
+        <!-- ================= CASO PRÁCTICO ================= -->
+    <section class="slide" data-module="Caso práctico" aria-label="Caso práctico interactivo">
+      <div class="sc" style="gap:12px;padding-top:24px">
+        <div class="cs-head"><div><span class="kicker" style="color:#ff6b6b"><i style="background:#ff6b6b"></i>Caso práctico · decidí como si estuvieras ahí</span>
+          <h2 style="margin-top:8px;font-size:40px">Viernes, 21:40. <em style="color:#ff8a8a">Un llamado al 911.</em></h2></div>
+          <div class="cs-dots" aria-label="Progreso"></div></div>
+        <div class="caso" id="caso">
+          <div class="cs-view">
+            <div class="cs-scene"></div>
+            <div class="cs-hud"><span class="rec"><i></i>REC</span><span>CÁM. CORPORAL 0417</span><span class="cs-time"></span></div>
+            <div class="cs-cap"><span class="cs-n"></span><span class="cs-place"></span></div>
+            <span class="cs-alert">¿Ves el error?</span>
+            <span class="cs-fic">Caso ficticio con fines de capacitación</span>
+          </div>
+          <div class="cs-panel">
+            <p class="cs-story"></p>
+            <p class="cs-q"></p>
+            <div class="cs-opts"></div>
+            <div class="cs-fb" aria-live="polite"></div>
+            <div class="cs-nav"><button class="cs-prev">← Anterior</button><button class="cs-next">Siguiente escena</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- ================= CONCIENTIZACIÓN ================= -->
     <section class="slide" data-module="El buen proceder" aria-label="Las consecuencias de un mal procedimiento">
       <div class="sc" style="gap:16px">
@@ -1083,8 +1163,8 @@ body.portrait .rot{display:block}
 
   addEventListener('keydown',e=>{
     if(e.target.closest&&e.target.closest('input,textarea,.ixlist'))return;
-    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1)}
-    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();if(window.__casoKey&&window.__casoKey(1))return;go(i+1)}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();if(window.__casoKey&&window.__casoKey(-1))return;go(i-1)}
     if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
     if(e.key==='f'||e.key==='F')toggleFs();
   });
@@ -1124,6 +1204,142 @@ body.portrait .rot{display:block}
   // Lista de control
   (function(){const l=document.getElementById('cklist');if(!l)return;const n=document.getElementById('ckn');
     l.addEventListener('change',()=>{const c=l.querySelectorAll('input:checked').length;n.textContent=c;l.closest('.sc').classList.toggle('done',c===l.querySelectorAll('input').length);});})();
+
+  // ===== Caso práctico interactivo =====
+  (function(){
+    const root=document.getElementById('caso');if(!root)return;
+    const NAVY='#0e1830',RIM='rgba(120,200,255,.55)';
+    const officer=(x,y,s=1,o={})=>{const f=o.f||NAVY,flip=o.flip?-1:1;return `<g transform="translate(${x} ${y}) scale(${s*flip} ${s})">
+      <path d="M-34 0 L-26 -120 Q0 -134 26 -120 L34 0 Z" fill="${f}" stroke="${RIM}" stroke-width="1.5"/>
+      <rect x="-30" y="-58" width="60" height="9" fill="#1c2a48"/><rect x="14" y="-60" width="10" height="13" rx="2" fill="#2a3a5c"/>
+      <path d="M-22 0 L-20 70 L-6 70 L-2 0 Z M2 0 L6 70 L20 70 L22 0 Z" fill="${f}" stroke="${RIM}" stroke-width="1.2"/>
+      <circle cx="0" cy="-150" r="20" fill="#1a2238" stroke="${RIM}" stroke-width="1.5"/>
+      <path d="M-24 -160 Q0 -184 24 -160 L26 -156 L-26 -156 Z" fill="#0a1224" stroke="${RIM}" stroke-width="1.2"/><rect x="-28" y="-158" width="38" height="5" rx="2" fill="#0a1224"/>
+      <rect x="-9" y="-112" width="18" height="11" rx="2" fill="#3fd0ff" opacity=".55"/>
+      ${o.arm==='up'?`<path d="M26 -112 L58 -150 L66 -142 L34 -100 Z" fill="${f}" stroke="${RIM}" stroke-width="1.2"/>`:o.arm==='fwd'?`<path d="M26 -112 L78 -86 L74 -76 L26 -92 Z" fill="${f}" stroke="${RIM}" stroke-width="1.2"/>`:`<path d="M26 -112 L36 -40 L26 -38 L20 -100 Z" fill="${f}" stroke="${RIM}" stroke-width="1.2"/>`}
+      <path d="M-26 -112 L-36 -40 L-26 -38 L-20 -100 Z" fill="${f}" stroke="${RIM}" stroke-width="1.2"/></g>`};
+    const youth=(x,y,s=1,o={})=>`<g transform="translate(${x} ${y}) scale(${s*(o.flip?-1:1)} ${s})">
+      <path d="M-30 0 L-24 -104 Q0 -116 24 -104 L30 0 Z" fill="#2b2f3a" stroke="rgba(255,170,150,.5)" stroke-width="1.5"/>
+      <path d="M-20 0 L-18 66 L-5 66 L-2 0 Z M2 0 L5 66 L18 66 L20 0 Z" fill="#1f2430" stroke="rgba(255,170,150,.4)" stroke-width="1.2"/>
+      <path d="M-24 -150 Q0 -176 24 -150 L22 -112 Q0 -100 -22 -112 Z" fill="#30343f" stroke="rgba(255,170,150,.55)" stroke-width="1.5"/>
+      <ellipse cx="0" cy="-130" rx="13" ry="16" fill="#0b0d12"/>
+      ${o.hands==='back'?'':`<path d="M24 -96 L32 -30 L22 -28 L18 -86 Z M-24 -96 L-32 -30 L-22 -28 L-18 -86 Z" fill="#2b2f3a" stroke="rgba(255,170,150,.45)" stroke-width="1.2"/>`}</g>`;
+    const car=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})">
+      <path d="M-170 0 L-160 -46 Q-150 -58 -120 -60 L-80 -100 L80 -100 L120 -60 Q160 -56 168 -40 L172 0 Z" fill="#1b2438" stroke="rgba(150,200,255,.45)" stroke-width="2"/>
+      <path d="M-70 -92 L70 -92 L104 -62 L-104 -62 Z" fill="#0c1220"/><rect x="-170" y="-34" width="342" height="12" fill="#e9eef7" opacity=".85"/>
+      <text x="0" y="-25" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="11" fill="#0b2a5a" letter-spacing="3">POLICÍA DE TUCUMÁN</text>
+      <rect x="-46" y="-112" width="44" height="12" rx="3" fill="#ff3b3b" class="sirR"/><rect x="2" y="-112" width="44" height="12" rx="3" fill="#2f7bff" class="sirB"/>
+      <circle cx="-110" cy="0" r="24" fill="#05070b" stroke="#3a4560" stroke-width="5"/><circle cx="110" cy="0" r="24" fill="#05070b" stroke="#3a4560" stroke-width="5"/></g>`;
+    const glow=`<ellipse class="sirR" cx="560" cy="300" rx="420" ry="240" fill="url(#gR)"/><ellipse class="sirB" cx="760" cy="300" rx="420" ry="240" fill="url(#gB)"/>`;
+    const street=(lights=true)=>`<rect width="1000" height="600" fill="url(#sky)"/>
+      <g opacity=".55"><rect x="40" y="190" width="150" height="250" fill="#0d1220"/><rect x="200" y="140" width="120" height="300" fill="#0b101c"/><rect x="760" y="170" width="200" height="270" fill="#0d1220"/>
+      ${[...Array(18)].map((_,i)=>`<rect x="${60+(i%3)*40+(i>8?720:0)}" y="${210+Math.floor((i%9)/3)*60}" width="18" height="26" fill="#f6c76b" opacity="${(i*37%10)/22+.08}"/>`).join('')}</g>
+      <rect y="440" width="1000" height="160" fill="#10131b"/><rect y="440" width="1000" height="6" fill="#22283a"/>
+      ${[0,1,2,3,4].map(i=>`<rect x="${60+i*220}" y="515" width="110" height="7" fill="#e9c46a" opacity=".35"/>`).join('')}
+      <g><rect x="880" y="190" width="6" height="250" fill="#2a3042"/><path d="M872 190 h40 l-6 10 h-28 z" fill="#2a3042"/><ellipse cx="892" cy="210" rx="70" ry="30" fill="#ffd27a" opacity=".12"/></g>
+      ${lights?glow:''}`;
+    const bubble=(x,y,w,txt,err)=>`<g transform="translate(${x} ${y})"><rect width="${w}" height="64" rx="14" fill="${err?'#2a0f12':'#f4f6fb'}" stroke="${err?'#ff6b6b':'none'}" stroke-width="2"/><path d="M28 64 L40 84 L52 64 Z" fill="${err?'#2a0f12':'#f4f6fb'}"/>
+      <text x="${w/2}" y="40" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="21" font-weight="600" fill="${err?'#ffd0d0':'#111'}">${txt}</text></g>`;
+    const mark=(x,y,r=70)=>`<g class="errmark"><circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#ff6b6b" stroke-width="4" stroke-dasharray="10 8"/><circle cx="${x}" cy="${y}" r="${r+14}" fill="none" stroke="#ff6b6b" stroke-width="2" opacity=".4"/></g>`;
+    const sign=(x,y,txt,col,crossed)=>`<g transform="translate(${x} ${y})"><rect x="-4" y="0" width="8" height="150" fill="#2a3042"/><rect x="-150" y="-74" width="300" height="74" rx="10" fill="${col}" opacity=".92"/><text x="0" y="-27" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="27" fill="#0b0c10">${txt}</text>${crossed?'<path d="M-140 -66 L140 -8 M140 -66 L-140 -8" stroke="#ff2a2a" stroke-width="9" stroke-linecap="round"/>':''}</g>`;
+    const defs=`<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070d"/><stop offset="1" stop-color="#121a2c"/></linearGradient>
+      <radialGradient id="gR"><stop offset="0" stop-color="#ff3b3b" stop-opacity=".35"/><stop offset="1" stop-color="#ff3b3b" stop-opacity="0"/></radialGradient>
+      <radialGradient id="gB"><stop offset="0" stop-color="#2f7bff" stop-opacity=".35"/><stop offset="1" stop-color="#2f7bff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></radialGradient></defs>`;
+    const S=[
+      {t:'21:41:05',place:'Plaza Independencia · San Miguel de Tucumán',
+       scene:()=>street()+car(700,470,1)+youth(380,440,1.15,{hands:'back'})+officer(300,440,1.15,{arm:'fwd'})+officer(500,440,1.1,{flip:true}),
+       story:'Llamado al 911: le arrebataron el celular a una mujer, con empujones. El móvil del <b>Sargento Díaz</b> y el <b>Cabo Ruiz</b> llega en 3 minutos y alcanza a un joven que corría con el teléfono. El joven forcejea un poco y después se queda quieto.',
+       q:'El Cabo Ruiz quiere esposarlo "por las dudas". ¿Qué corresponde?',
+       o:[['Esposarlo enseguida: es lo más seguro',0],['Precinto, evaluando su comportamiento. Esposas solo si corre peligro la vida del joven o de terceros',1],['No sujetarlo de ninguna forma',0]],
+       fb:'La sujeción se gradúa: <b>precinto</b> como regla, evaluando la conducta y la condición del joven. Las <b>esposas</b> son la última instancia, solo si corre peligro la vida del adolescente o de terceros.',art:'Principio de mínima intervención · art. 5 inc. b Ley 27.801'},
+      {t:'21:42:30',place:'Plaza Independencia',
+       scene:()=>street()+officer(330,440,1.25,{arm:'fwd'})+youth(560,440,1.3)+bubble(600,120,230,'"Tengo 19, jefe"')+`<g transform="translate(150 150)"><rect width="150" height="96" rx="10" fill="#e8ecf3"/><rect x="12" y="14" width="44" height="54" rx="4" fill="#b8c2d3"/><rect x="66" y="20" width="70" height="8" fill="#9aa6ba"/><rect x="66" y="38" width="56" height="8" fill="#9aa6ba"/><path d="M0 0 L150 96 M150 0 L0 96" stroke="#ff4d4d" stroke-width="8"/></g>`,
+       story:'No tiene documento. Dice que tiene 19 años, pero por su aspecto podría ser menor.',
+       q:'¿Cómo lo tratan?',
+       o:[['Como adulto: él dijo que tiene 19',0],['Como menor, hasta que se acredite la edad con DNI o partidas',1],['Lo dejan ir: sin documento no se puede hacer nada',0]],
+       fb:'Rige la <b>presunción de minoridad</b>: si la edad no se puede acreditar, se lo trata como menor hasta que se compruebe. Lo que diga el joven no alcanza.',art:'art. 2 Ley 27.801 · art. 393 CPP Tucumán'},
+      {t:'21:43:12',place:'Plaza Independencia',err:true,
+       scene:()=>street()+youth(360,440,1.3,{hands:'back'})+officer(620,440,1.3,{arm:'up',flip:true})+`<g transform="translate(520 205) rotate(-12)"><rect width="34" height="58" rx="6" fill="#0b0d12" stroke="#cfd6e3" stroke-width="2"/><circle cx="17" cy="12" r="5" fill="#fff"/></g><g class="flash"><circle cx="537" cy="215" r="60" fill="#fff" opacity=".35"/><circle cx="537" cy="215" r="24" fill="#fff" opacity=".7"/></g>`+mark(537,225,80),
+       story:'Mientras esperan, el <b>Cabo Ruiz</b> saca su celular y le toma una foto al joven: "es para el grupo de la comisaría, así lo tienen identificado".',
+       q:'¿Qué está mal en esta escena?',
+       o:[['Nada: es para identificarlo',0],['Viola la reserva de identidad: no se fotografía ni se difunde ningún dato del adolescente',1],['Solo está mal si la publica en redes',0]],
+       fb:'Está <b>prohibido</b> fotografiar o difundir el nombre, la imagen o cualquier dato que identifique al adolescente, por cualquier medio, incluidos los grupos de mensajería. El incumplimiento se sanciona y genera sumario.',art:'art. 5 inc. i Ley 27.801 · Ley 20.056'},
+      {t:'21:45:40',place:'Junto al móvil',err:true,
+       scene:()=>street()+car(760,470,.95)+youth(520,440,1.2,{hands:'back'})+officer(330,440,1.3,{arm:'fwd'})+bubble(110,110,420,'"Decime por qué lo hiciste y te va mejor"',true)+mark(320,142,90),
+       story:'El <b>Sargento Díaz</b> se acerca al joven y le habla en voz baja.',
+       q:'¿Qué error comete el Sargento?',
+       o:[['Ninguno: solo quiere saber qué pasó',0],['Le pregunta sobre el hecho: no se le toma ninguna declaración, ni siquiera informal',1],['Solo es error si lo anota en el acta',0]],
+       fb:'El adolescente tiene derecho a <b>no declarar</b> y a tener un abogado desde el primer momento. No se le pregunta sobre el hecho ni se le toma declaración de ningún tipo, tampoco espontánea. Lo que se le dice es <b>por qué interviene la policía y cuáles son sus derechos</b>.',art:'art. 5 inc. c Ley 27.801'},
+      {t:'21:47:02',place:'Desde el móvil',
+       scene:()=>street()+car(560,470,1.15)+officer(260,440,1.3,{arm:'up'})+bubble(320,90,360,'"Comisaría, tengo un menor..."',true)+`<g transform="translate(300 260)"><rect width="22" height="44" rx="5" fill="#0b0d12" stroke="#9aa6ba" stroke-width="2"/><rect x="8" y="-14" width="5" height="16" fill="#9aa6ba"/></g>`,
+       story:'El Sargento Díaz toma la radio para dar aviso.',
+       q:'¿A quién tiene que comunicar?',
+       o:[['Solo a su comisaría, que se encarga del resto',0],['Al supervisor de turno (que avisa al Juez de Menores), al MPF, al Ministerio Pupilar, a los padres y al defensor',1],['Solo a los padres del joven',0]],
+       fb:'Desde el móvil se comunica al <b>supervisor de turno</b>, que avisa al <b>Juez de Menores</b>, y también al <b>MPF</b>, al <b>Ministerio Pupilar</b>, a los <b>padres o responsables</b> y al <b>defensor</b>. Cada aviso queda en acta, con la hora y quién lo recibió.',art:'Directivas de Jefatura · art. 5 incs. c y l Ley 27.801'},
+      {t:'21:52:18',place:'Av. Mate de Luna',err:true,
+       scene:()=>`<rect width="1000" height="600" fill="url(#sky)"/><rect y="440" width="1000" height="160" fill="#10131b"/><path d="M500 600 L470 440 L530 440 Z" fill="#e9c46a" opacity=".25"/>`+sign(200,330,'COMISARÍA','#ff8a8a',true)+sign(800,330,'HOSPITAL → CAD','#5be3b0',false)+car(500,520,.9)+bubble(330,70,340,'"Tráiganlo un rato a la comisaría"',true)+mark(200,292,160),
+       story:'Por radio, el jefe de guardia le dice al Sargento que lleve al joven "un rato a la comisaría, hasta que se aclare todo".',
+       q:'¿Adónde lo llevan?',
+       o:[['A la comisaría "un rato": es solo transitorio',0],['Al centro asistencial público con un pedido médico, acompañado de sus padres o defensor, y después al CAD',1],['Directo a la casa de los padres',0]],
+       fb:'Está <b>prohibido</b> alojarlo en comisarías o dependencias policiales, aunque sea por un rato. Primero va al <b>centro asistencial público</b>, con un pedido médico y acompañado de sus padres o defensor. Después, al <b>CAD</b>.',art:'art. 402 inc. 9 CPP Tucumán · art. 5 inc. k Ley 27.801'},
+      {t:'23:08:44',place:'Ingreso al CAD',
+       scene:()=>`<rect width="1000" height="600" fill="url(#sky)"/><rect y="440" width="1000" height="160" fill="#10131b"/><rect x="520" y="150" width="400" height="290" fill="#14202a" stroke="#2fd69a" stroke-width="3"/><rect x="560" y="182" width="320" height="60" rx="8" fill="#2fd69a"/><text x="720" y="225" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="40" fill="#0b0c10">CAD</text><rect x="660" y="300" width="120" height="140" fill="#0a1016" stroke="#2fd69a" stroke-width="2"/><rect x="672" y="312" width="96" height="128" fill="#2fd69a" opacity=".12"/>`+officer(330,440,1.2,{arm:'fwd'})+youth(480,440,1.2)+`<g transform="translate(150 200)"><rect width="110" height="140" rx="6" fill="#e8ecf3"/><rect x="14" y="20" width="80" height="8" fill="#9aa6ba"/><rect x="14" y="40" width="64" height="8" fill="#9aa6ba"/><rect x="14" y="60" width="72" height="8" fill="#9aa6ba"/><circle cx="80" cy="112" r="16" fill="none" stroke="#2fd69a" stroke-width="4"/><path d="M73 112 l5 5 l9 -10" stroke="#2fd69a" stroke-width="4" fill="none"/></g>`,
+       story:'Después del examen médico, llegan al CAD.',
+       q:'¿Cómo debe ser el ingreso?',
+       o:[['Lo deja cualquier efectivo, sin papeles: el CAD se encarga',0],['Con personal del mismo sexo, el pedido y el informe del médico, y el número de causa. Lo recibe el coordinador del CAD',1],['Solo con el acta de aprehensión',0]],
+       fb:'Ingresa <b>acompañado por personal del mismo sexo</b>, con el <b>pedido</b> y el <b>informe médico</b> del centro asistencial público y el <b>número de identificación de la causa</b>. Lo recibe el <b>coordinador del CAD</b>, que luego se comunica con el supervisor.',art:'Directivas de Jefatura · art. 402 inc. 9 CPP'},
+      {t:'00:15:00',place:'La dependencia, al cierre',err:true,
+       scene:()=>`<rect width="1000" height="600" fill="#0d1018"/><rect y="380" width="1000" height="220" fill="#1a140f"/><g transform="translate(330 120) rotate(-3)"><rect width="340" height="420" rx="6" fill="#f2efe6"/><text x="170" y="56" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="30" fill="#1a1a1a">ACTA</text><rect x="36" y="90" width="268" height="7" fill="#8a8a8a"/><text x="36" y="140" font-family="IBM Plex Sans,sans-serif" font-size="20" fill="#333">"Se procedió a la aprehensión."</text>${[0,1,2,3,4,5].map(i=>`<rect x="36" y="${180+i*34}" width="268" height="2" fill="#cfcac0"/>`).join('')}</g>`+mark(500,330,170),
+       story:'Termina el turno. El acta del procedimiento tiene una sola línea: "Se procedió a la aprehensión."',
+       q:'¿Qué consecuencia puede tener?',
+       o:[['Ninguna: lo importante es que se lo aprehendió',0],['La defensa puede plantear la nulidad: sin horas, avisos, derechos leídos ni secuestros documentados, el proceso puede caer',1],['Se completa después, de memoria',0]],
+       fb:'<b>Todo queda en acta</b>: horas, avisos y a quién se hicieron, lectura de derechos, examen médico, secuestros con cadena de custodia y entrega al MPF, ingreso al CAD. Lo que no está escrito no existe para el proceso, y la causa puede caer.',art:'Buen proceder · responsabilidad del oficial'}
+    ];
+    let i=0,score=0,ans=[];
+    const sv=root.querySelector('.cs-scene'),st=root.querySelector('.cs-story'),qq=root.querySelector('.cs-q'),op=root.querySelector('.cs-opts'),fb=root.querySelector('.cs-fb'),dots=root.closest('.sc').querySelector('.cs-dots'),nx=root.querySelector('.cs-next'),pv=root.querySelector('.cs-prev'),hud=root.querySelector('.cs-hud'),pl=root.querySelector('.cs-place');
+    dots.innerHTML=S.map((_,k)=>`<span data-k="${k}"></span>`).join('')+'<span data-k="end" class="end"></span>';
+    function render(){
+      [...dots.children].forEach((d,k)=>{d.className=(d.dataset.k==='end'?'end ':'')+(k===i?'on ':'')+(ans[k]===1?'ok':ans[k]===0?'bad':'')});
+      if(i>=S.length){ // final
+        root.classList.add('fin');root.classList.remove('has-err','answered');root.querySelector('.cs-n').textContent='Resultado';
+        sv.innerHTML=`<svg viewBox="0 0 1000 600" role="img" aria-label="Resultado">${defs}<rect width="1000" height="600" fill="url(#sky)"/><text x="500" y="270" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="150" fill="#fff">${score}<tspan font-size="70" fill="#9aa3b2"> / ${S.length}</tspan></text><text x="500" y="350" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="30" fill="#c9d0db">decisiones correctas</text></svg>`;
+        hud.style.display='none';pl.textContent='';
+        st.innerHTML='<b>Los errores de este procedimiento:</b>';
+        qq.textContent='';
+        op.innerHTML='<ul class="cs-sum"><li>Esposar "por las dudas"</li><li>Creerle la edad sin documento</li><li>Fotografiarlo para un grupo</li><li>Preguntarle por qué lo hizo</li><li>Avisar solo a la comisaría</li><li>Llevarlo "un rato" a la comisaría</li><li>Un acta de una sola línea</li></ul>';
+        fb.className='cs-fb show ok';fb.innerHTML='<b>Cada uno de estos errores puede hacer caer la causa</b> y traer consecuencias legales y administrativas para el policía. Son situaciones que van a pasar: la diferencia la hace saber cómo proceder.';
+        nx.textContent='Empezar de nuevo';pv.disabled=false;return;
+      }
+      root.classList.remove('fin');hud.style.display='';
+      const c=S[i];
+      sv.innerHTML=`<svg viewBox="0 0 1000 600" role="img" aria-label="Escena ${i+1}">${defs}${c.scene()}<rect width="1000" height="600" fill="url(#vig)"/></svg>`;
+      root.querySelector('.cs-time').textContent='07/11/2026 '+c.t;
+      pl.textContent=c.place;
+      root.querySelector('.cs-n').textContent=`Escena ${i+1} de ${S.length}`;
+      root.classList.toggle('has-err',!!c.err);
+      st.innerHTML=c.story;qq.textContent=c.q;
+      op.innerHTML=c.o.map(([t,ok],k)=>`<button class="cs-o" data-ok="${ok}">${String.fromCharCode(65+k)}<span>${t}</span></button>`).join('');
+      fb.className='cs-fb';fb.innerHTML='';
+      if(ans[i]!==undefined)reveal(null);
+      nx.textContent=i===S.length-1?'Ver resultado':'Siguiente escena';pv.disabled=i===0;
+    }
+    function reveal(btn){
+      const c=S[i];
+      op.querySelectorAll('.cs-o').forEach(b=>{b.disabled=true;if(b.dataset.ok==='1')b.classList.add('right');});
+      if(btn&&btn.dataset.ok!=='1')btn.classList.add('wrong');
+      const ok=btn?btn.dataset.ok==='1':ans[i]===1;
+      fb.className='cs-fb show '+(ok?'ok':'no');
+      fb.innerHTML=`<span class="v">${ok?'Correcto':'Ese es el error'}</span><p>${c.fb}</p><span class="art">${c.art}</span>`;
+      root.classList.add('answered');
+    }
+    op.addEventListener('click',e=>{const b=e.target.closest('.cs-o');if(!b||b.disabled)return;const ok=b.dataset.ok==='1'?1:0;if(ans[i]===undefined){ans[i]=ok;score+=ok;}reveal(b);render_dots();});
+    function render_dots(){[...dots.children].forEach((d,k)=>{d.className=(d.dataset.k==='end'?'end ':'')+(k===i?'on ':'')+(ans[k]===1?'ok':ans[k]===0?'bad':'')});}
+    nx.onclick=()=>{if(i>=S.length){i=0;score=0;ans=[];}else i++;root.classList.remove('answered');render();};
+    pv.onclick=()=>{if(i>0){i--;root.classList.remove('answered');render();}};
+    window.__casoKey=(dir)=>{const on=root.closest('.slide').classList.contains('on');if(!on)return false;if(dir>0&&i<S.length){nx.click();return true}if(dir<0&&i>0){pv.click();return true}return false};
+    render();
+  })();
 
   // Fondo: grilla técnica + halos que respiran (cian / coral)
   const cv=document.getElementById('fx'),cx=cv.getContext('2d');
