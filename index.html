@@ -628,6 +628,17 @@ body.portrait .rot{display:block}
 .cs-sum li{font-size:16.5px;padding:9px 12px;border-radius:10px;border:1px solid rgba(255,107,107,.4);background:rgba(255,107,107,.08);color:#ffe3e3}
 @media (prefers-reduced-motion:reduce){.sirR,.sirB,.flash,.rec i,.cs-alert,.caso.answered .errmark{animation:none}}
 
+
+.qrs{display:grid!important;grid-template-columns:1fr 520px;gap:60px;align-items:center;padding-top:40px!important}
+.qrp{font-size:24px;line-height:1.45;color:#d5dbe4;margin-top:16px;max-width:30ch}
+.qrlist{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:12px}
+.qrlist li{font-size:21px;color:#e6e9ef;padding-left:26px;position:relative}
+.qrlist li::before{content:"";position:absolute;left:0;top:.5em;width:11px;height:11px;border-radius:3px;background:var(--emerald)}
+.qru{margin-top:26px;font:600 17px var(--mono);color:var(--cyan)}
+.qrbox{background:#fff;border-radius:28px;padding:30px 30px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 0 0 6px rgba(47,214,154,.35),0 40px 120px -30px rgba(47,214,154,.6)}
+.qrbox svg{width:100%;height:auto;display:block}
+.qrbox span{font:800 20px var(--display);color:#0b0c10}
+
 /* Controles */
 .ctl{position:fixed;bottom:16px;z-index:40;display:flex;gap:8px;right:16px}
 .ctl button{font:600 13px var(--body);color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:9px 12px;cursor:pointer;backdrop-filter:blur(8px)}
@@ -1090,6 +1101,19 @@ body.portrait .rot{display:block}
         <div class="prog"><b id="ckn">0</b><span>de 12</span></div></div>
         <div class="cklist" id="cklist"><label class="ck"><input type="checkbox"><span class="bx"></span><span>Verifiqué la edad con DNI o partidas; si hubo duda, lo traté como menor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Le informé sus derechos en palabras simples</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Avisé al <b>supervisor de turno</b>, que avisa al Juez de Menores</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Comuniqué al MPF, al Ministerio Pupilar, a los padres y al defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No le tomé ninguna declaración, ni espontánea</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Usé precinto; esposas solo si corría peligro la vida del adolescente o de terceros</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Si es mujer: requisa y custodia con <b>personal femenino</b></span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Pasó por el centro asistencial público con sus padres o defensor</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Entregué los secuestros de inmediato al MPF, con cadena de custodia</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Lo llevé al <b>CAD</b> con personal del mismo sexo, pedido e informe médico y n.º de causa</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>No hay fotos ni datos suyos difundidos</span></label><label class="ck"><input type="checkbox"><span class="bx"></span><span>Todo quedó en <b>acta</b>: horas, avisos, movimientos y secuestros</span></label></div>
         <div class="final"><span>Un procedimiento bien hecho protege a <b>la víctima</b>, al <b>adolescente</b> y <b>al policía</b>.</span></div>
+      </div>
+    </section>
+    <!-- ================= QR PROTOCOLO ================= -->
+    <section class="slide" data-module="El buen proceder" aria-label="Llevate el protocolo">
+      <div class="sc qrs">
+        <div class="qrl">
+          <span class="kicker" style="color:var(--emerald)"><i style="background:var(--emerald)"></i>Para tener en el celular</span>
+          <h2 style="margin-top:12px;font-size:58px">Llevate el <em style="color:var(--emerald)">protocolo</em></h2>
+          <p class="qrp">Escaneá el código con la cámara del celular y guardalo en tu pantalla de inicio.</p>
+          <ul class="qrlist"><li>La ruta del procedimiento, del lugar del hecho al CAD</li><li>34 casos con buscador: qué hacer, qué no hacer y a quién comunicar</li><li>Tareas del suboficial y del oficial</li><li>La lista de control antes de cerrar el procedimiento</li></ul>
+          <p class="qru">sergioponce88.github.io/protocolo-policial-ley27801</p>
+        </div>
+        <div class="qrbox"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 410" class="qr" role="img" aria-label="Código QR al protocolo policial"><g transform="scale(10)"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#0b0c10" d="M2 2.5h7m1 0h1m7 0h1m3 0h6m2 0h1m1 0h7m-37 1h1m5 0h1m2 0h1m3 0h2m3 0h2m2 0h1m1 0h4m2 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m2 0h3m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h2m2 0h1m3 0h5m3 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m1 0h2m5 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h1m1 0h1m1 0h1m3 0h2m2 0h3m3 0h3m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-28 1h3m1 0h6m1 0h4m2 0h1m1 0h1m-28 1h7m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h2m1 0h2m4 0h2m3 0h1m-35 1h3m2 0h3m4 0h2m2 0h2m3 0h1m1 0h2m1 0h1m2 0h1m1 0h2m-33 1h1m1 0h3m3 0h1m3 0h1m5 0h3m1 0h4m2 0h2m3 0h2m-36 1h2m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h3m1 0h1m4 0h2m-37 1h1m2 0h1m2 0h1m2 0h6m4 0h1m2 0h5m2 0h6m-34 1h2m2 0h1m1 0h1m2 0h2m2 0h1m1 0h1m4 0h3m2 0h1m1 0h2m1 0h1m1 0h2m-35 1h1m1 0h1m1 0h6m1 0h2m1 0h2m1 0h1m1 0h3m2 0h4m1 0h2m2 0h1m1 0h2m-37 1h1m1 0h2m4 0h1m1 0h2m3 0h2m1 0h1m1 0h2m1 0h2m1 0h5m5 0h1m-36 1h1m1 0h1m2 0h1m1 0h5m2 0h1m2 0h3m4 0h3m2 0h1m1 0h1m1 0h1m1 0h1m-36 1h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h4m2 0h1m1 0h3m4 0h1m1 0h1m2 0h1m-34 1h3m2 0h2m1 0h2m2 0h1m3 0h3m1 0h1m3 0h1m1 0h1m2 0h3m1 0h3m-36 1h5m1 0h1m1 0h3m2 0h1m2 0h1m3 0h3m2 0h2m8 0h1m-37 1h3m3 0h2m1 0h5m3 0h2m3 0h1m1 0h3m2 0h7m-36 1h1m2 0h2m3 0h3m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m5 0h1m2 0h1m-35 1h1m1 0h1m3 0h1m1 0h3m1 0h1m4 0h1m2 0h1m3 0h1m2 0h1m1 0h1m4 0h3m-36 1h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1m1 0h4m4 0h1m3 0h2m1 0h1m2 0h1m-37 1h1m2 0h1m1 0h2m1 0h2m3 0h2m2 0h1m1 0h2m2 0h3m4 0h1m1 0h4m-36 1h1m2 0h2m2 0h1m3 0h2m1 0h2m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m-34 1h1m4 0h2m3 0h1m3 0h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h2m1 0h2m2 0h3m-37 1h1m1 0h1m1 0h2m2 0h1m1 0h2m1 0h4m1 0h2m1 0h1m4 0h4m2 0h1m-33 1h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m2 0h1m1 0h1m1 0h1m2 0h2m1 0h8m-28 1h1m1 0h2m1 0h1m1 0h7m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m-36 1h7m1 0h2m1 0h2m3 0h2m1 0h3m6 0h1m1 0h1m1 0h2m1 0h2m-37 1h1m5 0h1m1 0h2m1 0h3m2 0h3m1 0h3m3 0h1m1 0h1m3 0h1m2 0h1m-36 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h5m6 0h8m1 0h2m-36 1h1m1 0h3m1 0h1m1 0h2m5 0h1m1 0h1m5 0h4m1 0h1m1 0h3m1 0h2m-36 1h1m1 0h3m1 0h1m1 0h1m2 0h4m2 0h1m2 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h2m1 0h1m-37 1h1m5 0h1m1 0h1m3 0h1m2 0h3m1 0h6m1 0h1m1 0h1m2 0h2m3 0h1m-37 1h7m2 0h3m1 0h2m1 0h2m1 0h1m2 0h1m1 0h4m2 0h7"/></g></svg><span>Protocolo policial · Ley 27.801</span></div>
       </div>
     </section>
   </div>
