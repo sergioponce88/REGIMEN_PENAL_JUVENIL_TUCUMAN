@@ -651,6 +651,22 @@ body.portrait .rot{display:block}
   .slide,.slide.on{transition:none}
   .pulse{animation:none}
 }
+
+.disert{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;width:100%}
+.disert .dp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;border-left:3px solid var(--cyan)}
+.disert .dl{grid-column:1/-1;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:-4px}
+.disert .dp b{display:block;font-family:var(--display);font-size:19px;color:var(--ink);letter-spacing:-.01em}
+.disert .dp span{font-size:13px;color:var(--cyan)}
+.endsl{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%}
+.end-logo{width:120px;margin-bottom:22px;filter:drop-shadow(0 10px 30px rgba(63,208,255,.25))}
+.end-h{font-family:var(--display);font-size:104px;line-height:1;margin:14px 0 16px;letter-spacing:-.03em}
+.end-h em{font-style:normal;color:var(--cyan)}
+.end-p{font-size:24px;color:var(--muted);max-width:900px}
+.end-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px;width:100%;max-width:1200px}
+.end-c{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px 22px;text-align:left;border-top:3px solid var(--cyan)}
+.end-c small{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.end-c b{font-family:var(--display);font-size:30px;letter-spacing:-.01em}
+.end-m{margin-top:34px;font-family:var(--mono);font-size:14px;color:var(--muted);letter-spacing:.06em}
 </style>
 </head>
 <body>
@@ -683,6 +699,7 @@ body.portrait .rot{display:block}
         </div>
 
         <div class="c-right">
+          <div class="disert" aria-label="Disertantes"><span class="dl">Disertantes</span><div class="dp"><b>Celestina T. Aira</b><span>Comisario · Abogada</span></div><div class="dp"><b>Julio Rodríguez</b><span>Comisario · Abogado</span></div><div class="dp"><b>Sergio E. Ponce</b><span>Oficial Auxiliar</span></div></div>
           <div class="chain" role="group" aria-label="La intervención policial paso a paso">
             <h3>La intervención policial</h3>
             <div class="step hl">
@@ -1114,6 +1131,16 @@ body.portrait .rot{display:block}
           <p class="qru">sergioponce88.github.io/protocolo-policial-ley27801</p>
         </div>
         <div class="qrbox"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 410" class="qr" role="img" aria-label="Código QR al protocolo policial"><g transform="scale(10)"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#0b0c10" d="M2 2.5h7m1 0h1m7 0h1m3 0h6m2 0h1m1 0h7m-37 1h1m5 0h1m2 0h1m3 0h2m3 0h2m2 0h1m1 0h4m2 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m2 0h3m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h2m2 0h1m3 0h5m3 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m1 0h2m5 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h1m1 0h1m1 0h1m3 0h2m2 0h3m3 0h3m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-28 1h3m1 0h6m1 0h4m2 0h1m1 0h1m-28 1h7m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h2m1 0h2m4 0h2m3 0h1m-35 1h3m2 0h3m4 0h2m2 0h2m3 0h1m1 0h2m1 0h1m2 0h1m1 0h2m-33 1h1m1 0h3m3 0h1m3 0h1m5 0h3m1 0h4m2 0h2m3 0h2m-36 1h2m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h3m1 0h1m4 0h2m-37 1h1m2 0h1m2 0h1m2 0h6m4 0h1m2 0h5m2 0h6m-34 1h2m2 0h1m1 0h1m2 0h2m2 0h1m1 0h1m4 0h3m2 0h1m1 0h2m1 0h1m1 0h2m-35 1h1m1 0h1m1 0h6m1 0h2m1 0h2m1 0h1m1 0h3m2 0h4m1 0h2m2 0h1m1 0h2m-37 1h1m1 0h2m4 0h1m1 0h2m3 0h2m1 0h1m1 0h2m1 0h2m1 0h5m5 0h1m-36 1h1m1 0h1m2 0h1m1 0h5m2 0h1m2 0h3m4 0h3m2 0h1m1 0h1m1 0h1m1 0h1m-36 1h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h4m2 0h1m1 0h3m4 0h1m1 0h1m2 0h1m-34 1h3m2 0h2m1 0h2m2 0h1m3 0h3m1 0h1m3 0h1m1 0h1m2 0h3m1 0h3m-36 1h5m1 0h1m1 0h3m2 0h1m2 0h1m3 0h3m2 0h2m8 0h1m-37 1h3m3 0h2m1 0h5m3 0h2m3 0h1m1 0h3m2 0h7m-36 1h1m2 0h2m3 0h3m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m5 0h1m2 0h1m-35 1h1m1 0h1m3 0h1m1 0h3m1 0h1m4 0h1m2 0h1m3 0h1m2 0h1m1 0h1m4 0h3m-36 1h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1m1 0h4m4 0h1m3 0h2m1 0h1m2 0h1m-37 1h1m2 0h1m1 0h2m1 0h2m3 0h2m2 0h1m1 0h2m2 0h3m4 0h1m1 0h4m-36 1h1m2 0h2m2 0h1m3 0h2m1 0h2m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m-34 1h1m4 0h2m3 0h1m3 0h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h2m1 0h2m2 0h3m-37 1h1m1 0h1m1 0h2m2 0h1m1 0h2m1 0h4m1 0h2m1 0h1m4 0h4m2 0h1m-33 1h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m2 0h1m1 0h1m1 0h1m2 0h2m1 0h8m-28 1h1m1 0h2m1 0h1m1 0h7m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m-36 1h7m1 0h2m1 0h2m3 0h2m1 0h3m6 0h1m1 0h1m1 0h2m1 0h2m-37 1h1m5 0h1m1 0h2m1 0h3m2 0h3m1 0h3m3 0h1m1 0h1m3 0h1m2 0h1m-36 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h5m6 0h8m1 0h2m-36 1h1m1 0h3m1 0h1m1 0h2m5 0h1m1 0h1m5 0h4m1 0h1m1 0h3m1 0h2m-36 1h1m1 0h3m1 0h1m1 0h1m2 0h4m2 0h1m2 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h2m1 0h1m-37 1h1m5 0h1m1 0h1m3 0h1m2 0h3m1 0h6m1 0h1m1 0h1m2 0h2m3 0h1m-37 1h7m2 0h3m1 0h2m1 0h2m1 0h1m2 0h1m1 0h4m2 0h7"/></g></svg><span>Protocolo policial · Ley 27.801</span></div>
+      </div>
+    </section>
+    <section class="slide" data-module="El buen proceder" aria-label="Cierre y disertantes">
+      <div class="sc endsl">
+        <img class="end-logo" src="assets/escudo-policia.png" alt="">
+        <span class="kicker"><i></i>Curso de capacitación · Régimen Penal Juvenil</span>
+        <h2 class="end-h">Muchas <em>gracias</em></h2>
+        <p class="end-p">Un buen procedimiento protege al adolescente, a la víctima, a la causa y al policía.</p>
+        <div class="end-grid"><div class="end-c"><small>Comisario · Abogada</small><b>Celestina T. Aira</b></div><div class="end-c"><small>Comisario · Abogado</small><b>Julio Rodríguez</b></div><div class="end-c"><small>Oficial Auxiliar</small><b>Sergio E. Ponce</b></div></div>
+        <p class="end-m">Policía de Tucumán · IESP · San Miguel de Tucumán · Noviembre 2026</p>
       </div>
     </section>
   </div>
