@@ -667,6 +667,38 @@ body.portrait .rot{display:block}
 .end-c small{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .end-c b{font-family:var(--display);font-size:30px;letter-spacing:-.01em}
 .end-m{margin-top:34px;font-family:var(--mono);font-size:14px;color:var(--muted);letter-spacing:.06em}
+
+.cb-stairs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;flex:1;align-items:end}
+.cb-st{--c:var(--cyan);display:flex;flex-direction:column;gap:9px;padding:20px 20px 18px;border-radius:20px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);background:linear-gradient(165deg,color-mix(in srgb,var(--c) 14%,transparent),rgba(255,255,255,.02));min-height:calc(74% + var(--d)*8.6%)}
+.cb-st.c1{--c:#3fd0ff}.cb-st.c2{--c:#7b9dff}.cb-st.c3{--c:#2fd69a}.cb-st.c4{--c:#ffb547}
+.cb-n{display:flex;align-items:center;justify-content:space-between}
+.cb-n b{font:900 44px/1 var(--display);color:var(--c)}
+.cb-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--c);border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
+.cb-st h4{font:800 27px/1.05 var(--display);letter-spacing:-.01em}
+.cb-q{font:600 18.5px/1.3 var(--body);color:#fff}
+.cb-w{font-size:16.5px;line-height:1.4;color:#c9d0db}
+.cb-ex,.cb-fail{font-size:16px;line-height:1.38;color:#e3e8ef;border-radius:10px;padding:9px 11px;background:rgba(255,255,255,.05)}
+.cb-ex span,.cb-fail span{display:block;font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-bottom:3px;color:var(--c)}
+.cb-fail{margin-top:auto;background:rgba(255,107,107,.08)}.cb-fail span{color:var(--coral)}
+.cb-st .art{color:var(--c)}
+.cb-two{display:grid;grid-template-columns:1fr 1fr;gap:18px;flex:1}
+.cb-age,.cb-acta{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:22px 24px;display:flex;flex-direction:column;gap:11px}
+.cb-two h4{font:800 24px/1.15 var(--display)}
+.cb-sub{font-size:17px;color:var(--muted);line-height:1.4}
+.cb-band{display:grid;grid-template-columns:118px 1fr;gap:14px;align-items:center;border-radius:14px;padding:16px 14px;border:1px solid var(--line)}
+.cb-band b{font:900 26px/1 var(--display)}
+.cb-band strong{display:block;font:700 18px var(--body)}.cb-band span{font-size:16px;color:#c9d0db;line-height:1.35}
+.cb-band.np b,.cb-band.np strong{color:var(--muted)}
+.cb-band.rpj{border-color:rgba(63,208,255,.5);background:rgba(63,208,255,.09)}.cb-band.rpj b,.cb-band.rpj strong{color:var(--cyan)}
+.cb-band.ad b{color:#c9d0db}
+.cb-foot{font-size:16px;color:#c9d0db;margin-top:auto;line-height:1.4}.cb-foot b{color:#fff}
+.cb-row{--c:var(--cyan);display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;padding:11px 0;border-top:1px solid var(--line)}
+.cb-row.c1{--c:#3fd0ff}.cb-row.c2{--c:#7b9dff}.cb-row.c3{--c:#2fd69a}.cb-row.c4{--c:#ffb547}
+.cb-row i{font:900 22px/44px var(--display);font-style:normal;text-align:center;border-radius:12px;color:var(--bg);background:var(--c)}
+.cb-row strong{display:block;font:700 19px var(--body);color:var(--c)}.cb-row span{font-size:17px;line-height:1.4;color:#d5dbe4}.cb-row span b{color:#fff}
+.cb-gl{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:14px;flex:1}
+.cb-g{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;border-top:3px solid var(--cyan)}
+.cb-g{justify-content:flex-start;padding-top:24px}.cb-g b{font:800 28px/1.1 var(--display)}.cb-g span{font-size:20.5px;line-height:1.42;color:#c9d0db}
 </style>
 </head>
 <body>
@@ -715,6 +747,76 @@ body.portrait .rot{display:block}
             <p class="quote">Lo que se hace bien o mal en la intervención policial condiciona todo lo que sigue.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ================= CONCEPTOS BÁSICOS ================= -->
+    <section class="slide" data-module="Conceptos básicos" aria-label="Estructura del delito: cuatro escalones">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>Antes de empezar · teoría del delito</span>
+          <h2 style="margin-top:12px">¿Cuándo hay delito? <em>Cuatro escalones</em>, siempre en este orden</h2>
+        </div>
+        <div class="case"><span class="tag">El caso</span><span>Un joven le arrebata el celular a una mujer en la parada del colectivo y la empuja.</span></div>
+        <div class="cb-stairs"><article class="cb-st c1" style="--d:0">
+            <div class="cb-n"><b>1</b><span class="cb-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M12 9v6M8 21l4-6 4 6M7 12h10"/></svg></span></div>
+            <h4>Conducta</h4><p class="cb-q">¿Hubo un acto humano?</p><p class="cb-w">Una acción (hacer) o una omisión (no hacer lo debido).</p>
+            <div class="cb-ex"><span>En el caso</span>Tira del celular y empuja a la víctima.</div>
+            <div class="cb-fail"><span>Se cae si…</span>Fuerza física irresistible, acto reflejo.</div>
+          </article><article class="cb-st c2" style="--d:1">
+            <div class="cb-n"><b>2</b><span class="cb-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 19V5M9 7h6M9 11h6"/></svg></span></div>
+            <h4>Tipicidad</h4><p class="cb-q">¿Encaja en un artículo del Código Penal?</p><p class="cb-w">El hecho coincide con la descripción de un delito, con dolo o con culpa.</p>
+            <div class="cb-ex"><span>En el caso</span>Apoderarse de algo ajeno con violencia: <b>robo</b>.</div>
+            <div class="cb-fail"><span>Se cae si…</span>El hecho no está previsto como delito.</div><span class="art">art. 164 CP</span>
+          </article><article class="cb-st c3" style="--d:2">
+            <div class="cb-n"><b>3</b><span class="cb-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 6a3 3 0 006 0zM19 7l-3 6a3 3 0 006 0z"/></svg></span></div>
+            <h4>Antijuridicidad</h4><p class="cb-q">¿Tenía permiso para hacerlo?</p><p class="cb-w">Es contrario a la ley si no hay una causa que lo justifique.</p>
+            <div class="cb-ex"><span>En el caso</span>Nada lo autorizaba a quitarle el celular.</div>
+            <div class="cb-fail"><span>Se cae si…</span>Legítima defensa, estado de necesidad, cumplimiento de un deber.</div><span class="art">art. 34 CP</span>
+          </article><article class="cb-st c4" style="--d:3">
+            <div class="cb-n"><b>4</b><span class="cb-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg></span></div>
+            <h4>Culpabilidad</h4><p class="cb-q">¿Se le puede reprochar a él?</p><p class="cb-w">Podía comprender lo que hacía y podía actuar de otra manera.</p>
+            <div class="cb-ex"><span>En el caso</span>Entendía lo que hacía y eligió hacerlo.</div>
+            <div class="cb-fail"><span>Se cae si…</span>No podía comprender (inimputable), error inevitable, amenaza grave.</div><span class="art">art. 34 CP</span>
+          </article></div>
+        <div class="takeaway"><span class="k">Regla clave</span><span>Se analiza escalón por escalón. <b>Si uno falla, no hay delito</b> y no se sigue al siguiente.</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="Conceptos básicos" aria-label="Dónde entra la edad y por qué le importa al policía">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>Del concepto a la calle</span>
+          <h2 style="margin-top:12px">La edad decide si hay pena. <em>El acta prueba</em> cada escalón</h2>
+        </div>
+        <div class="cb-two">
+          <div class="cb-age">
+            <h4>Después de los 4 escalones: ¿se puede aplicar pena?</h4>
+            <p class="cb-sub">El delito puede existir igual. Lo que cambia con la edad es la respuesta del Estado.</p>
+            <div class="cb-band np"><b>Hasta 13</b><div><strong>No punible</strong><span>El hecho existe y se investiga. No se le aplica pena: interviene la protección de derechos.</span></div></div>
+            <div class="cb-band rpj"><b>14 a 17</b><div><strong>Punible · Régimen Penal Juvenil</strong><span>Responde con todas las garantías, ante el Juez de Menores y con penas propias.</span></div></div>
+            <div class="cb-band ad"><b>18 o más</b><div><strong>Régimen de adultos</strong><span>Código Penal y CPP comunes.</span></div></div>
+            <p class="cb-foot">La edad se toma <b>al momento del hecho</b>. Si no se puede acreditar, se lo trata como menor. <span class="art">arts. 1 y 2 Ley 27.801</span></p>
+          </div>
+          <div class="cb-acta">
+            <h4>Qué deja asentado el policía para cada escalón</h4>
+            <div class="cb-row c1"><i>1</i><div><strong>Conducta</strong><span>Qué hizo cada uno, en orden, con hora y lugar.</span></div></div>
+            <div class="cb-row c2"><i>2</i><div><strong>Tipicidad</strong><span>Objetos secuestrados, lesiones, daños, testigos. Sin calificar: eso lo hace el fiscal.</span></div></div>
+            <div class="cb-row c3"><i>3</i><div><strong>Antijuridicidad</strong><span>Las circunstancias: ¿hubo una agresión previa?, ¿quién empezó?</span></div></div>
+            <div class="cb-row c4"><i>4</i><div><strong>Culpabilidad y edad</strong><span>Fecha de nacimiento, estado físico (intoxicación), examen médico. <b>Nunca su declaración.</b></span></div></div>
+          </div>
+        </div>
+        <div class="takeaway"><span class="k">Idea clave</span><span>El policía no decide si hay delito: <b>junta los hechos</b> con los que el fiscal y el juez recorren los cuatro escalones. Lo que no está en el acta, no existe.</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="Conceptos básicos" aria-label="Palabras que vamos a usar">
+      <div class="sc">
+        <div>
+          <span class="kicker"><i></i>Glosario práctico</span>
+          <h2 style="margin-top:12px">Doce palabras <em>que vamos a usar</em></h2>
+        </div>
+        <div class="cb-gl"><div class="cb-g"><b>Delito</b><span>Conducta típica, antijurídica y culpable. Los cuatro escalones.</span></div><div class="cb-g"><b>Imputado</b><span>Persona a la que se le atribuye un delito. Conserva todas sus garantías.</span></div><div class="cb-g"><b>Punible / no punible</b><span>Si la ley permite o no aplicarle una pena. Menor de 14: no punible.</span></div><div class="cb-g"><b>Flagrancia</b><span>Sorprendido al cometer el hecho, inmediatamente después o perseguido.</span></div><div class="cb-g"><b>Aprehensión</b><span>La retención que hace el policía en el lugar del hecho.</span></div><div class="cb-g"><b>Fiscal (MPF)</b><span>Dirige la investigación y acusa. Recibe los secuestros.</span></div><div class="cb-g"><b>Juez de Menores</b><span>Controla las garantías y decide las medidas y la pena.</span></div><div class="cb-g"><b>Defensor</b><span>Abogado del adolescente desde el primer momento.</span></div><div class="cb-g"><b>Ministerio Pupilar</b><span>Defiende los derechos del adolescente como menor de edad.</span></div><div class="cb-g"><b>Supervisor</b><span>Funcionario judicial que controla las medidas e informa al juez.</span></div><div class="cb-g"><b>CAD</b><span>Lugar especializado donde se aloja al adolescente. Nunca la comisaría.</span></div><div class="cb-g"><b>Acta</b><span>Registro escrito de todo el procedimiento. Es la prueba de lo actuado.</span></div></div>
       </div>
     </section>
 
