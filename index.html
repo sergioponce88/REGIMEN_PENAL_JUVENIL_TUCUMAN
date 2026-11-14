@@ -702,6 +702,57 @@ body.portrait .rot{display:block}
 .qrx .qrbox{box-shadow:0 0 0 6px rgba(255,181,71,.4),0 40px 120px -30px rgba(255,181,71,.55)}
 .qrx .qrlist li::before{background:#ffb547}
 .qrx .qru{color:#ffb547}
+
+.da-tl{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;flex:1;position:relative}
+.da-tl::before{content:"";position:absolute;left:4%;right:4%;top:22px;height:3px;background:linear-gradient(90deg,var(--cyan),#ffb547);opacity:.6}
+.da-t{--c:var(--cyan);position:relative;border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:62px 22px 20px;display:flex;flex-direction:column;gap:14px}
+.da-t.hl{--c:#ffb547;border-color:rgba(255,181,71,.5);background:rgba(255,181,71,.07)}.da-t.hl2{--c:#2fd69a;border-color:rgba(47,214,154,.45);background:rgba(47,214,154,.06)}
+.da-h{position:absolute;top:6px;left:18px;font:800 15px var(--mono);letter-spacing:.06em;color:var(--bg);background:var(--c);padding:7px 14px;border-radius:999px}
+.da-t h4{font:800 31px/1.1 var(--display)}.da-t p,.da-t li{font-size:21px;line-height:1.45;color:#d5dbe4}.da-t p b{color:#fff}
+.da-t ol{padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.da-sm{font-size:18px!important;color:var(--muted)!important}
+.da-br{display:grid;gap:8px}.da-br div{border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.05);border-left:3px solid var(--cyan)}.da-br div+div{border-left-color:#2fd69a}
+.da-br b{display:block;font:700 19px var(--body)}.da-br span{font-size:17px;color:#c9d0db}
+.da-who{margin-top:auto;font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+.da-two{display:grid;grid-template-columns:1fr 1fr;gap:18px;flex:1}.da-two.sm{flex:0}
+.da-c{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:20px 24px;display:flex;flex-direction:column;gap:2px}
+.da-ct{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}.da-ct h4{font:800 28px var(--display);color:var(--cyan)}
+.da-r{display:grid;grid-template-columns:150px 1fr;gap:14px;font-size:19px;line-height:1.4;color:#d5dbe4;padding:9px 0;border-top:1px solid var(--line)}
+.da-r span{font:600 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:4px}.da-r b{color:#fff}
+.da-r.ok span{color:var(--emerald)}.da-r.no span{color:var(--coral)}
+.da-band{display:flex;gap:12px;align-items:center;border:1px solid rgba(255,107,107,.45);background:rgba(255,107,107,.08);border-radius:16px;padding:14px 18px}
+.da-band b{font:800 19px var(--display);color:var(--coral);white-space:nowrap;margin-right:6px}.da-band span{flex:1;font-size:17px;color:#e6e9ef;padding-left:14px;border-left:1px solid rgba(255,107,107,.35)}.da-band span b{font:inherit;color:#fff;font-weight:700;margin:0}
+.da-cond{display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:19px;color:#d5dbe4;border-left:3px solid var(--cyan);padding:4px 0 4px 16px}.da-cond b{color:#fff}
+.da-mw{display:grid;grid-template-columns:1fr 420px;gap:16px;flex:1}
+.da-mg{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:10px}
+.da-m{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px}
+.da-m i{font:900 19px/40px var(--display);font-style:normal;text-align:center;border-radius:11px;background:rgba(63,208,255,.14);color:var(--cyan)}
+.da-m{align-items:center}.da-m b{display:block;font:700 20px/1.2 var(--body);margin-bottom:3px}.da-m span{font-size:17px;line-height:1.38;color:#c9d0db}
+.da-side{display:flex;flex-direction:column;gap:12px}
+.da-m.nine{flex:1;border-color:rgba(255,107,107,.5);background:rgba(255,107,107,.08);padding:18px}.da-m.nine i{background:var(--coral);color:var(--bg)}.da-m.nine b{font-size:21px}.da-m.nine span{font-size:17px}
+.da-m.nine em{display:block;margin-top:10px;font-style:normal;font-weight:700;font-size:17px;color:var(--coral)}
+.da-plazo{border:1px solid rgba(255,181,71,.45);background:rgba(255,181,71,.08);border-radius:14px;padding:14px 18px}.da-plazo b{font:900 34px var(--display);color:#ffb547;margin-right:8px}.da-plazo span{font-size:16.5px;color:#e6e9ef;line-height:1.4}
+.da-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;flex:1}
+.da-f{position:relative;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:8px}
+.da-f:not(:last-child)::after{content:"";position:absolute;right:-12px;top:34px;width:12px;height:2px;background:var(--cyan)}
+.da-f .n{font:900 34px/1 var(--display);color:var(--cyan)}.da-f h4{font:800 22px/1.12 var(--display)}.da-f p{font-size:18px;line-height:1.4;color:#d5dbe4}.da-f p b{color:#fff}.da-f .art{margin-top:auto}
+.da-f.hl{border-color:rgba(255,181,71,.5);background:rgba(255,181,71,.07)}.da-f.hl .n{color:#ffb547}
+.da-note{border:1px solid var(--line);border-radius:14px;padding:12px 16px;background:rgba(255,255,255,.03)}.da-note b{display:block;font:700 18px var(--body);color:var(--cyan);margin-bottom:3px}.da-note>span{font-size:16px;line-height:1.4;color:#c9d0db}
+.da-pw{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;flex:1}
+.da-pl,.da-pr{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.da-pl h4,.da-pr h4{font:800 23px var(--display);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.da-pg{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:10px;flex:1}
+.da-p{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:center;border-radius:12px;padding:9px 12px;background:rgba(255,255,255,.04)}
+.da-p i{font:800 16px/34px var(--mono);font-style:normal;text-align:center;border-radius:9px;background:rgba(47,214,154,.15);color:var(--emerald)}
+.da-p b{display:block;font:700 19px/1.2 var(--body);margin-bottom:2px}.da-p span{font-size:16px;color:#aeb6c2}
+.da-priv{border:1px solid rgba(255,107,107,.45);background:rgba(255,107,107,.07);border-radius:14px;padding:12px 14px}
+.da-priv b{font:800 18px var(--display);color:var(--coral)}.da-priv div{display:flex;gap:8px;margin-top:8px}.da-priv span{flex:1;font-size:15.5px;text-align:center;padding:8px;border-radius:10px;background:rgba(255,255,255,.05);color:#e6e9ef}
+.da-rp{border-radius:14px;padding:12px 16px;border:1px solid var(--line)}
+.da-rp b{display:block;font:800 22px var(--display);margin-bottom:4px}.da-rp>span{font-size:18.5px;color:#e6e9ef}.da-rp strong{color:#fff}
+.da-rp ul{margin:10px 0 0 22px;font-size:18px;line-height:1.45;color:#d5dbe4;display:flex;flex-direction:column;gap:8px}
+.da-rp.must{border-color:rgba(47,214,154,.5);background:rgba(47,214,154,.08)}.da-rp.must b{color:var(--emerald)}
+.da-rp.may{border-color:rgba(255,181,71,.45);background:rgba(255,181,71,.07);flex:1}.da-rp.may b{color:#ffb547}
+.da-rp.lim b{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1114,6 +1165,90 @@ body.portrait .rot{display:block}
       <div class="acta"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span><b>Todo queda en acta:</b> cada movimiento, situación o comunicación. Si no está documentado, el proceso puede caer.</span></div>
     </section>
 
+
+    <!-- ================= DESPUÉS DE LA APREHENSIÓN ================= -->
+    <section class="slide" data-module="El proceso" aria-label="Los plazos desde la aprehensión">
+      <div class="sc">
+        <div><span class="kicker"><i></i>El reloj empieza con la aprehensión</span><h2 style="margin-top:12px">Los plazos que corren <em>desde la aprehensión</em></h2></div>
+        <div class="da-tl">
+          <div class="da-t"><span class="da-h">Hora 0</span><h4>Aprehensión</h4><p>Desde el móvil: supervisor de turno, MPF, Ministerio Pupilar, padres y defensor.</p><span class="da-who">Policía</span></div>
+          <div class="da-t hl"><span class="da-h">Hasta 6 h</span><h4>Aviso al Fiscal</h4><p>Al <b>Fiscal o Auxiliar Fiscal especializado</b> según el delito que se le atribuye.</p><span class="da-who">Policía</span></div>
+          <div class="da-t"><span class="da-h">Decide</span><h4>El MPF resuelve</h4>
+            <div class="da-br"><div><b>Sigue aprehendido</b><span>Centro asistencial → CAD</span></div><div><b>Se entrega a sus padres</b><span>Sigue el proceso en libertad</span></div></div>
+            <p class="da-sm">Da intervención a la Defensoría de Menores y al Juez de Menores.</p><span class="da-who">Fiscal</span></div>
+          <div class="da-t hl2"><span class="da-h">Hasta 24 h</span><h4>Audiencia multipropósito</h4>
+            <ol><li>Controla la aprehensión.</li><li>Formaliza el cargo (declaración de imputado).</li><li>Resuelve las medidas de coerción.</li></ol><span class="da-who">Juez de Menores</span></div>
+        </div>
+        <div class="takeaway"><span class="k">Para el acta</span><span>Los plazos se cuentan desde la <b>hora exacta de la aprehensión</b>. Asentá esa hora y la de cada aviso: si no consta, el plazo no se puede controlar.</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="El proceso" aria-label="Salidas sin juicio: remisión y mediación">
+      <div class="sc">
+        <div><span class="kicker"><i></i>Si no hace falta llegar a juicio</span><h2 style="margin-top:12px">Remisión y mediación: <em>terminar el caso sin juicio</em></h2></div>
+        <div class="da-two">
+          <div class="da-c"><div class="da-ct"><h4>Remisión</h4><span class="art">art. 400 CPP</span></div>
+            <div class="da-r"><span>Quién la pide</span><div>El Fiscal o el adolescente, por sí o con su defensa.</div></div>
+            <div class="da-r"><span>Qué se evalúa</span><div>Gravedad del hecho, grado de responsabilidad, daño causado y su reparación.</div></div>
+            <div class="da-r"><span>Qué requiere</span><div>Consentimiento de la <b>víctima</b> y del <b>Fiscal</b>.</div></div>
+            <div class="da-r ok"><span>Resultado</span><div>Programas comunitarios con apoyo de la familia. Si los cumple, <b>se extingue la acción penal</b>.</div></div></div>
+          <div class="da-c"><div class="da-ct"><h4>Mediación penal juvenil</h4><span class="art">art. 401 CPP</span></div>
+            <div class="da-r"><span>Cuándo</span><div>En cualquier etapa, hasta que termina la etapa intermedia.</div></div>
+            <div class="da-r"><span>Quién la deriva</span><div>El Juez.</div></div>
+            <div class="da-r"><span>Qué requiere</span><div>Consentimiento expreso del <b>adolescente</b>, sus <b>representantes</b> y la <b>víctima</b>.</div></div>
+            <div class="da-r no"><span>Veto</span><div>Si el Fiscal se opone, <b>no hay mediación</b>.</div></div></div>
+        </div>
+        <div class="da-band"><b>No procede ninguna si…</b><span>la pena máxima supera <b>6 años</b></span><span>hubo <b>muerte</b> de la víctima, dolosa o culposa</span><span>tiene <b>condenas previas</b> o varios procesos en trámite</span></div>
+        <div class="takeaway"><span class="k">Rol policial</span><span>La policía <b>no media ni propone acuerdos</b>. Asienta los datos de la víctima, los daños y su posición: con eso decide el Fiscal.</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="El proceso" aria-label="Medidas de coerción">
+      <div class="sc">
+        <div><span class="kicker"><i></i>Mientras dura el proceso</span><h2 style="margin-top:12px">Medidas de coerción: <em>de menor a mayor</em></h2></div>
+        <div class="da-cond"><span>Provisionales y excepcionales. Solo ante <b>riesgo fundado de fuga</b> o de <b>entorpecer el proceso</b>.</span><span class="art">art. 402 CPP</span></div>
+        <div class="da-mw"><div class="da-mg"><div class="da-m"><i>1</i><div><b>Presentarse periódicamente</b><span>ante el tribunal o la autoridad, con sus padres o referentes.</span></div></div><div class="da-m"><i>2</i><div><b>No acercarse ni contactar</b><span>a la víctima, testigos o coimputados, tampoco por redes o teléfono.</span></div></div><div class="da-m"><i>3</i><div><b>No consumir alcohol ni drogas</b><span>con tratamiento ambulatorio si corresponde y lo acepta.</span></div></div><div class="da-m"><i>4</i><div><b>No conducir vehículos</b><span>con retención o inhabilitación de la licencia.</span></div></div><div class="da-m"><i>5</i><div><b>No portar armas</b><span>ni réplicas, elementos cortantes u objetos intimidatorios.</span></div></div><div class="da-m"><i>6</i><div><b>No salir de la provincia</b><span>o de su localidad sin autorización judicial.</span></div></div><div class="da-m"><i>7</i><div><b>Permanencia domiciliaria</b><span>supervisada, con o sin monitoreo electrónico.</span></div></div><div class="da-m"><i>8</i><div><b>Domicilio en franjas</b><span>fines de semana, de noche o en horario no escolar.</span></div></div></div>
+          <div class="da-side">
+            <div class="da-m nine"><i>9</i><div><b>Centro especializado de detención juvenil</b><span>Última opción y por el menor tiempo posible.</span><em>Prohibido: comisarías, dependencias policiales y lugares de adultos.</em></div></div>
+            <div class="da-plazo"><b>6 meses</b><span>como máximo. Se pueden prorrogar <b>una vez</b> por igual plazo, a pedido del Fiscal y con resolución fundada.</span></div>
+          </div></div>
+        <div class="takeaway"><span class="k">En la calle</span><span>Si encontrás a un adolescente incumpliendo una medida (acercamiento, horario, conducir, armas): <b>acta</b> y aviso al <b>supervisor asignado</b> y al <b>MPF</b>. Solo el juez cambia la medida.</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="El proceso" aria-label="El juicio en dos etapas">
+      <div class="sc">
+        <div><span class="kicker"><i></i>Si llega a juicio</span><h2 style="margin-top:12px">El juicio en <em>dos etapas</em>: primero la responsabilidad, después la pena</h2></div>
+        <div class="da-flow">
+          <div class="da-f"><span class="n">1</span><h4>Debate oral</h4><p>Público o a puertas cerradas: <b>lo elige el adolescente</b>.</p><span class="art">art. 404</span></div>
+          <div class="da-f"><span class="n">2</span><h4>Responsabilidad</h4><p>Solo se decide si hubo hecho, su calificación y si es responsable. <b>No se fija pena.</b></p><span class="art">art. 404</span></div>
+          <div class="da-f hl"><span class="n">3</span><h4>Plan de Reinserción Social</h4><p><b>Al menos 1 año.</b> Lo formula el Fiscal con un equipo interdisciplinario. Lo controla el Supervisor Territorial.</p><span class="art">art. 404</span></div>
+          <div class="da-f"><span class="n">4</span><h4>Integración de pena</h4><p><b>Otro magistrado</b>, distinto del que juzgó, fija la sanción tras oír al Supervisor Territorial.</p><span class="art">art. 404</span></div>
+          <div class="da-f"><span class="n">5</span><h4>Ejecución</h4><p>La controla el juez de la integración. Si cumple 18, pasa al Juez de Ejecución de adultos.</p><span class="art">art. 406</span></div>
+        </div>
+        <div class="da-two sm">
+          <div class="da-note"><b>Juicio abreviado</b><span>Desde la intimación hasta el debate. El adolescente reconoce su participación con su defensor y el Ministerio Pupilar. Solo resuelve calificación y responsabilidad: la pena sigue el mismo camino. <span class="art">art. 405</span></span></div>
+          <div class="da-note"><b>Plan de Ejecución Penal Juvenil</b><span>Si hay pena, el Supervisor Territorial arma un plan individual con los equipos interdisciplinarios y eleva informes periódicos de evolución. <span class="art">art. 406</span></span></div>
+        </div>
+        <div class="takeaway"><span class="k">Idea clave</span><span>Primero se prueba el hecho; la pena llega <b>después</b> de dar al adolescente una oportunidad real de reinsertarse. Por eso la prueba que junta la policía es la base de todo.</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-module="El proceso" aria-label="Las sanciones y el reemplazo de la prisión">
+      <div class="sc">
+        <div><span class="kicker"><i></i>Qué penas puede recibir</span><h2 style="margin-top:12px">Las sanciones <em>y el reemplazo de la prisión</em></h2></div>
+        <div class="da-pw">
+          <div class="da-pl"><h4>Penas posibles <span class="art">art. 12 Ley 27.801</span></h4><div class="da-pg"><div class="da-p"><i>a</i><div><b>Amonestación</b><span>siempre junto con otra pena</span></div></div><div class="da-p"><i>b</i><div><b>Prohibición de contacto</b><span>con la víctima, su familia u otras personas</span></div></div><div class="da-p"><i>c</i><div><b>Prohibición de conducir</b><span>si el delito se vincula con vehículos</span></div></div><div class="da-p"><i>d</i><div><b>Prohibición de concurrir</b><span>a lugares, espectáculos o eventos</span></div></div><div class="da-p"><i>e</i><div><b>Prohibición de salir</b><span>del país, la localidad o la zona fijada</span></div></div><div class="da-p"><i>f</i><div><b>Servicios a la comunidad</b><span>sin afectar estudio ni trabajo</span></div></div><div class="da-p"><i>g</i><div><b>Monitoreo electrónico</b><span>solo o como complemento</span></div></div><div class="da-p"><i>h</i><div><b>Reparación integral</b><span>del daño a la víctima</span></div></div></div>
+            <div class="da-priv"><b>i · Privación de libertad</b><div><span>en el domicilio</span><span>en un instituto abierto</span><span>en un instituto especializado de detención</span></div></div></div>
+          <div class="da-pr"><h4>¿Se reemplaza la prisión? <span class="art">art. 11</span></h4>
+            <div class="da-rp must"><b>Pena de hasta 3 años</b><span><strong>Se debe</strong> reemplazar por alguna de las otras penas.</span></div>
+            <div class="da-rp may"><b>Más de 3 y hasta 10 años</b><span><strong>Se puede</strong> reemplazar si:</span>
+              <ul><li>no hubo muerte ni violencia física o psíquica grave;</li><li>en culposos, sin lesiones gravísimas, muerte ni daño psíquico grave;</li><li>no tiene condenas ni otros procesos firmes;</li><li>hay dictamen pericial, conformidad del Fiscal y la víctima fue escuchada.</li></ul></div>
+            <div class="da-rp lim"><b>Tope</b><span>15 años como máximo, sin prisión perpetua. <span class="art">art. 19</span></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ================= NACIÓN Y TUCUMÁN ================= -->
     <section class="slide" data-module="Nación y Tucumán" aria-label="Cómo se combinan las dos leyes">
